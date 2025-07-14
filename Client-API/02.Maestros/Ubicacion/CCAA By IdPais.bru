@@ -1,0 +1,15 @@
+meta {
+  name: CCAA By IdPais
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{Server}}/api/v1/paises/60/comunidades
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

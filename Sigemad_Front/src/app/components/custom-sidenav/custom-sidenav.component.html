@@ -1,0 +1,112 @@
+<div class="sidenav-header">
+  <img [src]="logoSrc()" [style.width]="logoSize().width" [style.height]="logoSize().height" alt="Logo" />
+  <h4 class="environmentPre" *ngIf="this.environmentPre">PRE</h4>
+</div>
+
+<mat-nav-list>
+  <ng-container *ngFor="let item of menuBack()">
+    <a
+      mat-list-item
+      class="menu-item"
+      (click)="toggleSubmenu(item, 1)"
+      [routerLink]="!isMenuItemDisabled(item.id) ? (item.ruta || null) : null"
+      [ngStyle]="getActiveStyle(item, rla.isActive)"
+      routerLinkActive="selected-menu-item"
+      #rla="routerLinkActive"
+      [activated]="rla.isActive"
+      [title]="sideNavCollapsed() ? item.nombre : ''"
+      [class.disabled-menu-item]="isMenuItemDisabled(item.id)"
+    >
+      <mat-icon *ngIf="iconMap[item.ruta]" matListItemIcon [svgIcon]="iconMap[item.ruta]"></mat-icon>
+
+      <span matListItemTitle>{{ item.nombre }}</span>
+      <mat-icon *ngIf="item.subItems?.length" matListItemIcon>
+        {{ item.isOpen ? 'expand_less' : 'expand_more' }}
+      </mat-icon>
+    </a>
+
+    <div *ngIf="item.subItems?.length && expandedMenuId === item.id" class="submenu">
+      <!--
+      <a
+        mat-list-item
+        class="submenu-item"
+        *ngFor="let subItem of item.subItems"
+        [routerLink]="subItem.ruta"
+        [ngStyle]="getActiveStyle(subItem, subRla.isActive)"
+        routerLinkActive="selected-submenu-item"
+        #subRla="routerLinkActive"
+        [activated]="subRla.isActive"
+        [title]="sideNavCollapsed() ? subItem.nombre : ''"
+      >
+        <mat-icon *ngIf="iconMap[subItem.ruta]" matListItemIcon [svgIcon]="iconMap[subItem.ruta]"></mat-icon>
+
+        <span matListItemTitle>{{ subItem.nombre }}</span>
+      </a>
+      -->
+
+      <!-- PCD -->
+      <ng-container *ngFor="let subItem of item.subItems">
+        <a
+          mat-list-item
+          class="submenu-item"
+          (click)="toggleSubmenu(subItem, 2)"
+          [routerLink]="!isMenuItemDisabled(subItem.id) ? subItem.ruta : null"
+          [ngStyle]="getActiveStyle(subItem, subRla.isActive)"
+          routerLinkActive="selected-submenu-item"
+          #subRla="routerLinkActive"
+          [activated]="subRla.isActive"
+          [title]="sideNavCollapsed() ? subItem.nombre : ''"
+          [class.disabled-menu-item]="isMenuItemDisabled(subItem.id)"
+        >
+          <!--
+          <mat-icon *ngIf="iconMap[subItem.ruta]" matListItemIcon [svgIcon]="iconMap[subItem.ruta]"></mat-icon>
+
+          <span matListItemTitle>{{ subItem.nombre }}</span>
+      -->
+          <mat-icon *ngIf="iconMap[subItem.ruta]" matListItemIcon [svgIcon]="iconMap[subItem.ruta]"></mat-icon>
+          <mat-icon *ngIf="subItem.subItems?.length" matListItemIcon>
+            {{ subItem.isOpen ? 'expand_less' : 'expand_more' }}
+          </mat-icon>
+          <span matListItemTitle>{{ subItem.nombre }}</span>
+        </a>
+
+        <!-- Menús de segundo nivel -->
+        <div *ngIf="subItem.subItems?.length && expandedSubMenuId === subItem.id" class="submenu">
+          <ng-container *ngFor="let subSubItem of subItem.subItems">
+            <a
+              mat-list-item
+              class="submenu-subitem"
+              [routerLink]="!isMenuItemDisabled(subSubItem.id) ? subSubItem.ruta : null"
+              [ngStyle]="getActiveStyle(subSubItem, subRla.isActive)"
+              routerLinkActive="selected-submenu-item"
+              #subRla="routerLinkActive"
+              [activated]="subRla.isActive"
+              [title]="sideNavCollapsed() ? subSubItem.nombre : ''"
+              [class.disabled-menu-item]="isMenuItemDisabled(subSubItem.id)"
+            >
+              <mat-icon *ngIf="iconMap[subSubItem.ruta]" matListItemIcon [svgIcon]="iconMap[subSubItem.ruta]"></mat-icon>
+
+              <span matListItemTitle>{{ subSubItem.nombre }}</span>
+            </a>
+          </ng-container>
+        </div>
+      </ng-container>
+      <!-- FIN PCD -->
+    </div>
+  </ng-container>
+</mat-nav-list>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>
+
+<div class="user-label" *ngIf="!sideNavCollapsed()">
+  <div class="user-info">
+    <mat-icon matListItemIcon>account_circle</mat-icon>
+    <span>Usuario: {{ userName }}</span>
+    <div class="logout" (click)="logout()">
+      <mat-icon matListItemIcon (click)="logout()">logout</mat-icon>
+      <span (click)="logout()">Cerrar sesión</span>
+    </div>
+  </div>
+</div>

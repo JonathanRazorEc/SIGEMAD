@@ -1,0 +1,15 @@
+meta {
+  name: Tipo movimientos
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{Server}}/api/v1/tipos-movimientos
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

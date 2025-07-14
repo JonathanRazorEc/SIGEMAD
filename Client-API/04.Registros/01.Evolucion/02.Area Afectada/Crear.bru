@@ -1,0 +1,95 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/registros/areas-afectadas
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "IdSuceso": 3,
+    "IdRegistroActualizacion": 5,
+    "AreasAfectadas": [
+      {
+        "FechaHora": "2025-04-26T09:17:19",
+        "IdProvincia": 30,
+        "IdMunicipio": 1001,
+        "IdEntidadMenor": null,
+        "superficieAfectadaHectarea":150,
+        "GeoPosicion": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -104.99404,
+                39.75621
+              ],
+              [
+                -104.99404,
+                39.75422
+              ],
+              [
+                -104.99011,
+                39.75422
+              ],
+              [
+                -104.99011,
+                39.75621
+              ],
+              [
+                -104.99404,
+                39.75621
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "FechaHora": "2025-04-26T09:17:19",
+        "IdProvincia": 30,
+        "IdMunicipio": 1001,
+        "IdEntidadMenor": 1001,
+        "GeoPosicion": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -104.99404,
+                39.75621
+              ],
+              [
+                -104.99404,
+                39.75422
+              ],
+              [
+                -104.99011,
+                39.75422
+              ],
+              [
+                -104.99011,
+                39.75621
+              ],
+              [
+                -104.99404,
+                39.75621
+              ]
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}
+
+vars:post-response {
+  IdEvolucion: res.body.idEvolucion
+}
+
+assert {
+  res.status: eq 200
+}

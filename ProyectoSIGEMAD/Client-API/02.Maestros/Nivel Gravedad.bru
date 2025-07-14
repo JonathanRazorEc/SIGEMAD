@@ -1,0 +1,15 @@
+meta {
+  name: Nivel Gravedad
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{Server}}/api/v1/NivelGravedad
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

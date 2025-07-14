@@ -1,0 +1,15 @@
+meta {
+  name: Entidades Menores
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{Server}}/api/v1/entidad-menor
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,203 @@
+.filter-container {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-container h2 {
+  margin: 0;
+}
+
+.filter-container-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.filter-container-info h2 {
+  font-size: 20px;
+}
+
+.filter-container_general-note {
+  border: 2px solid #c0c0c0;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+.filter-container_general-note > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.filter-container_actions {
+  display: flex;
+  justify-content: space-between;
+
+  &__back-btn {
+    border: 2px solid #D9D9D9 !important;
+    background-color: #fff !important;
+
+    ::ng-deep .mdc-button__label {
+      color: #8EC7FF !important;
+    }
+  }
+
+  &__delete-btn {
+    border: 2px solid #D9D9D9 !important;
+    background-color: #C0C0C0 !important;
+
+    ::ng-deep .mdc-button__label {
+      color: #fff !important;
+    }
+  }
+
+  &__reload-btn {
+    border: 2px solid #D9D9D9 !important;
+    background-color: #fff !important;
+
+    ::ng-deep .mdc-button__label {
+      color: #82C043 !important;
+    }
+  }
+
+  button {
+    &:disabled {
+      opacity: .6;
+    }
+  }
+}
+
+.filter-container_actions > div {
+  display: flex;
+  gap: 10px;
+}
+
+.info-section mat-card {
+  padding-top: 16px;
+  background: white;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-section mat-card {
+  padding-top: 16px;
+  background: white;
+  padding-bottom: 30px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  padding: 0 16px;
+}
+
+mat-card-content {
+  flex: 1;
+  overflow: auto;
+}
+
+mat-divider {
+  margin: 8px 0;
+}
+
+ul {
+  padding-left: 16px;
+}
+
+.mdc-button {
+  min-width: 0px;
+}
+
+.circle-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 20%;
+  border: 2px solid #cccccc;
+  background-color: white;
+  color: #0d47a1;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+
+.circle-button:hover {
+  background-color: #e3f2fd;
+  border-color: #0d47a1;
+}
+
+.circle-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-container {
+  padding-right: 20px;
+}
+
+p {
+  margin: 0;
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: #e7e7e7;
+}
+
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding-top: 20px;
+}
+
+::ng-deep .mdc-text-field--filled.mdc-text-field--disabled .mdc-text-field__input {
+  color: black !important;
+  opacity: 1 !important;
+}
+
+.pin-location {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+
+.refresh-fire-container {
+  display: flex;
+  align-items: center;
+
+  .refresh-fire-icon,
+  .refresh-fire-spinner {
+    width: 30px;
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+  }
+}
+
+.refresh-fire-update-log{
+  margin-bottom: 10px;
+}
+
+.disabled-input {
+  color: black !important; /* Cambia el color del texto */
+}
+
+/* Asegurar que el contenedor principal no fuerce una altura específica */
+:host {
+  display: block;
+  height: auto;
+}
+  

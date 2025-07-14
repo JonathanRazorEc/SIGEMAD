@@ -1,0 +1,15 @@
+meta {
+  name: Delay
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/utilitarios/delay?Milisegundos=10
+  body: none
+  auth: inherit
+}
+
+params:query {
+  Milisegundos: 10
+}

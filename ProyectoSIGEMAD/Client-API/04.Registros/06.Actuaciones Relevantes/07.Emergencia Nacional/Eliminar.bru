@@ -1,0 +1,23 @@
+meta {
+  name: Eliminar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/actuaciones-relevantes/emergencia-nacional
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 1,
+    "idSuceso": 1,
+    "emergenciaNacional": null
+  }
+}
+
+assert {
+  res.status: eq 204
+}

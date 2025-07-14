@@ -1,0 +1,21 @@
+meta {
+  name: Listar Registros
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{Server}}/api/v1/sucesos/registros?IdSuceso=1&PageIndex=0&PageSize=5
+  body: none
+  auth: inherit
+}
+
+params:query {
+  IdSuceso: 1
+  PageIndex: 0
+  PageSize: 5
+}
+
+assert {
+  res.status: eq 200
+}

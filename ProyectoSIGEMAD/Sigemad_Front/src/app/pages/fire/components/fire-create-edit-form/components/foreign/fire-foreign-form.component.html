@@ -1,0 +1,136 @@
+<div class="fire-foreign-form-container" [formGroup]="formData">
+  <!-- Primera fila con campos comunes - mostrar solo si no se debe omitir -->
+  <div *ngIf="!skipFirstFields" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+    <mat-form-field appearance="outline" fxFlex="33" class="mb-3">
+      <mat-label>Clase de suceso</mat-label>
+      <mat-select formControlName="classEvent">
+        <mat-option *ngFor="let option of listClassEvent()" [value]="option.id">{{ option.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="formData.get('classEvent')?.hasError('required')">Este campo es obligatorio.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="33" class="mb-3">
+      <mat-label>Seguimiento</mat-label>
+      <mat-select formControlName="eventStatus">
+        <mat-option *ngFor="let option of listEventStatus()" [value]="option.id">{{ option.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="formData.get('eventStatus')?.hasError('required')">Este campo es obligatorio.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="33" class="mb-3">
+      <mat-label>Fecha de inicio</mat-label>
+      <input
+        matInput
+        type="datetime-local"
+        formControlName="startDateTime"
+        [min]="fechaMinimaDateTime"
+        [max]="fechaMaximaDateTime"
+      />
+      <mat-error *ngIf="formData.get('startDateTime')?.hasError('required')">Este campo es obligatorio.</mat-error>
+    </mat-form-field>
+  </div>
+    
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <mat-form-field appearance="outline" fxFlex="40" class="mb-3">
+        <mat-label>País</mat-label>
+        <input
+          matInput
+          formControlName="country"
+          [matAutocomplete]="autoCountry"
+          placeholder="Buscar país..."
+        />
+        <mat-autocomplete #autoCountry="matAutocomplete" [displayWith]="displayCountry">
+          <mat-option *ngFor="let country of countryfilteredOptions | async" [value]="country">
+            {{ country.descripcion }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="formData.get('country')?.hasError('required')">El país es obligatorio.</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" fxFlex="60" class="mb-3">
+        <mat-label>Distrito</mat-label>
+        <input
+          matInput
+          formControlName="distrito"
+          [matAutocomplete]="autoDistrito"
+          placeholder="Buscar distrito (mínimo 3 caracteres)..."
+        />
+        <mat-autocomplete #autoDistrito="matAutocomplete" [displayWith]="displayDistrito">
+          <mat-option *ngFor="let distrito of distritosfilteredOptions | async" [value]="distrito">
+            {{ distrito.descripcion }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <mat-form-field appearance="outline" fxFlex="100" class="mb-3">
+        <mat-label>Población / Ubicación</mat-label>
+        <input 
+          matInput 
+          formControlName="idMunicipioExtranjero"
+          [matAutocomplete]="autoForeignMunicipality"
+          placeholder="Buscar población (mínimo 3 caracteres)..."
+        />
+        <mat-autocomplete #autoForeignMunicipality="matAutocomplete" [displayWith]="displayForeignMunicipality">
+          <mat-option *ngFor="let municipio of foreignMunicipalitiesFilteredOptions | async" [value]="municipio">
+            {{ municipio.descripcion }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    
+    <mat-card class="card-ubicacion">
+      <mat-checkbox 
+        formControlName="limitSpain" 
+        [disabled]="!showLimitSpainOption" 
+        [attr.disabled]="!showLimitSpainOption">Limítrofe con España</mat-checkbox>
+      
+      <div *ngIf="showLimitSpainOption" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container" style="margin-top: 16px;">
+        <mat-form-field appearance="outline" fxFlex="50" class="mb-3">
+          <mat-label>Provincia</mat-label>
+          <input
+            matInput
+            formControlName="provinciaLimitrofe"
+            [matAutocomplete]="autoProvince"
+            placeholder="Buscar provincia..."
+          />
+          <mat-autocomplete #autoProvince="matAutocomplete" [displayWith]="displayProvince">
+            <mat-option *ngFor="let province of provincefilteredOptions | async" [value]="province">
+              {{ province.descripcion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="50" class="mb-3">
+          <mat-label>Municipio</mat-label>
+          <input
+            matInput
+            formControlName="municipioLimitrofe"
+            [matAutocomplete]="autoMunicipality"
+            placeholder="Buscar municipio..."
+          />
+          <mat-autocomplete #autoMunicipality="matAutocomplete" [displayWith]="displayMunicipality">
+            <mat-option *ngFor="let municipality of municipalityfilteredOptions | async" [value]="municipality">
+              {{ municipality.descripcion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </mat-card>
+  
+  <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+    <mat-form-field appearance="outline" fxFlex="100" class="mb-3">
+      <mat-label>Denominación</mat-label>
+      <input matInput formControlName="denomination" placeholder="Denominación">
+      <mat-error *ngIf="formData.get('denomination')?.hasError('required')">Este campo es obligatorio.</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+    <mat-form-field appearance="outline" fxFlex="100" class="mb-3">
+      <mat-label>Nota general</mat-label>
+      <textarea matInput placeholder="Nota general" formControlName="generalNote" rows="3"></textarea>
+    </mat-form-field>
+  </div>
+</div> 

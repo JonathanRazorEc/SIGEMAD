@@ -1,0 +1,42 @@
+<div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+  <mat-form-field appearance="outline" fxFlex="20%">
+    <mat-label>Tipo de Medio / Capacidad / Experto</mat-label>
+    <mat-select [formControl]="getForm('IdCapacidad')" [compareWith]="compareFn">
+      <mat-option *ngFor="let option of capacidad()" [value]="option">
+        {{ option.nombre }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="formGroup.get('IdCapacidad')?.hasError('required')">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="input full-width-input" appearance="outline" fxFlex="30%" *ngIf="showMedio">
+    <mat-label>Medio no catalogado</mat-label>
+    <input matInput [formControl]="getForm('MedioNoCatalogado')" placeholder="Ingresa texto" />
+    <mat-error *ngIf="formGroup.get('MedioNoCatalogado')?.hasError('required')">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" fxFlex="20%" class="mb-3">
+    <mat-label>Fecha / hora de despliegue</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="getForm('FechaHoraDespliegue')" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="formGroup.get('FechaHoraDespliegue')?.hasError('required')">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" fxFlex="20%" class="mb-3">
+    <mat-label>Fecha / hora de inicio de la intervención</mat-label>
+    <input matInput [matDatepicker]="picker2" [formControl]="getForm('FechaHoraInicioIntervencion')" />
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+    <mat-error *ngIf="formGroup.get('FechaHoraInicioIntervencion')?.hasError('required')">Este campo es
+      obligatorio.</mat-error>
+  </mat-form-field>
+</div>
+
+<div class="row" fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="start center">
+  <mat-form-field class="input full-width-input" appearance="outline" fxFlex="100%">
+    <mat-label>Observaciones</mat-label>
+    <input matInput [formControl]="getForm('Descripcion6')" placeholder="Ingresa texto" />
+    <mat-error *ngIf="formGroup.get('Descripcion6')?.hasError('required')">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+</div>

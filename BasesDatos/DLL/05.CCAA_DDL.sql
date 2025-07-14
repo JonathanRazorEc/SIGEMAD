@@ -1,0 +1,12 @@
+CREATE TABLE dbo.CCAA (
+	Id int NOT NULL,
+	Descripcion varchar(255) NOT NULL,
+	IdPais int NOT NULL FOREIGN KEY REFERENCES dbo.Pais(Id),
+	CONSTRAINT CCAA_PK PRIMARY KEY (Id)
+);
+
+CREATE INDEX IX_CCAA_IdPais
+ON CCAA(IdPais);
+
+CREATE INDEX IX_CCAA_Descripcion
+ON CCAA(Descripcion);

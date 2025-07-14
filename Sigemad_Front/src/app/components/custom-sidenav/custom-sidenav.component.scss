@@ -1,0 +1,179 @@
+:host * {
+  transition: all 500ms ease-in-out;
+}
+.sidenav-header {
+  padding-top: 24px;
+  text-align: center;
+
+  > img {
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .header-text {
+    > h2 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    > p {
+      margin: 0;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.selected-menu-item {
+  border-left: 5px solid;
+  border-left-color: blue;
+  background: rgb(0, 0, 0, 05);
+}
+
+.menu-item {
+  border-left: 5px solid;
+  border-left-color: rgb(0, 0, 0, 0);
+  height: 40px !important;
+}
+
+.submenu-item {
+  font-size: 10px !important;
+  height: 40px !important;
+}
+
+// PCD
+.submenu .submenu-item {
+  padding-left: 28px;
+}
+
+.submenu .submenu-subitem {
+  padding-left: 52px;
+}
+
+.user-label {
+  width: calc(100% - 16px); /* Resta un pequeño margen para evitar el desbordamiento */
+  max-width: 100%; /* Asegura que no se pase del contenedor */
+  overflow: hidden; /* Evita el scroll */
+  white-space: nowrap; /* Mantiene todo en una línea */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box; /* Incluye padding/border en el ancho total */
+}
+
+.mdc-list-item__primary-text {
+  font-size: 0.8rem;
+}
+
+.mdc-list-item--with-leading-icon .mdc-list-item__start {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+// FIN PCD
+
+.mat-mdc-list-base {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+ngx-spinner {
+  z-index: 1000 !important;
+}
+
+.user-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+.user-label mat-icon {
+  margin-right: 8px;
+  font-size: 20px;
+  color: black;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  flex-wrap: wrap;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #f44336;
+}
+
+.logout mat-icon {
+  margin-right: 4px;
+  font-size: 18px;
+  color: #f44336;
+}
+
+.logout:hover {
+  text-decoration: underline;
+}
+
+// PCD
+/* Asegura que el sidenav ocupe toda la altura de la ventana y no tenga scroll */
+mat-sidenav {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor de los ítems del menú (mat-nav-list) */
+mat-nav-list {
+  display: block;
+  max-height: calc(100vh - 120px - 140px);
+  overflow-y: auto;
+  padding: 10px;
+  flex-grow: 1;
+  overflow-x: hidden;
+}
+
+/* Opcional: Personaliza el scroll dentro de mat-nav-list */
+mat-nav-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+mat-nav-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+mat-nav-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+// FIN PCD
+
+.disabled-menu-item {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none; 
+  color: #999 !important;
+}
+
+.disabled-menu-item mat-icon {
+  opacity: 0.5;
+  color: #999 !important;
+}
+
+.environmentPre{
+  color: green !important;
+  font-weight: bold;
+}

@@ -1,0 +1,81 @@
+<h2 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle class="title">
+  {{ data.fire?.id ? 'Modificar' : 'Crear' }} incendio
+</h2>
+
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container mb-3">
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Territorio</mat-label>
+        <mat-select [formControl]="getForm('territory')" (selectionChange)="changeTerritory($event)">
+          <mat-option *ngFor="let option of territories()" [value]="option.id">{{ option.descripcion }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('territory')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Clase de suceso</mat-label>
+        <mat-select formControlName="classEvent">
+          <mat-option *ngFor="let option of listClassEvent()" [value]="option.id">{{ option.descripcion }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('classEvent')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Seguimiento</mat-label>
+        <mat-select formControlName="eventStatus">
+          <mat-option *ngFor="let option of listEventStatus()" [value]="option.id">{{ option.descripcion }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('eventStatus')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Fecha de inicio</mat-label>
+        <input
+          matInput
+          type="datetime-local"
+          formControlName="startDateTime"
+          [min]="fechaMinimaDateTime"
+          [max]="fechaMaximaDateTime"
+        />
+        <mat-error *ngIf="formData.get('startDateTime')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <app-fire-national-form 
+      *ngIf="selectedTerritory === 1"
+      [formData]="formData"
+      [provinces]="provinces"
+      [municipalities]="municipalities"
+      [listClassEvent]="listClassEvent"
+      [listEventStatus]="listEventStatus"
+      [provincefilteredOptions]="provincefilteredOptions"
+      [municipalityfilteredOptions]="municipalityfilteredOptions"
+      [geometry]="geometry"
+      [fechaMinimaDateTime]="fechaMinimaDateTime"
+      [fechaMaximaDateTime]="fechaMaximaDateTime"
+      [skipFirstFields]="true"
+      (onMapOpen)="handleMapOpen()"
+    ></app-fire-national-form>
+
+    <app-fire-foreign-form
+      *ngIf="selectedTerritory === 2"
+      [formData]="formData"
+      [foreignCountries]="foreignCountries"
+      [listClassEvent]="listClassEvent"
+      [listEventStatus]="listEventStatus"
+      [fechaMinimaDateTime]="fechaMinimaDateTime"
+      [fechaMaximaDateTime]="fechaMaximaDateTime"
+      [skipFirstFields]="true"
+    ></app-fire-foreign-form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <button mat-stroked-button color="primary" (click)="closeModal()" type="button" class="custom-button">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" class="custom-button">Guardar</button>
+  </mat-dialog-actions>
+</form>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

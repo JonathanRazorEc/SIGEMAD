@@ -1,0 +1,6 @@
+@Sigemad.Mantenimiento_HostAddress = http://localhost:5070
+
+GET {{Sigemad.Mantenimiento_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

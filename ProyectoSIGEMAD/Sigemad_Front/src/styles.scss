@@ -1,0 +1,414 @@
+@use '@angular/material' as mat;
+@use './app/m3-theme.scss' as theme;
+
+@include mat.core();
+
+$font-family: 'Nunito', sans-serif;
+
+:root {
+  --primary-50: #186c93;
+  --secondary-50: #608215;
+  --icons: #608215;
+  --title-color-green: #009900;
+  --fire-color: rgb(255, 128, 0);
+  --fire-color-disabled: rgb(255, 200, 150); // Tono más claro y menos saturado para elementos desactivados
+}
+
+html {
+  @include mat.all-component-themes(theme.$light-theme);
+}
+
+html,
+body {
+  height: 100%;
+  font-family: $font-family;
+  margin: 0;
+}
+
+h1 {
+  font-family: $font-family;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+}
+
+h2 {
+  font-family: $font-family;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 500;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+h3,
+h5,
+h6 {
+  font-family: $font-family;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+h3 {
+  font-size: 19px;
+  color: rgb(202 102 2) !important;
+  font-weight: bold;
+}
+
+h4 {
+  font-family: $font-family;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 400;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: var(--primary-50) !important;
+}
+
+p {
+  font-family: $font-family;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+mat-toolbar h1 {
+  font-family: $font-family !important;
+  font-size: 32px !important;
+  line-height: 40px !important;
+  font-weight: 700 !important;
+}
+
+.mdc-list-item__primary-text {
+  font-family: $font-family !important;
+}
+
+.mat-expansion-panel-header-title {
+  font-family: $font-family;
+  color: var(--primary-50) !important;
+  font-size: 24px !important;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+  font-family: $font-family;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  font-family: $font-family;
+}
+
+.mat-mdc-unelevated-button .mdc-button__label {
+  font-family: $font-family;
+  color: white;
+}
+
+table .mat-mdc-header-cell {
+  font-family: $font-family;
+  font-weight: bold !important;
+}
+
+.mat-mdc-cell {
+  font-family: $font-family;
+}
+
+.mat-mdc-paginator-page-size-label {
+  font-family: $font-family;
+}
+
+.mat-mdc-paginator-range-label {
+  font-family: $font-family;
+}
+
+.mat-mdc-card-title {
+  font-family: $font-family !important;
+  color: var(--primary-50) !important;
+}
+
+.mat-mdc-standard-chip.mdc-evolution-chip--selected:not(.mdc-evolution-chip--disabled) {
+  background-color: var(--primary-50) !important;
+}
+
+.mat-mdc-standard-chip.mdc-evolution-chip--selected:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__text-label {
+  color: white !important;
+  font-family: $font-family !important;
+  display: flex;
+}
+
+.mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic .mdc-evolution-chip__graphic {
+  color: white !important;
+}
+
+.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__text-label {
+  font-family: $font-family !important;
+}
+
+.mat-mdc-tooltip-surface {
+  background-color: var(--primary-50) !important;
+  color: white !important;
+}
+
+.mat-mdc-button-persistent-ripple::before {
+  opacity: 0 !important;
+}
+
+// PCD
+.snackbar-verde {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: green,
+      supporting-text-color: white,
+      supporting-text-size: 1em,
+    )
+  );
+}
+
+.snackbar-rojo {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: darkred,
+      supporting-text-color: white,
+      supporting-text-size: 1em,
+    )
+  );
+}
+
+// Multilinea en errores
+.snackbar-rojo {
+  white-space: pre-wrap !important;
+}
+
+.sweetAlert-fsize20 {
+  font-size: 1.6em;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+// FIN PCD
+
+// ✅ Éxito (Verde)
+.snackbar-success {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: #388e3c,
+      // Verde fuerte
+      supporting-text-color: white,
+    )
+  );
+}
+
+// ❌ Error (Rojo)
+.snackbar-error {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: #d32f2f,
+      // Rojo fuerte
+      supporting-text-color: white,
+    )
+  );
+}
+
+// ⚠️ Advertencia (Amarillo)
+.snackbar-warning {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: #fbc02d,
+      // Amarillo
+      supporting-text-color: black,
+    )
+  );
+}
+
+// ℹ️ Información (Azul)
+.snackbar-info {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: #1976d2,
+      // Azul Material Design
+      supporting-text-color: white,
+    )
+  );
+}
+
+.mat-mdc-card {
+  box-shadow: none !important;
+  border: 1px solid #e0e0e0;
+}
+
+.mat-mdc-form-field.mat-form-field-disabled .mat-mdc-floating-label,
+.mat-mdc-form-field.mat-form-field-disabled .mdc-floating-label {
+  color: rgba(0, 0, 0, 0.38) !important;
+}
+
+.mat-mdc-form-field.mat-form-field-disabled .mat-mdc-input-element::placeholder {
+  color: rgba(0, 0, 0, 0.38) !important;
+}
+
+.cdk-overlay-pane .mat-mdc-dialog-container,
+.mat-mdc-dialog-container .mdc-dialog__container,
+.mat-mdc-dialog-container .mdc-dialog__surface,
+.cdk-overlay-pane {
+  border-radius: 10px !important;
+}
+
+.mat-mdc-form-field {
+  &:not(.mat-focused) {
+    .mat-mdc-floating-label,
+    .mdc-floating-label,
+    .mat-mdc-form-field-label {
+      color: #000000 !important;
+    }
+  }
+
+  &.mat-focused {
+    .mat-mdc-floating-label,
+    .mdc-floating-label,
+    .mat-mdc-form-field-label {
+      color: #1b6ab6 !important;
+    }
+  }
+}
+
+.mdc-text-field:not(.mdc-text-field--focused) .mdc-floating-label {
+  color: #000000 !important;
+}
+
+.mdc-text-field.mdc-text-field--focused .mdc-floating-label {
+  color: #1b6ab6 !important;
+}
+
+mat-form-field:not(.mat-focused) mat-label {
+  color: #000000 !important;
+}
+
+mat-form-field.mat-focused mat-label {
+  color: #1b6ab6 !important;
+}
+
+.mat-mdc-form-field {
+  &:not(.mat-focused) {
+    .mdc-text-field:not(.mdc-text-field--focused) {
+      .mdc-floating-label:not(.mdc-floating-label--float-above) {
+        color: rgba(0, 0, 0, 0.87) !important;
+      }
+
+      .mdc-floating-label.mdc-floating-label--float-above {
+        color: rgba(0, 0, 0, 0.87) !important;
+      }
+    }
+  }
+
+  &.mat-focused {
+    .mdc-text-field.mdc-text-field--focused {
+      .mdc-floating-label {
+        color: var(--primary-color) !important;
+      }
+    }
+  }
+}
+
+mat-label {
+  font-family: var(--font);
+  &:not(.mat-focused) {
+    color: rgba(0, 0, 0, 0.87) !important;
+  }
+}
+
+.mat-mdc-form-field.mat-focused .mdc-line-ripple::after {
+  border-bottom-color: var(--primary-color) !important;
+}
+
+.textoCentrado {
+  text-align: center !important;
+}
+
+// CABECERA DE TABLA CON ORDENACIÓN CENTRADA
+::ng-deep .cabecera-con-ordenacion-centrada .mat-sort-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+// FIN CABECERA DE TABLA CON ORDENACIÓN CENTRADA
+
+/* Estilos para multi-select-autocomplete */
+app-multi-select-autocomplete {
+  display: block;
+  width: 100%;
+}
+
+app-multi-select-autocomplete .mat-mdc-form-field {
+  width: 100% !important;
+}
+
+app-multi-select-autocomplete .mat-mdc-chip-grid {
+  width: 100% !important;
+}
+
+app-multi-select-autocomplete input.mat-mdc-input-element {
+  width: 100% !important;
+}
+
+// Para que aparezca la barra de desplazamiento horizontal en la tabla si la pantalla es mmás pequeña que la tabla
+.mat-elevation-z8 {
+  overflow-x: auto !important;
+}
+//
+
+// PCD
+.mat-mdc-row,
+.mat-mdc-header-row {
+  height: 30px;
+  line-height: 16px;
+}
+
+td.mat-column-opciones img {
+  cursor: pointer;
+}
+// FIN PCD
+
+// Cabecera fija para la tabla
+.fixed-table-header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+// Si hay varios errores, mostrar solo el primero
+mat-error {
+  display: none !important;
+}
+
+mat-error:last-of-type {
+  display: block !important;
+  line-height: 1 !important;
+  transform: translateY(-3px) !important;
+}
+//
+
+//
+::ng-deep .mat-mdc-select-panel .mat-mdc-option {
+  min-height: 36px !important;
+  height: 36px !important;
+}
+
+::ng-deep .mat-mdc-autocomplete-panel .mat-mdc-option {
+  min-height: 36px !important;
+  height: 36px !important;
+}
+//
+
+.audit-info {
+  font-size: 0.8rem;
+}

@@ -1,0 +1,15 @@
+meta {
+  name: Entidades Menores de Municipio
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{Server}}/api/v1/municipios/1001/entidades-menores
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

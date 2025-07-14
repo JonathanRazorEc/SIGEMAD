@@ -1,0 +1,30 @@
+meta {
+  name: Eliminar
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{Server}}/api/v1/registros/Parametros
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idSuceso": 1,
+    "IdRegistroActualizacion": 1,
+    "Parametro": [{
+      "id":1,
+      "idEstadoIncendio": 1,
+      "fechaFinal": "2025-04-29T18:22:24.857Z",
+      "idPlanEmergencia": 2,
+      "idFaseEmergencia": 2,
+      "idPlanSituacion": 2,
+      "idSituacionEquivalente": 5,
+      "fechaHoraActualizacion":"2025-04-29T18:22:24.857Z",
+      "observaciones": "observacion Actualizado",
+      "prevision": "prevision Actualizado"
+    }]
+  }
+}

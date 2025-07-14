@@ -1,0 +1,7 @@
+# Top-level settings for the entire solution
+root = true
+
+# General settings for all C# files in the solution
+[*.cs]
+# Configurar los namespaces para ser inline
+csharp_style_namespace_declarations = file_scoped:suggestion

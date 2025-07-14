@@ -1,0 +1,90 @@
+<h2 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle class="title">
+  {{ data.opePorcentajeOcupacionAreaEstacionamiento?.id ? 'Modificar' : 'Crear' }} Porcentaje ocupación área de estacionamiento
+</h2>
+
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <!-- Ocupación -->
+      <mat-form-field appearance="outline" fxFlex="50" class="mb-3">
+        <mat-label>Ocupación</mat-label>
+        <mat-select [formControl]="getForm('opeOcupacion')">
+          <mat-option *ngFor="let option of opeOcupaciones()" [value]="option.id">
+            {{ option.nombre }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('opeFase')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <!-- Porcentaje inferior -->
+      <mat-form-field class="input" appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Desde (%)</mat-label>
+        <input
+          matInput
+          [formControl]="getForm('porcentajeInferior')"
+          type="number"
+          (keypress)="utilsService.allowOnlyNumbers($event)"
+          (input)="utilsService.enforceMaxLength($event, 3, getForm('porcentajeInferior'))"
+          min="0"
+          max="9999"
+          step="1"
+        />
+        <mat-error *ngIf="formData.get('porcentajeInferior')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <!-- Porcentaje superior -->
+      <mat-form-field class="input" appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Hasta (%)</mat-label>
+        <input
+          matInput
+          [formControl]="getForm('porcentajeSuperior')"
+          type="number"
+          (keypress)="utilsService.allowOnlyNumbers($event)"
+          (input)="utilsService.enforceMaxLength($event, 3, getForm('porcentajeSuperior'))"
+          min="0"
+          max="9999"
+          step="1"
+        />
+        <mat-error *ngIf="formData.get('porcentajeSuperior')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <!--
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+
+    <button mat-raised-button (click)="closeModal()" color="primary" aria-label="Buscar" class="custom-button" type="button">Cancelar</button>
+
+    <button mat-flat-button color="primary" type="submit" aria-label="Guardar" class="custom-button">Guardar</button>
+  </mat-dialog-actions>
+  -->
+  <!-- PIE CON AUDITORIA -->
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <!-- Info auditoría si hay datos completos -->
+    <div fxFlex="50" class="audit-info" style="text-align: left">
+      <div *ngIf="data.opePorcentajeOcupacionAreaEstacionamiento?.creadoPor && data.opePorcentajeOcupacionAreaEstacionamiento?.fechaCreacion">
+        <b>Alta:</b>
+        {{ data.opePorcentajeOcupacionAreaEstacionamiento.creadoPor }} con fecha
+        {{ getFechaFormateadaConHorasMinutosYSegundos(data.opePorcentajeOcupacionAreaEstacionamiento.fechaCreacion) }}
+      </div>
+      <div *ngIf="data.opePorcentajeOcupacionAreaEstacionamiento?.modificadoPor && data.opePorcentajeOcupacionAreaEstacionamiento?.fechaModificacion">
+        <b>Última modificación:</b>
+        {{ data.opePorcentajeOcupacionAreaEstacionamiento.modificadoPor }} con fecha
+        {{ getFechaFormateadaConHorasMinutosYSegundos(data.opePorcentajeOcupacionAreaEstacionamiento.fechaModificacion) }}
+      </div>
+    </div>
+
+    <!-- Flex vacío que ocupa espacio y empuja botones a la derecha -->
+    <div fxFlex></div>
+
+    <!-- Botones -->
+    <div fxLayout="row" fxLayoutGap="16px">
+      <button mat-raised-button (click)="closeModal()" color="primary" aria-label="Buscar" class="custom-button" type="button">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit" aria-label="Guardar" class="custom-button">Guardar</button>
+    </div>
+  </mat-dialog-actions>
+  <!-- FIN PIE CON AUDITORIA-->
+</form>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

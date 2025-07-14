@@ -1,0 +1,15 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-porcentaje-ocupacion-area-estacionamiento-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opePorcentajesOcupacionAreasEstacionamiento)]="opePorcentajesOcupacionAreasEstacionamiento"
+  ></app-ope-porcentaje-ocupacion-area-estacionamiento-filter-form>
+  <app-ope-porcentajes-ocupacion-areas-estacionamiento-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opePorcentajesOcupacionAreasEstacionamiento]="opePorcentajesOcupacionAreasEstacionamiento.data"
+    *ngIf="opePorcentajesOcupacionAreasEstacionamiento?.data"
+  ></app-ope-porcentajes-ocupacion-areas-estacionamiento-table>
+</div>

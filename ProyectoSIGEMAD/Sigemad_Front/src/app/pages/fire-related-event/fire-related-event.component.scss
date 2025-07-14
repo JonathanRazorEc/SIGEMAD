@@ -1,0 +1,89 @@
+@use '../../../styles.scss' as theme;
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  padding-top: 0;
+}
+
+.form-container {
+  flex: 1;
+  background: #ececec;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.spaced-input {
+  margin-right: 15px;
+}
+
+.side-menu {
+  width: 200px;
+}
+
+.mat-chip {
+  margin: 5px 0;
+  display: block;
+}
+
+.form-container {
+  flex: 1;
+  background: #ececec;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.input {
+  flex: 1 1 calc(50% - 20px);
+  min-width: 200px;
+}
+
+.full-width-chip {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.spaced-input {
+  margin-right: 15px;
+}
+
+.modal-header {
+  text-align: center;
+}
+
+.modal-footer {
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  color: var(--fire-color);
+}
+
+.j-end {
+  justify-content: flex-end;
+}
+
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: #e7e7e7;
+}

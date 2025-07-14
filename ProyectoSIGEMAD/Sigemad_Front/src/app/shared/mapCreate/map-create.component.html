@@ -1,0 +1,25 @@
+<div class="container gap-4 flex-column align-items-center justify-content-center p-4">
+  <div *ngIf="close" class="modal-header mapa-titulo" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+    <span>Mapa de situación</span>
+  </div>
+
+  <div *ngIf="showSearchCoordinates" style="width: 100%">
+    <div class="coordinate-search" style="width: 100%; display: flex; justify-content: center; align-items: center; height: auto; max-height: 100%">
+      <span class="coordinates-display">{{ coordinates }}</span>
+      <input type="text" id="utm-x" placeholder="UTM X" />
+      <input type="text" id="utm-y" placeholder="UTM Y" />
+      <button (click)="searchCoordinates()" mat-raised-button color="secondary">Buscar</button>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <mat-dialog-actions  *ngIf="close" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <button (click)="closeModal()" mat-raised-button color="secondary" autofocus>Cancelar</button>
+    <button (click)="savePolygon()" *ngIf="!data.onlyView" mat-flat-button color="primary">Guardar</button>  
+  </mat-dialog-actions>
+
+  <div id="popup" class="ol-popup">
+    <div id="popup-content"></div>
+  </div>
+</div>

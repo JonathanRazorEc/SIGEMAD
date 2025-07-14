@@ -1,0 +1,46 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/registros/direccion-coordinacion
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  idRegistroActualizacion: 2
+  Direcciones[0].IdTipoDireccionEmergencia: 2
+  Direcciones[0].AutoridadQueDirige: Autoridad
+  Direcciones[0].FechaInicio: 2025-05-20T18:22:24.857Z
+  Direcciones[0].FechaFin: 2025-05-21T18:22:24.857Z
+  Direcciones[0].archivo: @file()
+  CoordinacionesPMA[0].FechaInicio: 2025-05-20T13:22:24.857Z
+  CoordinacionesPMA[0].FechaFin: 2025-05-21T18:22:24.857Z
+  CoordinacionesPMA[0].IdProvincia: 8
+  CoordinacionesPMA[0].IdMunicipio: 1001
+  CoordinacionesPMA[0].Lugar: Lugar PMA
+  CoordinacionesPMA[0].Observaciones: Observaciones PMA
+  CoordinacionesPMA[0].Archivo: @file()
+  CoordinacionesCECOPI[0].FechaInicio: 2025-05-20T13:22:24.857Z
+  CoordinacionesCECOPI[0].FechaFin: 2025-05-21T18:22:24.857Z
+  CoordinacionesCECOPI[0].IdProvincia: 9
+  CoordinacionesCECOPI[0].IdMunicipio: 1002
+  CoordinacionesCECOPI[0].Lugar: Lugar CECOPI
+  CoordinacionesCECOPI[0].Observaciones: Observaciones CECOPI
+  CoordinacionesCECOPI[0].Archivo: @file()
+  IdSuceso: 2
+  CoordinacionesCECOPI[0].Id: 1
+  Direcciones[0].Id: 2
+  CoordinacionesPMA[0].Id: 1
+}
+
+vars:post-response {
+  IdDocumentacion: res.body.idDocumentacion
+}
+
+assert {
+  res.status: eq 200
+}

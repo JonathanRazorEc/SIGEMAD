@@ -1,0 +1,34 @@
+@use '../../../../../styles.scss' as theme;
+
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding-top: 20px;
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: #e7e7e7;
+}
+
+.spinner {
+  margin-left: 50%;
+}
+
+.icon-container {
+  gap: 15px; /* Espacio entre íconos */
+  /* Las clases d-flex, justify-content-center y align-items-center ya se aplican desde Bootstrap */
+  padding: 8px 0; /* Opcional: permite definir un espacio vertical sin afectar la altura general */
+  margin: 0; /* Asegúrate de que no se aplique margen extra */
+}
+
+.icon {
+  width: 24px; /* Ajusta el tamaño según necesites */
+  height: 24px;
+  object-fit: contain; /* Evita que la imagen se deforme */
+  transition: transform 0.2s ease-in-out;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}

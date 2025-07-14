@@ -1,0 +1,15 @@
+meta {
+  name: Superficies Filtros
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{Server}}/api/v1/superficies-filtros
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

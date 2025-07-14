@@ -1,0 +1,36 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/actuaciones-relevantes/declaraciones-zagep/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 0,
+    "idSuceso": 1,
+    "detalles": [
+      {
+        "id": 0,
+        "fechaSolicitud": "2025-01-30",
+        "denominacion": "denominacion 1",
+        "observaciones": "observaciones 1"
+      },
+      {
+        "id": 0,
+        "fechaSolicitud": "2025-01-30",
+        "denominacion": "denominacion 2",
+        "observaciones": "observaciones 2"
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,30 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/registros/activaciones-planes
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  IdRegistroActualizacion: 2
+  IdSuceso: 2
+  ActivacionPlanes[0].IdTipoPlan: 1
+  ActivacionPlanes[0].TipoPlanPersonalizado: Nuevo plan REGIONAL
+  ActivacionPlanes[0].IdPlanEmergencia: 1
+  ActivacionPlanes[0].PlanEmergenciaPersonalizado: Plan de emergencia REGIONAL
+  ActivacionPlanes[0].FechaHoraInicio: 2025-06-05
+  ActivacionPlanes[0].Autoridad: Nueva REGIONAL
+  ActivacionPlanes[0].Observaciones: Nueva REGIONAL
+  ~ActivacionPlanes[0].FechaHoraFin: 2025-05-22
+  ~ActivacionPlanes[0].Archivo: @file()
+  ~ActivacionPlanes[0].Id: 0
+}
+
+assert {
+  res.status: eq 200
+}

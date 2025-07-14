@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TerritorioObligatorio" xml:space="preserve">
+    <value>El territorio es obligatorio</value>
+  </data>
+  <data name="TerritorioInvalido" xml:space="preserve">
+    <value>El territorio es inválido</value>
+  </data>
+  <data name="DenominacionNoVacio" xml:space="preserve">
+    <value>Denominacion no puede estar en blanco</value>
+  </data>
+  <data name="DenominacionObligatorio" xml:space="preserve">
+    <value>Denominacion es obligatorio</value>
+  </data>
+  <data name="DenominacionMaxLength" xml:space="preserve">
+    <value>Denominacion no puede exceder los 255 caracteres</value>
+  </data>
+  <data name="FechaInicioObligatorio" xml:space="preserve">
+    <value>Fecha de Inicio es obligatoria</value>
+  </data>
+  <data name="ClaseSucesoObligatorio" xml:space="preserve">
+    <value>Clase de Suceso es obligatorio</value>
+  </data>
+  <data name="EstadoSucesoObligatorio" xml:space="preserve">
+    <value>Estado de Suceso es obligatorio</value>
+  </data>
+  <data name="GeoPosicionObligatorio" xml:space="preserve">
+    <value>GeoPosicion es obligatorio</value>
+  </data>
+  <data name="GeoPosicionInvalida" xml:space="preserve">
+    <value>La geometría no es válida, sistema de referencia no es Wgs84</value>
+  </data>
+  <data name="ProvinciaObligatorio" xml:space="preserve">
+    <value>Provincia es obligatoria</value>
+  </data>
+  <data name="ProvinciaInvalido" xml:space="preserve">
+    <value>Provincia es inválido</value>
+  </data>
+  <data name="MunicipioObligatorio" xml:space="preserve">
+    <value>Municipio es obligatorio</value>
+  </data>
+  <data name="MunicipioInvalido" xml:space="preserve">
+    <value>Municipio es inválido</value>
+  </data>
+  <data name="PaisObligatorio" xml:space="preserve">
+    <value>Pais es obligatoria</value>
+  </data>
+  <data name="PaisInvalido" xml:space="preserve">
+    <value>Pais es inválido</value>
+  </data>
+  <data name="UbicacionObligatorio" xml:space="preserve">
+    <value>Ubicación es obligatorio</value>
+  </data>
+  <data name="UbicacionNoVacio" xml:space="preserve">
+    <value>Ubicación no puede ser vacio</value>
+  </data>
+  <data name="IdObligatorio" xml:space="preserve">
+    <value>Id es obligatorio</value>
+  </data>
+  <data name="IdNoVacio" xml:space="preserve">
+    <value>Id no puede ser vacio</value>
+  </data>
+  <data name="EvolucionObligatorio" xml:space="preserve">
+    <value>Evolucion es obligatorio</value>
+  </data>
+  <data name="FechaHoraObligatorio" xml:space="preserve">
+    <value>FechaHora es obligatorio</value>
+  </data>
+  <data name="EntidadMenorObligatorio" xml:space="preserve">
+    <value>Entidad Menor es obligatorio</value>
+  </data>
+  <data name="IncendioObligatorio" xml:space="preserve">
+    <value>Incendio es obligatorio</value>
+  </data>
+  <data name="IncendioInvalido" xml:space="preserve">
+    <value>Incendio es invalido</value>
+  </data>
+  <data name="TipoDireccionEmergenciaObligatorio" xml:space="preserve">
+    <value>Tipo dirección emergencia es obligatorio</value>
+  </data>
+  <data name="TipoDireccionEmergenciaInvalido" xml:space="preserve">
+    <value>Tipo dirección emergencia es invalido</value>
+  </data>
+  <data name="MunicipioCECOPIInvalido" xml:space="preserve">
+    <value>Municipio CECOPI es invalido</value>
+  </data>
+  <data name="MunicipioCECOPIObligatorio" xml:space="preserve">
+    <value>Municipio CECOPI es Obligatorio</value>
+  </data>
+  <data name="MunicipioPMAiInvalido" xml:space="preserve">
+    <value>Municipio CECOPI es invalido</value>
+  </data>
+  <data name="MunicipioPMAObligatorio" xml:space="preserve">
+    <value>Municipio PMA es Obligatorio</value>
+  </data>
+  <data name="ProvinciaPMAInvalido" xml:space="preserve">
+    <value>Provincia PMA es invalido</value>
+  </data>
+  <data name="ProvinciaPMAObligatorio" xml:space="preserve">
+    <value>Provincia PMA es obligatorio</value>
+  </data>
+  <data name="ProvinciaCECOPIInvalido" xml:space="preserve">
+    <value>Provincia CECOPI es invalido</value>
+  </data>
+  <data name="ProvinciaCECOPIObligatorio" xml:space="preserve">
+    <value>Provincia CECOPI es obligatorio</value>
+  </data>
+  <data name="GeoPosicionPMAInvalida" xml:space="preserve">
+    <value>La geometría PMA no es válida, sistema de referencia no es Wgs84</value>
+  </data>
+  <data name="GeoPosicionPMAObligatoria" xml:space="preserve">
+    <value>GeoPosicion PMA es obligatorio</value>
+  </data>
+  <data name="GeoPosicionCECOPInvalida" xml:space="preserve">
+    <value>La geometría CECOPI no es válida, sistema de referencia no es Wgs84</value>
+  </data>
+  <data name="GeoPosicionCECOPIObligatoria" xml:space="preserve">
+    <value>GeoPosicion CECOPI es obligatoria</value>
+  </data>
+  <data name="AutoridadQueDirigeObligatorio" xml:space="preserve">
+    <value>Autoridad que dirige es obligatorio</value>
+  </data>
+  <data name="AutoridadQueDirigeEnBlanco" xml:space="preserve">
+    <value>Autoridad que dirige no puede estar en blanco</value>
+  </data>
+  <data name="FechaInicioPMAObligatorio" xml:space="preserve">
+    <value>Fecha inicio PMA es obligatoria</value>
+  </data>
+  <data name="IncendioIdNoVacio" xml:space="preserve">
+    <value>Id Incendio no puede estar vacio</value>
+  </data>
+  <data name="IncendioIdObligatorio" xml:space="preserve">
+    <value>IdIncendio es obligatorio</value>
+  </data>
+  <data name="MedioIdNoVacio" xml:space="preserve">
+    <value>MedioId no puede ser vacio</value>
+  </data>
+  <data name="MedioIdObligatorio" xml:space="preserve">
+    <value>MedioId es obligatorio</value>
+  </data>
+  <data name="FechaHoraNoVacio" xml:space="preserve">
+    <value>FechaHora no puede ser vacio</value>
+  </data>
+  <data name="AsuntoNoVacio" xml:space="preserve">
+    <value>Asunto no puede ser vacio</value>
+  </data>
+  <data name="AsuntoNoNulo" xml:space="preserve">
+    <value>Asunto es obligatorio</value>
+  </data>
+  <data name="AsuntoMaxLegth" xml:space="preserve">
+    <value>Asunto no puede superar 500 caracteres</value>
+  </data>
+  <data name="IdSucesoAsociadoNoVacio" xml:space="preserve">
+    <value>Id Suceso asociado no puede ser vacio</value>
+  </data>
+  <data name="IdSucesoAsociadoObligatorio" xml:space="preserve">
+    <value>Id suceso asociado es oblogatorio</value>
+  </data>
+  <data name="IdSucesoPrincipalNoVacio" xml:space="preserve">
+    <value>Id Suceso principal no puede ser vacio</value>
+  </data>
+  <data name="IdSucesoPrincipalObligatorio" xml:space="preserve">
+    <value>Id Suceso principal es obligatorio</value>
+  </data>
+  <data name="AreaAfectadaNoNulo" xml:space="preserve">
+    <value>La lista de áreas afectadas no puede ser nula.</value>
+  </data>
+  <data name="AreaAfectadaVacio" xml:space="preserve">
+    <value>La lista de áreas afectadas no puede estar vacía.</value>
+  </data>
+  <data name="IdTipoDireccionEmergenciaInvalido" xml:space="preserve">
+    <value>Id Tipo de Direccion Emergencia es inválido</value>
+  </data>
+  <data name="FechaInicioDebeSerMenorQueFechaFin" xml:space="preserve">
+    <value>Fecha de Inicio debe ser menor que Fecha Fin</value>
+  </data>
+  <data name="LugarObligatorio" xml:space="preserve">
+    <value>El lugar es obligatorio</value>
+  </data>
+  <data name="DireccionesObligatorio" xml:space="preserve">
+    <value>Las lista de direcciones es obligatorio</value>
+  </data>
+  <data name="CoordinacionesObligatorio" xml:space="preserve">
+    <value>La lista de coordinaciones es obligatorio</value>
+  </data>
+  <data name="FechaHoraSolicitudObligatorio" xml:space="preserve">
+    <value>FechaHoraSolicitud es obligatoria</value>
+  </data>
+  <data name="IdTipoDocumentoObligatorio" xml:space="preserve">
+    <value>IdTipoDocumento es obligatorio</value>
+  </data>
+  <data name="IdTipoDocumentoInvalido" xml:space="preserve">
+    <value>IdTipoDocumento es invalido</value>
+  </data>
+  <data name="DescripcionObligatorio" xml:space="preserve">
+    <value>Descripción es obligatorio</value>
+  </data>
+  <data name="DescripcionMaxLength" xml:space="preserve">
+    <value>Descripción no puede exceder los 255 caracteres</value>
+  </data>
+  <data name="IdArchivoObligatorio" xml:space="preserve">
+    <value>IdArchivo es obligatorio</value>
+  </data>
+  <data name="ListaOtraInformacion" xml:space="preserve">
+    <value>List of Other information is required</value>
+  </data>
+  <data name="ObservacionObligatorio" xml:space="preserve">
+    <value>Observación es obligatorio</value>
+  </data>
+  <data name="IdSucesoObligatorio" xml:space="preserve">
+    <value>Id Suceso es obligatorio</value>
+  </data>
+  <data name="RegistroObligatorio" xml:space="preserve">
+    <value>Datos de Registros son obligatorio</value>
+  </data>
+  <data name="DatoPrincipalObligatorio" xml:space="preserve">
+    <value>Datos Principal son obligatorios</value>
+  </data>
+  <data name="ParametroObligatorio" xml:space="preserve">
+    <value>Datos de parámetros son obligatorio</value>
+  </data>
+  <data name="IdEntradaSalidaObligatorio" xml:space="preserve">
+    <value>Id de lista Entrada/Salida es obligatorio</value>
+  </data>
+  <data name="IdMedioObligatorio" xml:space="preserve">
+    <value>Id de lista de medios es obligatorio</value>
+  </data>
+  <data name="ProcedenciasDestinosObligatorio" xml:space="preserve">
+    <value>Lista de procedencia/Destino es obligatorio</value>
+  </data>
+  <data name="IdEstadoIncendioObligatorio" xml:space="preserve">
+    <value>Id de estado incendio es obligatorio</value>
+  </data>
+  <data name="AutoridadSolicitanteObligatorio" xml:space="preserve">
+    <value>Autoridad Solicitante es obligatorio</value>
+  </data>
+  <data name="AutoridadSolicitanteMaxLength" xml:space="preserve">
+    <value>Autoridad solicitante no puede superar los 510 caracteres</value>
+  </data>
+  <data name="DescripcionSolicitudObligatorio" xml:space="preserve">
+    <value>Descripción Solicitud es obligatorio</value>
+  </data>
+  <data name="DescripcionSolicitudMaxLength" xml:space="preserve">
+    <value>Descripción Solicitud no puede superar los 510 caracteres</value>
+  </data>
+  <data name="FechaSolicitudObligatorio" xml:space="preserve">
+    <value>FechaSolicitud es obligatoria</value>
+  </data>
+  <data name="DenominacionZAGEPMaxLength" xml:space="preserve">
+    <value>Denominación no puede exceder los 510 caracteres</value>
+  </data>
+  <data name="AutoridadObligatorio" xml:space="preserve">
+    <value>Autoridad es obligatorio</value>
+  </data>
+  <data name="AutoridadMaxLength" xml:space="preserve">
+    <value>Autoridad no puede exceder 100 caracteres</value>
+  </data>
+  <data name="LugarObligatorioMaxLength" xml:space="preserve">
+    <value>Lugar no puede exceder los 510 caracteres</value>
+  </data>
+  <data name="ConvocadosObligatorio" xml:space="preserve">
+    <value>Convocados es obligatorio</value>
+  </data>
+  <data name="ConvocadosMaxLength" xml:space="preserve">
+    <value>Convocados no puede exceder los 510 caracteres</value>
+  </data>
+  <data name="IdArchivoOrArchivo" xml:space="preserve">
+    <value>Debe proporcionar al menos un valor para IdArchivo o Archivo</value>
+  </data>
+  <data name="IdTipoSistemaEmergencia" xml:space="preserve">
+    <value>Id Tipo Sistema de Emergencia es obligatorio</value>
+  </data>
+  <data name="IdTipoNotificacionObligatorio" xml:space="preserve">
+    <value>IdTipoNotificacion es obligatorio</value>
+  </data>
+  <data name="FechaHoraNotificacionObligatorio" xml:space="preserve">
+    <value>FechaHoraNotificacion es obligatorio</value>
+  </data>
+  <data name="OrganosNotificadosObligatorio" xml:space="preserve">
+    <value>Organos Notificados es obligatorio</value>
+  </data>
+  <data name="OrganosNotificadosMaxLength" xml:space="preserve">
+    <value>Organos notificados no puede superar los 510 caracteres</value>
+  </data>
+  <data name="FechaInicioFutura" xml:space="preserve">
+    <value>La fecha de inicio no puede ser posterior a la fecha actual.</value>
+  </data>
+  <data name="ObservacionesObligatorio" xml:space="preserve">
+    <value>Observaciones es obligatorio</value>
+  </data>
+  <data name="PrevisionObligatorio" xml:space="preserve">
+    <value>Forecasting is mandatory</value>
+  </data>
+  <data name="FechaHoraActualizacionObligatorio" xml:space="preserve">
+    <value>FechaHoraActualizacion es obligatorio</value>
+  </data>
+  <data name="IdCapacidadObligatorio" xml:space="preserve">
+    <value>IdCapacidad es obligatorio</value>
+  </data>
+  <data name="IdCaracterMedioObligatorio" xml:space="preserve">
+    <value>IdCaracterMedio es obligatorio</value>
+  </data>
+  <data name="NumeroCapacidadesObligatorio" xml:space="preserve">
+    <value>NumeroCapacidades es obligatorio</value>
+  </data>
+  <data name="IdTitularidadMedioObligatorio" xml:space="preserve">
+    <value>IdTitularidadMedio es obligatorio</value>
+  </data>
+  <data name="FechaHoraActivacionObligatorio" xml:space="preserve">
+    <value>FechaHoraActivacionObligatorio es obligatorio</value>
+  </data>
+  <data name="CodigoMaxLength" xml:space="preserve">
+    <value>Codigo no puede tener mas de 15 caracteres</value>
+  </data>
+</root>

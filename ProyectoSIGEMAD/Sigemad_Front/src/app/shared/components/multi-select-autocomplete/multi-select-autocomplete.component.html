@@ -1,0 +1,29 @@
+<div class="multi-select-container">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>{{ label }}</mat-label>
+    <mat-chip-grid #chipGrid [attr.aria-label]="'Selección de ' + label">
+      <mat-chip-row *ngFor="let item of selectedItems" [removable]="true" (removed)="removeItem(item)">
+        {{ getDisplayText(item) }}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+      <input
+        placeholder="{{ placeholder }}"
+        #autocompleteInput
+        [formControl]="inputCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipGrid"
+        (click)="showAllOptions()"
+        (focus)="showAllOptions()"
+      />
+    </mat-chip-grid>
+    <!--<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" [panelWidth]="'auto'">-->
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{ getDisplayText(option) }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="isRequired && isEmpty()">Este campo es obligatorio</mat-error>
+  </mat-form-field>
+</div>

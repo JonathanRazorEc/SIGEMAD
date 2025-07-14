@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h2 mat-dialog-title class="title" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>{{ dataProps.title }}</h2>
+</div>
+
+<div class="container">
+  <div class="side-menu">
+    <mat-chip-listbox [value]="selectedOption.value" (change)="onSelectionChange($event)">
+      <mat-chip-option *ngFor="let sec of sections; trackBy: trackByFn" [value]="sec.id" class="full-width-chip">
+        {{ sec.label }}
+      </mat-chip-option>
+    </mat-chip-listbox>
+  </div>
+
+  <div class="form-container">
+    <app-fire-related-event-form
+      [fire]="this.dataProps.fire"
+      [fireDetail]="this.dataProps.fireDetail"
+      (closeModal)="closeModal({ refresh: true })"
+      (hasRecords)="handleRecordsChange($event)"
+    ></app-fire-related-event-form>
+
+    <div class="modal-footer" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+      <div *ngIf="dataProps.fireDetail?.esUltimoRegistro !== true"></div>
+      <button
+        *ngIf="dataProps.fireDetail?.esUltimoRegistro ?? false"
+        (click)="delete()"
+        mat-flat-button
+        [style.background-color]="'var(--fire-color)'"
+      >
+        Eliminar
+      </button>
+
+      <div fxLayout="row" fxLayoutGap="10px" fxFlex="auto">
+        <button (click)="closeModal({ refresh: true })" mat-flat-button color="secondary" style="margin-right: 10px">Volver</button>
+        <button mat-flat-button color="primary" (click)="callSave()" [disabled]="!hasRelatedRecords">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

@@ -1,0 +1,37 @@
+<mat-toolbar class="mat-elevation-z3">
+  <button mat-icon-button (click)="collapsed.set(!collapsed())">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1 class="toolbar-title" color="mat-primary">Sistema de Información en Gestión de Emergencias y Apoyo a la Decisión</h1>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+    <app-custom-sidenav [collapsed]="collapsed()" />
+  </mat-sidenav>
+
+
+
+  <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
+    <nav class="nav-miga-pan">
+      <ol class="breadcrumb">
+        <li *ngFor="let breadcrumb of breadcrumbs; let last = last"
+            class="breadcrumb-item"
+            [class.active]="last">
+    
+          <!-- Si no es el último breadcrumb, mostrar como enlace -->
+          <a *ngIf="!last" (click)="goToRoute(breadcrumb.url)">
+            {{ breadcrumb.label }}
+          </a>
+    
+          <!-- Si es el último, mostrar texto plano -->
+          <span *ngIf="last">
+            {{ breadcrumb.label }}
+          </span>
+        </li>
+      </ol>
+    </nav>
+    
+    
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

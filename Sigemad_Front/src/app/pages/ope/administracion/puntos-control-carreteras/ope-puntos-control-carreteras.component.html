@@ -1,0 +1,15 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-punto-control-carretera-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opePuntosControlCarreteras)]="opePuntosControlCarreteras"
+  ></app-ope-punto-control-carretera-filter-form>
+  <app-ope-puntos-control-carreteras-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opePuntosControlCarreteras]="opePuntosControlCarreteras.data"
+    *ngIf="opePuntosControlCarreteras?.data"
+  ></app-ope-puntos-control-carreteras-table>
+</div>

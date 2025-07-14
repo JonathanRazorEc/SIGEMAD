@@ -1,0 +1,15 @@
+meta {
+  name: Procedencias-Medios
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{Server}}/api/v1/movilizaciones-medios/procedencias-medios
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

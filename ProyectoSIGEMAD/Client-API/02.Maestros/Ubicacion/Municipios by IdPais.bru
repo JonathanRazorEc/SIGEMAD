@@ -1,0 +1,15 @@
+meta {
+  name: Municipios by IdPais
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{Server}}/api/v1/paises/1/municipios
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,98 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/actuaciones-relevantes/movilizacion-medios/lista
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  data: '''
+    {
+      "IdRegistroActualizacion": 0,
+      "IdSuceso": 1,
+      "Movilizaciones": [
+        {
+          "Id": 0,
+          "Solicitante": "Prueba de movilización",
+          "Pasos": [
+            {
+              "Id": 0,
+              "TipoPaso": 1,
+              "IdProcedenciaMedio": 1,
+              "AutoridadSolicitante": "Autoridad de solicitud",
+              "FechaHoraSolicitud": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "Descripción del paso de solicitud",
+              "Observaciones": "Esta es una observación"
+            },
+            {
+              "Id": 0,
+              "TipoPaso": 2,
+              "IdDestinoMedio": 1,
+              "TitularMedio": "Titular de tramitación",
+              "FechaHoraTramitacion": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "Descripción de tramitación",
+              "Observaciones": "Esta es una observación tramitación",
+              "PublicadoCECIS": true
+            },
+            {
+              "Id": 0,
+              "TipoPaso": 3,
+              "TitularMedio": "Titular de ofrecimiento",
+              "FechaHoraOfrecimiento": "2025-01-06T05:56:33.216Z",
+              "FechaHoraDisponibilidad": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "Descripción del paso de solicitud",
+              "Observaciones": "Esta es una observación de ofrecimiento",
+              "GestionCECOD": true
+            },
+            {
+              "Id": 0,
+              "TipoPaso": 5,
+              "IdCapacidad": 1,
+              "IdTipoAdministracion": 1,
+              "MedioNoCatalogado": "Medio no catalogado APORTACION",
+              "TitularMedio": "Titular de APORTACION",
+              "FechaHoraAportacion": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "Descripción del paso APORTACION"
+            },
+            {
+              "Id": 0,
+              "TipoPaso": 6,
+              "IdCapacidad": 2,
+              "MedioNoCatalogado": "Medio no catalogado DESPLIEGUE",
+              "FechaHoraDespliegue": "2025-01-06T05:56:33.216Z",
+              "FechaHoraInicioIntervencion": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "Descripción del paso APORTACION",
+              "Observaciones": "Esta es una observación DESPLIEGUE"
+            },
+            {
+              "Id": 0,
+              "TipoPaso": 7,
+              "IdCapacidad": 3,
+              "MedioNoCatalogado": "Medio no catalogado FIN DE INTERVENCION",
+              "FechaHoraInicioIntervencion": "2025-01-06T05:56:33.216Z",
+              "Observaciones": "Esta es una observación INTERVENCION"
+            },
+            {
+              "Id": 0,
+              "TipoPaso": 8,
+              "IdCapacidad": 4,
+              "MedioNoCatalogado": "Medio no catalogado LLEGADA A BASE",
+              "FechaHoraLlegada": "2025-01-06T05:56:33.216Z",
+              "Observaciones": "Esta es una observación LLEGADA A BASE"
+            }
+          ]
+        }
+      ]
+    }
+  '''
+  Movilizaciones[0].Pasos[0].Archivo: @file(C:\Users\ftm_com_uat\Downloads\vite.svg)
+}
+
+assert {
+  res.status: eq 200
+}

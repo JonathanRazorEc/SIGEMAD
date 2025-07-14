@@ -1,0 +1,31 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/actuaciones-relevantes/emergencia-nacional
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 0,
+    "idSuceso": 1,
+    "emergenciaNacional": {
+      "autoridad": "autoridad",
+      "descripcionSolicitud": "descripcionSolicitud",
+      "fechaHoraSolicitud": "2025-01-30T15:42:31.275Z",
+      "fechaHoraDeclaracion": "2025-01-30T15:42:31.275Z",
+      "descripcionDeclaracion": "descripcionDeclaracion",
+      "fechaHoraDireccion": "2025-01-30T15:42:31.275Z",
+      "observaciones": "observaciones"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+}

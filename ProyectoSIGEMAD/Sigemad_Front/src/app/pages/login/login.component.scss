@@ -1,0 +1,108 @@
+@use '@angular/material' as mat;
+@use '../../m3-theme.scss' as theme;
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.login-card {
+  width: 880px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 16px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.left-section {
+  flex: 40%;
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.left-section-title {
+  color: var(--primary-50) !important;
+  font-weight: 600;
+}
+
+h2 {
+  margin-bottom: 16px;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.login-button {
+  width: 50%;
+  margin-left: 25%;
+}
+
+.right-section {
+  flex: 60%;
+  padding: 32px 64px 64px 32px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url('../../../assets/assets/img/login_fondo.png') no-repeat;
+  background-size: cover;
+  opacity: 0.9;
+  border-radius: 0 16px 16px 0;
+  justify-content: space-between;
+}
+
+.right-section-title {
+  color: var(--primary-50) !important;
+  font-weight: 700;
+  font-size: 40px;
+}
+
+.right-section-description {
+  color: var(--primary-50) !important;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.right-section-color-gray {
+  color: gray;
+}
+
+.text-content {
+  color: #ffffff;
+}
+
+.image-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.image-content img {
+  width: 100%;
+  height: auto;
+}
+
+.login-logo {
+  width: 100px !important;
+  height: 140px !important;
+}
+
+::ng-deep .mat-mdc-form-field-error-wrapper {
+  padding: 0 !important;
+}

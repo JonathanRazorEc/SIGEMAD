@@ -1,0 +1,17 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-linea-maritima-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opeLineasMaritimas)]="opeLineasMaritimas"
+    [opePuertosPaises]="opePuertosPaises"
+  ></app-ope-linea-maritima-filter-form>
+  <app-ope-lineas-maritimas-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opeLineasMaritimas]="opeLineasMaritimas.data"
+    [opePuertosPaises]="opePuertosPaises"
+    *ngIf="opeLineasMaritimas?.data"
+  ></app-ope-lineas-maritimas-table>
+</div>

@@ -1,0 +1,48 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/otras-informaciones/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idOtraInformacion": {{IdOtraInformacion}},
+    "IdSuceso": {{IdSuceso}},
+    "lista": [
+      {
+        "id": 7,
+        "fechaHora": "2024-11-27T16:14:54.691Z",
+        "idMedio": 1,
+        "asunto": "**** ACTUALIZADO ****",
+        "observaciones": "**** ACTUALIZADO ****",
+        "IdsProcedenciasDestinos": [
+          3
+        ]
+      },
+      {
+        "id": null,
+        "fechaHora": "2024-11-27T16:14:54.691Z",
+        "idMedio": 1,
+        "asunto": "string",
+        "observaciones": "string",
+        "IdsProcedenciasDestinos": [
+          3
+        ]
+      }
+    ]
+  }
+}
+
+vars:post-response {
+  IdOtraInformacion: res.body.idOtraInformacion
+}
+
+assert {
+  res.status: eq 200
+}

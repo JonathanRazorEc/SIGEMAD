@@ -1,0 +1,15 @@
+meta {
+  name: Provincias By IdCCAA
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{Server}}/api/v1/Provincias/1
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

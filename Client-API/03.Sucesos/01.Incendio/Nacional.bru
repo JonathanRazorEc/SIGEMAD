@@ -1,0 +1,64 @@
+meta {
+  name: Nacional
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/incendios
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idTerritorio": 1,
+    "idClaseSuceso": 1,
+    "idEstadoSuceso": 1,
+    "fechaInicio": "2025-01-17T18:03:50.516Z",
+    "denominacion": "incendio",
+    "notaGeneral": "nota general",
+    "rutaMapaRiesgo": "/path/image.png",
+    "GeoPosicion": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -104.99404,
+            39.75621
+          ],
+          [
+            -104.99404,
+            39.75422
+          ],
+          [
+            -104.99011,
+            39.75422
+          ],
+          [
+            -104.99011,
+            39.75621
+          ],
+          [
+            -104.99404,
+            39.75621
+          ]
+        ]
+      ]
+    },
+    "idProvincia": 10,
+    "idMunicipio": 10005,
+    "idPais": 60,
+    "idDistrito": 1,
+    "idEntidadMenor": 101,
+    "ubicacion": "string"
+  }
+}
+
+vars:post-response {
+  IdIncendio: res.body.id
+}
+
+assert {
+  res.status: eq 201
+}

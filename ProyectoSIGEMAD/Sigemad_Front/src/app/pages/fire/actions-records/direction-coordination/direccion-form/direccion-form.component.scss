@@ -1,0 +1,74 @@
+// Estilos para el campo de fichero
+.custom-form-field {
+  margin-bottom: 16px;
+}
+
+.custom-form-field-label {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  display: block;
+}
+
+.custom-form-field-container {
+  position: relative;
+  width: 100%;
+}
+
+.custom-file-input {
+  border: 1px solid rgba(0, 0, 0, 0.38);
+  border-radius: 4px;
+  padding: 15px 16px;
+  background-color: white;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 16px;
+  position: relative;
+  
+  &:hover {
+    cursor: pointer;
+    border-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    min-width: 80px;
+    margin: 0;
+  }
+}
+
+.file-display-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.hidden-content {
+  display: flex;
+  width: 100%;
+}
+
+.existing-file-container,
+.new-file-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.existing-file {
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.download-btn {
+  color: #4caf50;
+  min-width: 40px;
+} 

@@ -1,0 +1,93 @@
+<!-- Acordeón para Filtros -->
+
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-accordion multi>
+    <mat-expansion-panel #filterPanel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Filtros</mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- Fila 1 -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+        <!-- Nombre -->
+        <mat-form-field appearance="outline" fxFlex="33">
+          <mat-label>Nombre</mat-label>
+          <input matInput [formControl]="getForm('nombre')" placeholder="Ingresa texto" />
+        </mat-form-field>
+
+        <!-- País -->
+        <mat-form-field appearance="outline" fxFlex="33" class="mb-3">
+          <mat-label>País</mat-label>
+          <mat-select [formControl]="getForm('country')">
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let option of filteredCountriesOpePuertos()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- OPE Fase-->
+        <mat-form-field appearance="outline" fxFlex="33">
+          <mat-label>Fase</mat-label>
+          <mat-select [formControl]="getForm('opeFase')">
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let option of opeFases()" [value]="option.id">
+              {{ option.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Puerto operativo -->
+        <mat-checkbox fxFlex="15" [formControl]="getForm('operativo')">Operativo</mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <!-- Botón Crear (a la izquierda) -->
+    <button mat-flat-button color="accent" aria-label="Crear" class="custom-button" type="button" (click)="goModal()">
+      <mat-icon>add</mat-icon>
+      Añadir
+    </button>
+
+    <!-- Botones a la derecha -->
+    <div fxLayout="row" fxLayoutGap="16px">
+      <!-- Botón Logs -->
+      <button
+        mat-flat-button
+        color="primary"
+        aria-label="Logs"
+        class="custom-button"
+        type="button"
+        (click)="opeUtilsService.abrirLogs(ID_TABLA_LOGS)"
+      >
+        <mat-icon>search</mat-icon>
+        Logs
+      </button>
+      <!-- Botón Buscar -->
+      <button mat-flat-button color="primary" aria-label="Buscar" class="custom-button" type="submit">
+        <mat-icon>search</mat-icon>
+        Buscar
+      </button>
+
+      <!-- Botón Filtrar -->
+      <!--
+      <button mat-flat-button color="primary" aria-label="Filtrar" class="custom-button" (click)="toggleAccordion(filterPanel)" type="button">
+        <mat-icon>filter_list</mat-icon>
+        Filtrar
+      </button>
+      -->
+
+      <!-- Botón Borrar -->
+      <button mat-flat-button color="primary" aria-label="Borrar" class="custom-button" type="button" (click)="clearFormFilter()">
+        <mat-icon>delete</mat-icon>
+        Limpiar
+      </button>
+
+      <!-- Botón Exportar Excel -->
+      <button mat-flat-button color="warn" aria-label="Exportar Excel" class="custom-button" type="button" (click)="exportToExcel()">
+        <mat-icon>file_download</mat-icon>
+        Exportar Excel
+      </button>
+    </div>
+  </div>
+</form>

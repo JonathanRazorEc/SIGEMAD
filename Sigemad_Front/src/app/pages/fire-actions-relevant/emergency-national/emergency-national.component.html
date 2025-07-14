@@ -1,0 +1,71 @@
+<div class="form-container">
+    <form *ngIf="formData" [formGroup]="formData">
+      <!-- REGISTRO -->
+      <div>
+        <h3 class="title">DECLARACION DE EMERGENCIA DE INTERES NACIONAL</h3>
+        <div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+            <mat-form-field class="input" appearance="outline" fxFlex="35%">
+                <mat-label>Autoridad solicitante</mat-label>
+                <input matInput [formControl]="getForm('autoridad')" placeholder="Ingresa texto"  />
+                <mat-error *ngIf="formData.get('autoridad')?.hasError('required')">Este campo es obligatorio.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="input" appearance="outline" fxFlex="65%">
+                <mat-label>Descripción de solicitud </mat-label>
+                <input matInput [formControl]="getForm('descripcionSolicitud')" placeholder="Ingresa texto"  />
+                <mat-error *ngIf="formData.get('descripcionSolicitud')?.hasError('required')">Este campo es obligatorio.</mat-error>
+            </mat-form-field>
+
+        </div>
+
+        <div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+            <mat-form-field appearance="outline" fxFlex="25%" class="mb-3">
+                <mat-label>Fecha/hora de solicitud</mat-label>
+                <input matInput [matDatepicker]="picker1" [formControl]="getForm('fechaHoraSolicitud')" />
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" fxFlex="25%" class="mb-3">
+                <mat-label>Fecha/hora de declaración</mat-label>
+                <input matInput [matDatepicker]="picker2" [formControl]="getForm('fechaHoraDeclaracion')" />
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field class="input" appearance="outline" fxFlex="50%">
+                <mat-label>Descripción de solicitud </mat-label>
+                <input matInput [formControl]="getForm('descripcionDeclaracion')" placeholder="Ingresa texto"  />
+                <mat-error *ngIf="formData.get('descripcionDeclaracion')?.hasError('required')">Este campo es obligatorio.</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+            <mat-form-field appearance="outline" fxFlex="35%" class="mb-3">
+                <mat-label>Fecha/hora Dirección operativa GEJUME</mat-label>
+                <input matInput [matDatepicker]="picker3" [formControl]="getForm('fechaHoraDireccion')" />
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field class="input" appearance="outline" fxFlex="65%">
+                <mat-label>Observaciones </mat-label>
+                <input matInput [formControl]="getForm('observaciones')" placeholder="Ingresa texto"  />
+                <mat-error *ngIf="formData.get('observaciones')?.hasError('required')">Este campo es obligatorio.</mat-error>
+            </mat-form-field>
+        </div>
+        
+      </div>
+    </form>
+  
+    <div class="modal-footer" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+      <div *ngIf="esUltimo" fxFlex="none">
+        <button (click)="delete()" mat-flat-button [style.background-color]="'var(--fire-color)'">Eliminar</button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" fxFlex="auto">
+        <button mat-flat-button color="accent" (click)="closeModal()">Volver</button>
+        <button mat-flat-button color="primary" (click)="sendDataToEndpoint()">Guardar</button>
+      </div>
+    </div>
+  </div>
+  

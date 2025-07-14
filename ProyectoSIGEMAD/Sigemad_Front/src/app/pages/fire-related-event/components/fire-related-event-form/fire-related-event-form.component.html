@@ -1,0 +1,218 @@
+<h3 class="title" *ngIf="(listaSucesosRelacionados()?.data?.sucesosAsociados || []).length > 0">Sucesos Relacionados</h3>
+
+<div class="mat-elevation-z8 table-container" *ngIf="(listaSucesosRelacionados()?.data?.sucesosAsociados || []).length > 0">
+  <table mat-table [dataSource]="listaSucesosRelacionados()?.data?.sucesosAsociados || []" matSort class="mat-table" style="width: 100%">
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha y Hora</th>
+      <td mat-cell *matCellDef="let eventType">
+        {{ getFormatdate(eventType?.fechaCreacion) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="eventType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Suceso</th>
+      <td mat-cell *matCellDef="let event">
+        {{ event?.tipoSuceso }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let event">
+        {{ event?.estado }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="denominacion">
+      <th mat-header-cell *matHeaderCellDef>Denominación</th>
+      <td mat-cell *matCellDef="let event">
+        {{ event?.denominacion }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="opciones">
+      <th mat-header-cell *matHeaderCellDef>Opciones</th>
+      <td mat-cell *matCellDef="let fire; let i = index">
+        <!-- <img (click)="seleccionarItem(i)" src="/assets/img/edit-btn.svg" alt="edit-btn" /> -->
+        <img (click)="eliminarItem(i)" src="/assets/img/close.svg" alt="doc-btn" />
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsRelations"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsRelations"></tr>
+  </table>
+</div>
+
+<br />
+<hr *ngIf="(listaSucesosRelacionados()?.data?.sucesosAsociados || []).length > 0"/>
+<br />
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <div>
+    <h3 class="title">Buscador de sucesos</h3>
+
+    <div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+      <mat-form-field class="input spaced-input" appearance="outline" fxFlex="25%">
+        <mat-label>Denominación</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="formData.get('name')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input spaced-input" appearance="outline" fxFlex="25%">
+        <mat-label>Clase de suceso</mat-label>
+        <mat-select formControlName="claseSuceco">
+          <mat-option *ngFor="let option of listadoClaseSuceso()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('claseSuceco')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input spaced-input" appearance="outline" fxFlex="25%">
+        <mat-label>Territorio</mat-label>
+        <mat-select formControlName="territory" (selectionChange)="changeTerritory($event)">
+          <mat-option *ngFor="let option of listadoTerritorio()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('territory')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input spaced-input" appearance="outline" fxFlex="25%">
+        <mat-label>País</mat-label>
+        <mat-select formControlName="country">
+          <mat-option *ngFor="let option of filteredCountries()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('country')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+      <mat-form-field class="input spaced-input" appearance="outline" fxFlex="33%">
+        <mat-label>CCAA</mat-label>
+        <mat-select formControlName="CCAA" (selectionChange)="loadProvinces($event)">
+          <mat-option *ngFor="let option of listadoCCAA()" [value]="option">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('CCAA')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input spaced-input" appearance="outline" fxFlex="33%">
+        <mat-label>Provincia</mat-label>
+        <mat-select formControlName="province" (selectionChange)="loadMunicipios($event)">
+          <mat-option *ngFor="let option of listadoProvincia()" [value]="option">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('province')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="input spaced-input" appearance="outline" fxFlex="33%">
+        <mat-label>Municipio</mat-label>
+        <mat-select formControlName="minicipality">
+          <mat-option *ngFor="let option of listadoMunicipio()" [value]="option">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('minicipality')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <mat-form-field appearance="outline" fxFlex="25">
+        <mat-label>Movimiento</mat-label>
+        <mat-select formControlName="move">
+          <mat-option *ngFor="let option of moves()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('move')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="25">
+        <mat-label>Entre</mat-label>
+        <mat-select formControlName="between" (selectionChange)="changeBetween($event)">
+          <mat-option *ngFor="let option of comparativeDates()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('between')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Fecha de inicio</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaInicio" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="formData.get('fechaInicio')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3" [ngStyle]="{ visibility: showDateEnd() ? 'visible' : 'hidden' }">
+        <mat-label>Fecha de fin</mat-label>
+        <input matInput [matDatepicker]="picker2" formControlName="fechaFin" />
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+        <mat-error *ngIf="formData.get('fechaFin')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row add-button-row j-end" fxLayout="row" fxLayoutAlign="end center">
+      <button mat-flat-button color="primary" type="submit">Buscar</button>
+    </div>
+  </div>
+</form>
+
+<br />
+
+<div class="mat-elevation-z8 table-container" *ngIf="(listaSucesos()?.data || []).length > 0">
+  <table mat-table [dataSource]="listaSucesos()?.data || []" matSort class="mat-table" style="width: 100%">
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha y Hora</th>
+      <td mat-cell *matCellDef="let eventType">
+        {{ getFormatdate(eventType?.fechaCreacion) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="eventType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Suceso</th>
+      <td mat-cell *matCellDef="let event">
+        {{ event?.tipoSuceso }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let event">
+        {{ event?.estado }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="denominacion">
+      <th mat-header-cell *matHeaderCellDef>Denominación</th>
+      <td mat-cell *matCellDef="let event">
+        {{ event?.denominacion }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="opciones">
+      <th mat-header-cell *matHeaderCellDef>Opciones</th>
+      <td mat-cell *matCellDef="let event; let i = index">
+        <mat-checkbox (change)="handleSeleccionarItem(i)"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<div *ngIf="(listaSucesos()?.data || []).length > 0">
+  <div class="row add-button-row j-end mt-20" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-flat-button color="primary" (click)="agregarItem()">
+      <mat-icon>add</mat-icon>
+      Agregar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,215 @@
+<div class="container" *ngIf="isDataReady()">
+  <!-- Encabezado -->
+  <div class="header-section">
+    <h4 class="section-title">Activación de planes de emergencia</h4>
+    <h4 class="section-title-2">Actualizaciones anteriores</h4>
+
+    <!-- Tabla de registros -->
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource()" class="full-width-table">
+        <!-- Columna Tipo de Plan -->
+        <ng-container matColumnDef="tipoPlan">
+          <th mat-header-cell *matHeaderCellDef>Tipo de Plan</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.tipoPlan }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Plan de Emergencia -->
+        <ng-container matColumnDef="planEmergencia">
+          <th mat-header-cell *matHeaderCellDef>Nombre del Plan</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.planEmergencia }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Fecha y hora inicio -->
+        <ng-container matColumnDef="fechaInicio">
+          <th mat-header-cell *matHeaderCellDef>Fecha y hora inicio</th>
+          <td mat-cell *matCellDef="let element">{{ getFormattedDate(element.fechaInicio) }}</td>
+        </ng-container>
+
+        <!-- Columna Fecha y hora fin -->
+        <ng-container matColumnDef="fechaFin">
+          <th mat-header-cell *matHeaderCellDef>Fecha y hora fin</th>
+          <td mat-cell *matCellDef="let element">{{ getFormattedDate(element.fechaFin) }}</td>
+        </ng-container>
+
+        <!-- Columna Autoridad -->
+        <ng-container matColumnDef="autoridad">
+          <th mat-header-cell *matHeaderCellDef>Autoridad</th>
+          <td mat-cell *matCellDef="let element">{{ element.autoridad }}</td>
+        </ng-container>
+
+        <!-- Columna Acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let element">
+            <div style="display: flex; gap: .5rem;">
+              <span style="align-self: center; font-weight: bold;">
+                @if (element.esModificado) {
+                  <span style="color: #A16F01;">M</span>
+                } @else {
+                  <span style="color: #05BB05">N</span>
+                }
+              </span>
+
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" (click)="editRecord(element)" matTooltip="Editar registro">
+                  <img src="/assets/img/edit-btn.svg" alt="Editar" />
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteRecord(element)" matTooltip="Eliminar registro">
+                  <img src="/assets/img/close.svg" alt="Borrar" />
+                </button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Header row -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <!-- Data rows -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <form *ngIf="showForm()" [formGroup]="formData" (ngSubmit)="onSubmit()" class="form-padding-top">
+    <div>
+      <h4 class="section-title-2">Información</h4>
+
+      <!-- Primera fila: Tipo de plan y Nombre del plan -->
+      <div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+        <mat-form-field appearance="outline" fxFlex="20%">
+          <mat-label>Tipo de plan</mat-label>
+          <mat-select formControlName="idTipoPlan" (selectionChange)="onTipoPlanChange($event.value)">
+            <mat-option *ngFor="let tipo of tiposPlanes()" [value]="tipo.id">
+              {{ tipo.descripcion }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="getForm('idTipoPlan')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="30%">
+          <mat-label>Nombre del plan</mat-label>
+          <mat-select formControlName="idPlanEmergencia">
+            <mat-option *ngIf="isLoadingPlanes()" disabled>
+              <mat-icon>refresh</mat-icon>
+              Cargando planes...
+            </mat-option>
+            <mat-option *ngIf="!isLoadingPlanes() && planesEmergencia().length === 0 && !formData.get('idTipoPlan')?.value" disabled>
+              Seleccione un tipo de plan primero
+            </mat-option>
+            <mat-option *ngIf="!isLoadingPlanes() && planesEmergencia().length === 0 && formData.get('idTipoPlan')?.value" disabled>
+              No hay planes disponibles para este tipo
+            </mat-option>
+            <mat-option *ngFor="let plan of planesEmergencia()" [value]="plan.id">
+              {{ plan.descripcion }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="getForm('idPlanEmergencia')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25%">
+          <mat-label>Fecha y hora inicio</mat-label>
+          <input matInput type="datetime-local" formControlName="fechaInicio" [min]="fechaMinimaDateTime" [max]="fechaMaximaDateTime" />
+          <mat-error *ngIf="getForm('fechaInicio')?.hasError('required')">Este campo es obligatorio</mat-error>
+          <mat-error *ngIf="getForm('fechaInicio')?.hasError('fechaInicioInvalida')">
+            La fecha y hora debe ser igual o posterior a la fecha y hora del incendio
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25%">
+          <mat-label>Fecha y hora fin</mat-label>
+          <input matInput type="datetime-local" formControlName="fechaFin" [min]="fechaMinimaDateTime" [max]="fechaMaximaDateTime" />
+          <mat-error *ngIf="getForm('fechaFin')?.hasError('required')">Este campo es obligatorio</mat-error>
+          <mat-error *ngIf="getForm('fechaFin')?.hasError('fechaFinInvalida')">
+            La fecha y hora debe ser posterior a la fecha y hora de inicio
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Segunda fila: Autoridad y Documento -->
+      <div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+        <mat-form-field class="input full-width-input" appearance="outline" fxFlex="50%">
+          <mat-label>Autoridad que lo activa</mat-label>
+          <input matInput formControlName="autoridad" placeholder="Ingrese la autoridad responsable" />
+          <mat-error *ngIf="getForm('autoridad')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <div fxFlex="50%" class="custom-form-field">
+          <label class="custom-form-field-label">Documento de la activación</label>
+          <div class="custom-form-field-container">
+            <ngx-file-drop
+              dropZoneClassName="custom-file-input"
+              contentClassName="hidden-content"
+              (onFileDrop)="dropped($event)"
+              (onFileOver)="fileOver($event)"
+              (onFileLeave)="fileLeave($event)"
+            >
+              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                <!-- Mostrar archivo existente como enlace descargable -->
+                <div *ngIf="existingFile && !file" class="existing-file-container">
+                  <input type="text" readonly class="file-display-input existing-file" [value]="existingFile.nombreOriginal" />
+                  <button mat-button type="button" (click)="downloadExistingFile()" class="download-btn" matTooltip="Descargar archivo">
+                    <mat-icon>download</mat-icon>
+                  </button>
+                  <button mat-button type="button" (click)="openFileSelector()" matTooltip="Cambiar archivo">
+                    <mat-icon>attach_file</mat-icon>
+                  </button>
+                </div>
+
+                <!-- Input normal para nuevos archivos -->
+                <div *ngIf="!existingFile || file" class="new-file-container">
+                  <input
+                    type="text"
+                    readonly
+                    class="file-display-input"
+                    [value]="file ? file.name : 'Arraste o selecione un archivo aquí'"
+                    (click)="openFileSelector()"
+                    placeholder="Arraste o selecione un archivo aquí"
+                  />
+                  <button mat-button type="button" (click)="openFileSelector()">
+                    <mat-icon>attach_file</mat-icon>
+                  </button>
+                </div>
+              </ng-template>
+            </ngx-file-drop>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tercera fila: Observaciones -->
+      <div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+        <mat-form-field class="input full-width-input" appearance="outline" fxFlex="100%">
+          <mat-label>Observaciones</mat-label>
+          <textarea matInput formControlName="observaciones" rows="3" placeholder="Ingrese observaciones adicionales (opcional)"></textarea>
+        </mat-form-field>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="row add-button-row" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+        <button mat-raised-button color="accent" type="button" (click)="cancelEdit()">Cancelar</button>
+        <button mat-flat-button color="primary" type="button" (click)="onSubmit()">
+          <mat-icon>{{ isEditing() ? 'save' : 'add' }}</mat-icon>
+          {{ isEditing() ? 'Actualizar' : 'Agregar' }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Botón para mostrar el formulario - solo un placeholder por ahora -->
+  <div *ngIf="!showForm()" fxLayout="row" fxLayoutAlign="end center" class="new-button-container">
+    <button mat-flat-button color="primary" (click)="showFormSection()">
+      <mat-icon>add</mat-icon>
+      Nuevo
+    </button>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

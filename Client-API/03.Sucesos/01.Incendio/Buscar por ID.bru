@@ -1,0 +1,15 @@
+meta {
+  name: Buscar por ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{Server}}/api/v1/Incendios/{{IdIncendio}}
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

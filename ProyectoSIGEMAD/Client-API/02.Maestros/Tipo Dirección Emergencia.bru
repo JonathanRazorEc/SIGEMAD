@@ -1,0 +1,15 @@
+meta {
+  name: Tipo Dirección Emergencia
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{Server}}/api/v1/tipos-direcciones-emergencias
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

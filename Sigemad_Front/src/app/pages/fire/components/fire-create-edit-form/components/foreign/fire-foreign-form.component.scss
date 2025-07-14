@@ -1,0 +1,204 @@
+// Estilos específicos que solo aplican a este componente
+.pin-location {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+.card-ubicacion {
+  border: 1px solid #70787e;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: transparent;
+}
+
+.section-label {
+  font-weight: bold;
+  color: #389ef8;
+  font-size: 14px;
+  margin-left: 0.3rem;
+  margin-bottom: 10px;
+}
+
+.section-label-foreign {
+  font-weight: bold;
+  color: #FF8000;
+  font-size: 14px;
+  margin-left: 0;
+  margin-bottom: 5px;
+}
+
+.mat-mdc-form-field {
+  --mdc-filled-text-field-container-color: transparent;
+  --mdc-filled-text-field-focus-active-indicator-color: transparent;
+  --mdc-filled-text-field-hover-active-indicator-color: transparent;
+  --mdc-filled-text-field-disabled-container-color: transparent;
+  --mdc-filled-text-field-focus-outline-color: transparent;
+}
+
+.mat-mdc-form-field .mat-mdc-text-field-wrapper {
+  border-radius: 8px !important;
+  background-color: rgba(0, 0, 0, 0.04);
+  padding-left: 12px;
+  padding-right: 12px;
+  border: 2px solid #C0C0C0 !important;
+}
+
+.mat-mdc-form-field-type-mat-select .mat-mdc-text-field-wrapper {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  border-radius: 8px !important;
+  border: 2px solid #C0C0C0 !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+  border-color: #389ef8 !important;
+}
+
+::ng-deep .mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: white !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mdc-line-ripple {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  border-radius: 8px !important;
+}
+
+::ng-deep {
+  .mat-mdc-form-field, mat-form-field {
+    width: 100%;
+    
+    &:not(.mat-focused) {
+      .mat-mdc-floating-label,
+      .mdc-floating-label,
+      .mat-mdc-form-field-label,
+      mat-label {
+        color: #000000 !important;
+      }
+    }
+    
+    &.mat-focused {
+      .mat-mdc-floating-label,
+      .mdc-floating-label,
+      .mat-mdc-form-field-label,
+      mat-label {
+        color: #1B6AB6 !important;
+      }
+    }
+  }
+  
+  .mdc-text-field {
+    &:not(.mdc-text-field--focused) {
+      .mdc-floating-label {
+        color: #000000 !important;
+      }
+    }
+    
+    &.mdc-text-field--focused {
+      .mdc-floating-label {
+        color: #1B6AB6 !important;
+      }
+    }
+  }
+}
+
+::ng-deep .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: white !important;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: white !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+  background-color: white;
+  border-radius: 10px;
+}
+
+.disabled-checkbox {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+::ng-deep .disabled-checkbox .mat-checkbox-layout {
+  cursor: not-allowed !important;
+}
+
+::ng-deep .disabled-checkbox .mat-checkbox-inner-container {
+  opacity: 0.5 !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-form-field-disabled .mat-mdc-floating-label,
+::ng-deep .mat-mdc-form-field.mat-form-field-disabled .mdc-floating-label {
+  color: rgba(0, 0, 0, 0.38) !important;
+}
+
+::ng-deep .mat-form-field-disabled .mat-mdc-form-field-label,
+::ng-deep .mat-form-field-disabled mat-label {
+  color: rgba(0, 0, 0, 0.38) !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-form-field-disabled .mat-mdc-input-element {
+  color: rgba(0, 0, 0, 0.38) !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-form-field-disabled .mat-mdc-text-field-wrapper {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+  border-color: #e0e0e0 !important;
+}
+
+::ng-deep {
+  .fire-foreign-form-container {
+    mat-form-field.mat-mdc-form-field {
+      width: 100%;
+      
+      .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label:not(.mdc-floating-label--float-above) {
+        color: #000000 !important;
+      }
+      
+      .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mdc-floating-label.mdc-floating-label--float-above {
+        color: #000000 !important;
+      }
+      
+      &.mat-focused {
+        .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mdc-floating-label {
+          color: #1B6AB6 !important;
+        }
+        
+        .mdc-line-ripple::after {
+          border-bottom-color: #1B6AB6 !important;
+        }
+      }
+    }
+  }
+}
+
+.fire-foreign-form-container {
+  ::ng-deep {
+    .mat-form-field {
+      .mat-form-field-label {
+        color: #000000 !important;
+      }
+      
+      &.mat-focused {
+        .mat-form-field-label {
+          color: #3f51b5 !important;
+        }
+      }
+      
+      .mat-form-field-underline {
+        background-color: #000000;
+        
+        .mat-form-field-ripple {
+          background-color: #3f51b5;
+        }
+      }
+    }
+  }
+}
+

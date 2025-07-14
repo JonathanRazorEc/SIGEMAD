@@ -1,0 +1,158 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/registros/impactos
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "IdRegistroActualizacion": 1,
+    "IdSuceso": 1,
+    "TipoImpactos": [
+      {
+        "Id": 1,
+        "IdTipoImpacto": 1,
+        "estimado": 100,
+        "ImpactosEvoluciones": [
+          {
+            "Id": 1,
+            "IdTipoImpactoEvolucion": 1,
+            "IdImpactoClasificado": 1,
+            "IdAlteracionInterrupcion": null,
+            "Causa": "REGISTRO ACTUALIZADO 1",
+            "Fecha": "2025-05-27T00:00:00",
+            "FechaHora": "2025-05-27T14:00:00",
+            "FechaHoraInicio": "2025-05-27T13:00:00",
+            "FechaHoraFin": "2025-05-27T15:00:00",
+            "Numero": 50,
+            "NumeroGraves": 5,
+            "NumeroIntervinientes": 10,
+            "NumeroLocalidades": 3,
+            "NumeroServicios": 2,
+            "NumeroUsuarios": 1000,
+            "Observaciones": "REGISTRO ACTUALIZADO 1",
+            "IdTipoDanio": 3,
+            "TipoDanio": null,
+            "IdProvincia": 12,
+            "IdMunicipio": 1001,
+            "ExtraFechaHora1": "2025-05-27T16:00:00",
+            "ExtraFechaHora2": null,
+            "ExtraNumero1": 200,
+            "ExtraNumero2": null,
+            "ExtraNumero3": null,
+            "ExtraCaracter1": "REGISTRO ACTUALIZADO 1",
+            "IdZonaPlanificacion": 4
+          },        
+          {
+            "Id": 2,
+            "IdTipoImpactoEvolucion": 1,
+            "IdImpactoClasificado": 1,
+            "IdAlteracionInterrupcion": null,
+            "Causa": "REGISTRO ACTUALIZADO 2",
+            "Fecha": "2025-05-27T00:00:00",
+            "FechaHora": "2025-05-27T14:00:00",
+            "FechaHoraInicio": "2025-05-27T13:00:00",
+            "FechaHoraFin": "2025-05-27T15:00:00",
+            "Numero": 50,
+            "NumeroGraves": 5,
+            "NumeroIntervinientes": 10,
+            "NumeroLocalidades": 3,
+            "NumeroServicios": 2,
+            "NumeroUsuarios": 1000,
+            "Observaciones": "REGISTRO ACTUALIZADO 2",
+            "IdTipoDanio": 3,
+            "TipoDanio": null,
+            "IdProvincia": 12,
+            "IdMunicipio": 1001,
+            "ExtraFechaHora1": "2025-05-27T16:00:00",
+            "ExtraFechaHora2": null,
+            "ExtraNumero1": 200,
+            "ExtraNumero2": null,
+            "ExtraNumero3": null,
+            "ExtraCaracter1": "REGISTRO ACTUALIZADO 2",
+            "IdZonaPlanificacion": 4
+          }
+        ]
+      },    
+      {
+        "Id": 2,
+        "IdTipoImpacto": 1,
+        "estimado": 100,
+        "ImpactosEvoluciones": [
+          {
+            "Id": 3,
+            "IdTipoImpactoEvolucion": 2,
+            "IdImpactoClasificado": 1,
+            "IdAlteracionInterrupcion": null,
+            "Causa": "REGISTRO ACTUALIZADO 1 PARTE 2 segunda vez",
+            "Fecha": "2025-05-27T00:00:00",
+            "FechaHora": "2025-05-27T14:00:00",
+            "FechaHoraInicio": "2025-05-27T13:00:00",
+            "FechaHoraFin": "2025-05-27T15:00:00",
+            "Numero": 50,
+            "NumeroGraves": 5,
+            "NumeroIntervinientes": 10,
+            "NumeroLocalidades": 3,
+            "NumeroServicios": 2,
+            "NumeroUsuarios": 1000,
+            "Observaciones": "REGISTRO ACTUALIZADO 1 PARTE 2 segunda vez",
+            "IdTipoDanio": 3,
+            "TipoDanio": null,
+            "IdProvincia": 12,
+            "IdMunicipio": 1001,
+            "ExtraFechaHora1": "2025-05-27T16:00:00",
+            "ExtraFechaHora2": null,
+            "ExtraNumero1": 200,
+            "ExtraNumero2": null,
+            "ExtraNumero3": null,
+            "ExtraCaracter1": "REGISTRO ACTUALIZADO 1 PARTE 2 segunda vez",
+            "IdZonaPlanificacion": 4
+          },
+          {
+            "Id": 0,
+            "IdImpactoClasificado": 1,
+            "IdAlteracionInterrupcion": null,
+            "Causa": "REGISTRO NUEVO 2 PARTE 2",
+            "Fecha": "2025-05-27T00:00:00",
+            "FechaHora": "2025-05-27T14:00:00",
+            "FechaHoraInicio": "2025-05-27T13:00:00",
+            "FechaHoraFin": "2025-05-27T15:00:00",
+            "Numero": 50,
+            "NumeroGraves": 5,
+            "NumeroIntervinientes": 10,
+            "NumeroLocalidades": 3,
+            "NumeroServicios": 2,
+            "NumeroUsuarios": 1000,
+            "Observaciones": "REGISTRO NUEVO 2 PARTE 2",
+            "IdTipoDanio": 3,
+            "TipoDanio": null,
+            "IdProvincia": 12,
+            "IdMunicipio": 1001,
+            "ExtraFechaHora1": "2025-05-27T16:00:00",
+            "ExtraFechaHora2": null,
+            "ExtraNumero1": 200,
+            "ExtraNumero2": null,
+            "ExtraNumero3": null,
+            "ExtraCaracter1": "REGISTRO NUEVO 2 PARTE 2",
+            "IdZonaPlanificacion": 4
+          }
+        ]
+      }
+    ]
+  }
+  
+}
+
+vars:post-response {
+  IdEvolucion: res.body.idEvolucion
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Distrito por busqueda
+  type: http
+  seq: 16
+}
+
+get {
+  url: {{Server}}/api/v1/paises/busqueda/distritos
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~busqueda: Ta
+  ~IdPais: 65
+}
+
+assert {
+  res.status: eq 200
+}

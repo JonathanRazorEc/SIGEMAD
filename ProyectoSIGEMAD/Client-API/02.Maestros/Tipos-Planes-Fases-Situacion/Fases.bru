@@ -1,0 +1,19 @@
+meta {
+  name: Fases
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{Server}}/api/v1/fases-emergencia?idPlanEmergencia=15
+  body: none
+  auth: inherit
+}
+
+params:query {
+  idPlanEmergencia: 15
+}
+
+assert {
+  res.status: eq 200
+}

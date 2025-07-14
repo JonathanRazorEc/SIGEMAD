@@ -1,0 +1,15 @@
+meta {
+  name: Eliminar
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{Server}}/api/v1/Incendios/{{IdIncendio}}
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 204
+}

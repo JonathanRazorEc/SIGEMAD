@@ -1,0 +1,39 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/registros/Parametros
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idSuceso": 1,
+    "IdRegistroActualizacion": 4,
+    "Parametro": [{
+      "fechaHoraActualizacion":"2025-05-08T18:22:24.857Z"
+    },
+    {
+      "idEstadoIncendio": 1,
+      "idPlanEmergencia": 2,
+      "idFaseEmergencia": 2,
+      "idPlanSituacion": 2,
+      "idSituacionEquivalente": 5,
+      "fechaHoraActualizacion": "2025-05-08T18:22:24.857Z",
+      "observaciones": "Observacion 2",
+      "prevision": "Prevision 2"
+    }]
+  }
+}
+
+vars:post-response {
+  IdEvolucion: res.body.id
+}
+
+assert {
+  res.status: eq 201
+}

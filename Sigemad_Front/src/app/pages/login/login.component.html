@@ -1,0 +1,50 @@
+<div class="container">
+  <mat-card class="login-card">
+    <div class="left-section">
+      <h2 class="left-section-title">Ingreso</h2>
+      <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="input-full-width">
+          <mat-label>Usuario</mat-label>
+          <input matInput type="text" formControlName="usuario" />
+          <mat-error *ngIf="formData.get('usuario')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="input-full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" formControlName="clave" />
+          <mat-error *ngIf="formData.get('clave')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" class="login-button">Entrar</button>
+        <br />
+        <p style="float: right">v 0.3.67</p>
+      </form>
+    </div>
+
+    <div class="right-section">
+      <div class="text-content">
+        <span class="right-section-title">SIGEMAD</span>
+        <p class="right-section-description">
+          <span>Sistema de Información en Gestión</span>
+          <br />
+          <span>de Emergencias y Apoyo a la Decisión</span>
+        </p>
+      </div>
+      <div class="image-content">
+        <img src="/assets/assets/img/logo-color.png" class="login-logo" alt="logo sigemad" />
+        <div>
+          <span class="right-section-color-gray">DIRECCIÓN GENERAL DE</span>
+          <br />
+          <span class="right-section-description">PROTECCIÓN CIVIL</span>
+          <span class="right-section-color-gray">Y</span>
+          <br />
+          <span class="right-section-description">EMERGENCIAS</span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

@@ -1,0 +1,22 @@
+export const COUNTRIES_ID = {
+  PORTUGAL: 1,
+  SPAIN: 60,
+  FRANCE: 65,
+} as const;
+
+export const FECHA_MINIMA_DATETIME = '1980-01-01T00:00';
+export const FECHA_MAXIMA_DATETIME = '2099-01-01T23:59';
+
+export const FECHA_MINIMA_DATEPICKER = '1980-01-01';
+export const FECHA_MAXIMA_DATEPICKER = '2099-12-31';
+
+export const IDS_TABLAS_MAESTRAS_GRUPOS = {
+  SIGEMAD_CATALOGO: 1,
+  SIGEMAD_LOGS: 2,
+  OPE_CATALOGO: 3,
+  OPE_LOGS: 4,
+  OPE_HISTORICO_SIGE2: 5,
+} as const;
+
+export const DEFAULT_PAGESIZE = 20;
+export const DEFAULT_PAGESIZE_OPTIONS: number[] = [5, 10, 20, 50, 100];

@@ -1,0 +1,63 @@
+app-ope-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #f0f0f0;
+  z-index: 1000;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+}
+
+/* Ajusta el contenido debajo del menú */
+router-outlet {
+  margin-top: 60px;
+}
+
+::ng-deep .breadcrumb {
+  display: none !important;
+}
+
+.breadcrumb-ope {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.breadcrumb-item-ope {
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.breadcrumb-item-ope::after {
+  content: '/';
+  margin-left: 0.5rem;
+}
+.breadcrumb-item-ope.active::after {
+  content: '';
+}
+
+.difuminado {
+  filter: blur(5px); /* Aplica el desenfoque */
+  transition: filter 0.3s ease-in-out; /* Transición suave */
+}
+
+.sin-difuminado {
+  filter: none; /* Elimina el desenfoque */
+}
+
+.nav-miga-pan-ope {
+  padding: 0px 12px 12px;
+}
+
+.breadcrumb-item-ope a {
+  text-decoration: none;
+  color: var(--primary-50) !important;
+  cursor: pointer;
+}
+
+.breadcrumb-item-ope a:hover {
+  text-decoration: underline;
+}

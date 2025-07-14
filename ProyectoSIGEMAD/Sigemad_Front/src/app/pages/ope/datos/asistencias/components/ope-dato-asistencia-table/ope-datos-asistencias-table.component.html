@@ -1,0 +1,77 @@
+<div class="mat-elevation-z8 table-container">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-table" appRowHighlight appMatSortNoClear>
+    <!-- Fecha -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+      <td mat-cell *matCellDef="let opeDatoAsistencia">{{ getFechaFormateada(opeDatoAsistencia.fecha) }}</td>
+    </ng-container>
+
+    <!-- Puerto -->
+    <ng-container matColumnDef="opePuerto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Puerto</th>
+      <td mat-cell *matCellDef="let opeDatoAsistencia">
+        {{ opeDatoAsistencia.opePuerto.nombre }}
+      </td>
+    </ng-container>
+
+    <!-- Nº asistencias sanitarias -->
+    <ng-container matColumnDef="numeroOpeDatosAsistenciasSanitarias">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="cabecera-con-ordenacion-centrada">Sanitarias</th>
+      <td mat-cell *matCellDef="let opeDatoAsistencia" class="textoCentrado">
+        {{ getNumeroTotalDeListado(opeDatoAsistencia.opeDatosAsistenciasSanitarias) }}
+      </td>
+    </ng-container>
+
+    <!-- Nº asistencias sociales -->
+    <ng-container matColumnDef="numeroOpeDatosAsistenciasSociales">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="cabecera-con-ordenacion-centrada">Sociales</th>
+      <td mat-cell *matCellDef="let opeDatoAsistencia" class="textoCentrado">
+        {{ getNumeroTotalDeListado(opeDatoAsistencia.opeDatosAsistenciasSociales) }}
+      </td>
+    </ng-container>
+
+    <!-- Nº asistencias traducciones -->
+    <ng-container matColumnDef="numeroOpeDatosAsistenciasTraducciones">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="cabecera-con-ordenacion-centrada">Traducciones</th>
+      <td mat-cell *matCellDef="let opeDatoAsistencia" class="textoCentrado">
+        {{ getNumeroTotalDeListado(opeDatoAsistencia.opeDatosAsistenciasTraducciones) }}
+      </td>
+    </ng-container>
+
+    <!-- Nº asistencias TOTAL -->
+    <ng-container matColumnDef="numeroOpeDatosAsistenciasTotal">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="cabecera-con-ordenacion-centrada">Total</th>
+      <td mat-cell *matCellDef="let opeDatoAsistencia" class="textoCentrado">
+        {{
+          getNumeroTotalAsistencias(
+            opeDatoAsistencia.opeDatosAsistenciasSanitarias,
+            opeDatoAsistencia.opeDatosAsistenciasSociales,
+            opeDatoAsistencia.opeDatosAsistenciasTraducciones
+          )
+        }}
+      </td>
+    </ng-container>
+
+    <!-- Opciones -->
+    <ng-container matColumnDef="opciones">
+      <th mat-header-cell *matHeaderCellDef class="textoCentrado">Opciones</th>
+      <td mat-cell *matCellDef="let opeDatoAsistencia" class="textoCentrado">
+        <a (click)="goModalEdit(opeDatoAsistencia)">
+          <img src="/assets/img/edit.svg" alt="Editar" appTooltip="Datos de asistencia" />
+        </a>
+        <a (click)="deleteOpeDatoAsistencia(opeDatoAsistencia.id)">
+          <img src="/assets/img/delete-btn.svg" alt="Borrar" appTooltip="Borrar dato de asistencia" />
+        </a>
+      </td>
+    </ng-container>
+
+    <!-- Header and Rows -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+
+  <!-- Paginator -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>
+</div>

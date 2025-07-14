@@ -1,0 +1,58 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{Server}}/api/v1/Incendios
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "id":{{IdIncendio}},
+    "idTerritorio": 1,
+    "idProvincia": 1,
+    "idMunicipio": 1001,
+    "denominacion": "Incendio en españa",
+    "fechaInicio": "2024-09-17T05:40:19.720Z",
+    "idTipoSuceso": 1,
+    "idClaseSuceso": 1,
+    "idEstadoSuceso": 1,
+    "comentarios": "string",
+    "rutaMapaRiesgo": "/path/image-modificado.png",
+    "GeoPosicion": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -104.99404,
+            39.75621
+          ],
+          [
+            -104.99404,
+            39.75422
+          ],
+          [
+            -104.99011,
+            39.75422
+          ],
+          [
+            -104.99011,
+            39.75621
+          ],
+          [
+            -104.99404,
+            39.75621
+          ]
+        ]
+      ]
+    }
+  }
+}
+
+assert {
+  res.status: eq 204
+}

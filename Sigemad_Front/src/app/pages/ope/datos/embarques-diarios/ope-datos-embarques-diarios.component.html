@@ -1,0 +1,15 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-dato-embarque-diario-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opeDatosEmbarquesDiarios)]="opeDatosEmbarquesDiarios"
+  ></app-ope-dato-embarque-diario-filter-form>
+  <app-ope-datos-embarques-diarios-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opeDatosEmbarquesDiarios]="opeDatosEmbarquesDiarios.data"
+    *ngIf="opeDatosEmbarquesDiarios?.data"
+  ></app-ope-datos-embarques-diarios-table>
+</div>

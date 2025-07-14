@@ -1,0 +1,21 @@
+# Dependencias de Node
+node_modules
+bower_components
+
+# Archivos de logs
+*.log
+
+# Directorios temporales
+tmp/
+temp/
+dist/
+build/
+
+# Archivos de configuración
+.env
+.vscode/
+.idea/
+
+# Control de versiones
+.git/
+.gitignore

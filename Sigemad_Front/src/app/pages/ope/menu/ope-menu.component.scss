@@ -1,0 +1,171 @@
+/* Estilo para el mat-nav-list que convierte la lista vertical en horizontal */
+mat-nav-list {
+  display: flex;
+  justify-content: flex-start; /* Alinea los elementos al principio */
+  padding: 0;
+  margin: 0;
+  list-style-type: none; /* Eliminar los estilos de lista predeterminados */
+  flex-wrap: nowrap; /* Evita que los elementos se muevan a la siguiente línea */
+  overflow-x: auto; /* Permite el desplazamiento horizontal si es necesario */
+}
+
+/* Estilo para los items del menú de primer nivel */
+.ope-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  margin-right: 1.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* Estilo para los iconos de los items de primer nivel */
+.ope-menu-item mat-icon {
+  margin-left: 0px;
+  margin-right: 0px; /* Separación más pequeña entre el icono y el texto */
+}
+
+/* Estilo para el texto de los items */
+.ope-menu-item span {
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+
+/* Estilo para el estado activo del item */
+.ope-menu-item.selected-ope-menu-item {
+  background-color: #f0f0f0;
+}
+
+// PCD
+.ope-menu-container:nth-child(1) {
+  width: 9%;
+}
+
+.ope-menu-container:nth-child(2) {
+  width: 10%;
+}
+
+.ope-menu-container:nth-child(3) {
+  width: 13%;
+}
+
+.ope-menu-container:nth-child(4) {
+  width: 13%;
+}
+
+.ope-menu-container:nth-child(5) {
+  width: 9%;
+}
+
+.ope-menu-container:nth-child(6) {
+  width: 20%;
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  width: 300%; /* Hace que el submenú tenga el mismo ancho que el padre */
+  margin-left: 0; /* Elimina la alineación negativa */
+  margin-top: 5px; /* Espaciado entre el menú y el submenú */
+  padding: 5px;
+  padding-left: 20px;
+  transition: all 0.3s ease;
+  width: max-content;
+  white-space: nowrap;
+}
+
+.submenu-subitem {
+  display: block;
+  padding-left: 20px;
+  margin-top: 5px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+// FIN PCD
+
+.subope-menu-item mat-icon,
+.submenu-subitem mat-icon {
+  margin-left: 4px;
+  margin-right: 6px;
+}
+
+////
+///
+.ope-menu-item,
+.ope-menu-item:hover,
+.ope-menu-item span,
+.ope-menu-item span:hover {
+  font-size: 0.8rem !important;
+}
+
+.subope-menu-item,
+.subope-menu-item:hover,
+.subope-menu-item span,
+.subope-menu-item span:hover {
+  font-size: 0.8rem !important;
+}
+
+.submenu-subitem,
+.submenu-subitem:hover,
+.submenu-subitem span,
+.submenu-subitem span:hover {
+  font-size: 0.8rem !important;
+}
+
+/* Asegura que el texto de los elementos del menú no se corte */
+.ope-menu-item,
+.subope-menu-item,
+.submenu-subitem {
+  white-space: normal; /* Permite saltos de línea */
+  overflow: visible; /* Evita que el contenido se oculte */
+  text-overflow: clip; /* Desactiva los puntos suspensivos */
+  word-wrap: break-word; /* Rompe palabras largas si es necesario */
+  max-width: 100%; /* Usa el ancho completo disponible */
+}
+
+.menuExpandido {
+  transition:
+    max-height 0.3s ease-in,
+    opacity 0.3s ease-in;
+  max-height: 100vh;
+}
+
+.menuPlegado {
+  transition:
+    max-height 0.3s ease-out,
+    opacity 0.3s ease-out;
+  max-height: 5vh; /* Cuando el menú está cerrado */
+}
+
+/////
+.ope-menu-item,
+.subope-menu-item,
+.submenu-subitem {
+  border-radius: 10px;
+  background-color: transparent; /* Asegurar que no haya fondo por defecto */
+  transition: background-color 0.3s ease-in-out; /* Suaviza el cambio */
+}
+
+.ope-menu-item:hover,
+.subope-menu-item:hover,
+.submenu-subitem:hover {
+  background-color: #e0e0e0;
+}
+
+.ope-menu-item::before,
+.subope-menu-item::before,
+.submenu-subitem::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: inherit;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+///////////
+.ope-menu-container {
+  max-width: 45%;
+}

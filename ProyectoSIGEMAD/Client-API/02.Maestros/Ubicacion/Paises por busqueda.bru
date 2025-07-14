@@ -1,0 +1,20 @@
+meta {
+  name: Paises por busqueda
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{Server}}/api/v1/v2-paises?mostrarNacional=true&busqueda=espa
+  body: none
+  auth: inherit
+}
+
+params:query {
+  mostrarNacional: true
+  busqueda: espa
+}
+
+assert {
+  res.status: eq 200
+}

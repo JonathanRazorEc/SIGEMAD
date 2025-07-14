@@ -1,0 +1,199 @@
+<h2 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle class="title">
+  {{ data.opeAreaEstacionamiento?.id ? 'Modificar' : 'Crear' }} Área de estacionamiento
+</h2>
+
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <!-- Nombre -->
+      <mat-form-field appearance="outline" fxFlex="40" class="mb-3">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre del área de estacionamiento" formControlName="nombre" />
+        <mat-error *ngIf="formData.get('nombre')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <!-- Instalación portuaria -->
+      <mat-checkbox fxFlex="20" [formControl]="getForm('instalacionPortuaria')" (change)="onChangeInstalacionPortuaria()">
+        Instalación portuaria
+      </mat-checkbox>
+
+      <!-- Puerto -->
+      <mat-form-field appearance="outline" fxFlex="40" class="mb-3">
+        <mat-label>Puerto</mat-label>
+        <mat-select [formControl]="getForm('opePuerto')" required>
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let option of opePuertos()" [value]="option.id">
+            {{ option.nombre }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="getForm('opePuerto').hasError('required')">El puerto es obligatorio cuando la instalación es portuaria.</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <!-- CCAA -->
+      <!--
+      <mat-form-field appearance="outline" fxFlex="33" class="mb-3">
+        <mat-label>CCAA</mat-label>
+        <mat-select [formControl]="getForm('autonomousCommunity')" (selectionChange)="loadProvinces($event)">
+          <mat-option *ngFor="let option of autonomousCommunities()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('autonomousCommunity')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+      -->
+
+      <!-- CCAA -->
+      <mat-form-field appearance="outline" fxFlex="33" class="mb-3">
+        <mat-label>CCAA</mat-label>
+        <input type="text" matInput [formControl]="getForm('autonomousCommunity')" [matAutocomplete]="autoCCAA" />
+        <mat-autocomplete #autoCCAA="matAutocomplete" [displayWith]="displayFnCCAA" (optionSelected)="loadProvinces($event)">
+          <mat-option *ngFor="let option of CCAAFiltradas()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="formData.get('autonomousCommunity')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        <mat-error *ngIf="formData.get('autonomousCommunity')?.hasError('invalidOption')">Debe seleccionar una CCAA de la lista</mat-error>
+      </mat-form-field>
+
+      <!-- Provincia -->
+      <mat-form-field appearance="outline" fxFlex="33" class="mb-3">
+        <mat-label>Provincia</mat-label>
+        <input type="text" matInput [formControl]="getForm('provincia')" [matAutocomplete]="autoProvincia" />
+        <mat-autocomplete #autoProvincia="matAutocomplete" [displayWith]="displayFnProvincia" (optionSelected)="loadMunicipios($event)">
+          <mat-option *ngFor="let option of provinciasFiltradas()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="formData.get('provincia')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        <mat-error *ngIf="formData.get('provincia')?.hasError('invalidOption')">Debe seleccionar una provincia de la lista</mat-error>
+      </mat-form-field>
+
+      <!-- Municipio -->
+      <mat-form-field appearance="outline" fxFlex="33" class="mb-3">
+        <mat-label>Municipio</mat-label>
+        <input type="text" matInput [formControl]="getForm('municipality')" [matAutocomplete]="autoMunicipio" />
+        <mat-autocomplete #autoMunicipio="matAutocomplete" [displayWith]="displayFnMunicipio">
+          <mat-option *ngFor="let option of municipiosFiltrados()" [value]="option.id">
+            {{ option.descripcion }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="formData.get('municipality')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        <mat-error *ngIf="formData.get('municipality')?.hasError('invalidOption')">Debe seleccionar un municipio de la lista</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <!-- Carretera -->
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Carretera</mat-label>
+        <input matInput placeholder="Carretera" formControlName="carretera" />
+        <mat-error *ngIf="formData.get('carretera')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <!-- Punto kilométrico -->
+      <mat-form-field class="input" appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Punto kilométrico</mat-label>
+        <input
+          matInput
+          [formControl]="getForm('PK')"
+          type="number"
+          (keypress)="utilsService.allowOnlyNumbersAndDecimal($event)"
+          (input)="utilsService.enforceMaxLength($event, 9, getForm('PK')); utilsService.enforceMaxDecimals($event, 3)"
+          min="0"
+          max="9999999"
+          step="1"
+        />
+        <mat-error *ngIf="formData.get('PK')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        <mat-error *ngIf="formData.get('PK')?.hasError('pattern')">Debe ser un número con 3 decimales máximo</mat-error>
+        <mat-error *ngIf="formData.get('PK')?.hasError('min')">El valor no puede ser menor que 0</mat-error>
+        <mat-error *ngIf="formData.get('PK')?.hasError('max')">El valor no puede ser mayor que 9.999.999</mat-error>
+      </mat-form-field>
+
+      <!-- Coordenada UTM X -->
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Coordenada UTM X</mat-label>
+        <input
+          matInput
+          placeholder="Coordenada UTM X"
+          formControlName="coordenadaUTM_X"
+          type="number"
+          required
+          (keypress)="utilsService.allowOnlyNumbers($event)"
+          min="0"
+        />
+        <mat-error *ngIf="formData.get('coordenadaUTM_X')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <!-- Coordenada UTM Y -->
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Coordenada UTM Y</mat-label>
+        <input
+          matInput
+          placeholder="Coordenada UTM Y"
+          formControlName="coordenadaUTM_Y"
+          type="number"
+          required
+          (keypress)="utilsService.allowOnlyNumbers($event)"
+          min="0"
+        />
+        <mat-error *ngIf="formData.get('coordenadaUTM_Y')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <!-- Capacidad -->
+      <mat-form-field class="input" appearance="outline" fxFlex="33" class="mb-3">
+        <mat-label>Capacidad</mat-label>
+        <input
+          matInput
+          [formControl]="getForm('capacidad')"
+          type="number"
+          required
+          (keypress)="utilsService.allowOnlyNumbers($event)"
+          (input)="utilsService.enforceMaxLength($event, 6, getForm('capacidad'))"
+          min="0"
+          max="9999999"
+          step="1"
+        />
+        <mat-error *ngIf="formData.get('capacidad')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <!--
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+
+    <button mat-raised-button (click)="closeModal()" color="primary" aria-label="Buscar" class="custom-button" type="button">Cancelar</button>
+
+    <button mat-flat-button color="primary" type="submit" aria-label="Guardar" class="custom-button">Guardar</button>
+  </mat-dialog-actions>
+  -->
+  <!-- PIE CON AUDITORIA -->
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <!-- Info auditoría si hay datos completos -->
+    <div fxFlex="50" class="audit-info" style="text-align: left">
+      <div *ngIf="data.opeAreaEstacionamiento?.creadoPor && data.opeAreaEstacionamiento?.fechaCreacion">
+        <b>Alta:</b>
+        {{ data.opeAreaEstacionamiento.creadoPor }} con fecha
+        {{ getFechaFormateadaConHorasMinutosYSegundos(data.opeAreaEstacionamiento.fechaCreacion) }}
+      </div>
+      <div *ngIf="data.opeAreaEstacionamiento?.modificadoPor && data.opeAreaEstacionamiento?.fechaModificacion">
+        <b>Última modificación:</b>
+        {{ data.opeAreaEstacionamiento.modificadoPor }} con fecha
+        {{ getFechaFormateadaConHorasMinutosYSegundos(data.opeAreaEstacionamiento.fechaModificacion) }}
+      </div>
+    </div>
+
+    <!-- Flex vacío que ocupa espacio y empuja botones a la derecha -->
+    <div fxFlex></div>
+
+    <!-- Botones -->
+    <div fxLayout="row" fxLayoutGap="16px">
+      <button mat-raised-button (click)="closeModal()" color="primary" aria-label="Buscar" class="custom-button" type="button">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit" aria-label="Guardar" class="custom-button">Guardar</button>
+    </div>
+  </mat-dialog-actions>
+  <!-- FIN PIE CON AUDITORIA-->
+</form>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

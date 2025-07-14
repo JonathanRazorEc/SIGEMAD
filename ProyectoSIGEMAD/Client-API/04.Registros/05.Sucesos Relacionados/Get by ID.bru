@@ -1,0 +1,19 @@
+meta {
+  name: Get by ID
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{Server}}/api/v1/sucesos-relacionados/?idSuceso=2
+  body: none
+  auth: inherit
+}
+
+params:query {
+  idSuceso: 2
+}
+
+assert {
+  res.status: eq 200
+}

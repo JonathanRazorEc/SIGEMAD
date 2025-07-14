@@ -1,0 +1,42 @@
+meta {
+  name: Eliminar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/registros/activaciones-sistemas/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 1,
+    "idSuceso": 1,
+    "detalles": [
+      {
+        "id": 1,
+        "idTipoSistemaEmergencia": 1,
+        "fechaHoraActivacion": "2025-01-30T15:26:37.510Z",
+        "fechaHoraActualizacion": "2025-01-30T15:26:37.510Z",
+        "autoridad": "autoridad 1",
+        "descripcionSolicitud": "descripcionSolicitud 1",
+        "observaciones": "observaciones 1",
+        "idModoActivacion": 1,
+        "fechaActivacion": "2025-01-30",
+        "codigo": "codigo 1",
+        "nombre": "nombre 1",
+        "urlAcceso": "urlAcceso 1",
+        "fechaHoraPeticion": "2025-01-30T15:26:37.510Z",
+        "fechaAceptacion": "2025-01-30",
+        "peticiones": "peticiones 1",
+        "mediosCapacidades": "mediosCapacidades 1"
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 204
+}

@@ -1,0 +1,76 @@
+@use '../../m3-theme.scss' as theme;
+@use '@angular/material' as mat;
+
+.content {
+  padding: 24px;
+  background-color: rgb(234, 234, 234);
+  min-height: calc(100vh - 64px);
+  height: auto;
+  overflow: auto;
+}
+
+.nav-miga-pan {
+  padding: 0px 12px 12px;
+}
+
+mat-toolbar {
+  position: relative;
+  z-index: 5;
+}
+
+mat-sidenav-container {
+  min-height: calc(100vh - 64px);
+  height: auto;
+}
+
+.toolbar-title {
+  margin: 0 auto;
+  text-align: center;
+  color: var(--primary-50);
+  font-weight: 500;
+}
+
+mat-sidenav,
+mat-sidenav-content {
+  transition: all 500ms ease-in-out;
+}
+
+::ng-deep .mat-mdc-form-field-error-wrapper {
+  padding: 0 !important;
+}
+
+.breadcrumb {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  margin-right: 6px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.breadcrumb-item::after {
+  content: '/';
+  margin-left: 0.5rem;
+}
+.breadcrumb-item.active::after {
+  content: '';
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: var(--primary-50) !important;
+  cursor: pointer;
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-item:last-child {
+  color: #186c93;
+  font-weight: bold;
+}

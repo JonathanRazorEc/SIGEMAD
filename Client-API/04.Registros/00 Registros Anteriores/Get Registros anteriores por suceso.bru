@@ -1,0 +1,16 @@
+meta {
+  name: Get Registros anteriores por suceso
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/registros-anteriores?idSuceso=1&IdRegistro=3
+  body: none
+  auth: inherit
+}
+
+params:query {
+  idSuceso: 1
+  IdRegistro: 3
+}

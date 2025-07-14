@@ -1,0 +1,74 @@
+<mat-nav-list [ngClass]="menuExpandido() ? 'menuExpandido' : 'menuPlegado'" (mouseleave)="closeMenu()">
+  <ng-container *ngFor="let item of menuOpeBack()">
+    <div class="ope-menu-container">
+      <a
+        mat-list-item
+        class="ope-menu-item"
+        (mouseenter)="toggleSubmenu(item, 1)"
+        (click)="toggleSubmenu(item, 1)"
+        [routerLink]="item.ruta || null"
+        [ngStyle]="getActiveStyle(item, rla.isActive)"
+        routerLinkActive="selected-ope-menu-item"
+        #rla="routerLinkActive"
+        [activated]="rla.isActive"
+        [title]="!menuExpandido() ? item.nombre : ''"
+      >
+        <mat-icon *ngIf="iconMap[item.ruta]" matListItemIcon [svgIcon]="iconMap[item.ruta]"></mat-icon>
+
+        <span matListItemTitle>{{ item.nombre }}</span>
+        <mat-icon *ngIf="item.subItems?.length" matListItemIcon>
+          {{ item.isOpen ? 'expand_less' : 'expand_more' }}
+        </mat-icon>
+      </a>
+
+      <div *ngIf="item.subItems?.length && expandedMenuId === item.id" class="submenu">
+        <!-- PCD -->
+        <ng-container *ngFor="let subItem of item.subItems">
+          <a
+            mat-list-item
+            class="subope-menu-item"
+            (mouseover)="toggleSubmenu(item, 2)"
+            (click)="toggleSubmenu(subItem, 2)"
+            [routerLink]="subItem.ruta"
+            [ngStyle]="getActiveStyle(subItem, subRla.isActive)"
+            routerLinkActive="selected-subope-menu-item"
+            #subRla="routerLinkActive"
+            [activated]="subRla.isActive"
+            [title]="!menuExpandido() ? subItem.nombre : ''"
+          >
+            <mat-icon *ngIf="iconMap[subItem.ruta]" matListItemIcon [svgIcon]="iconMap[subItem.ruta]"></mat-icon>
+            <mat-icon *ngIf="subItem.subItems?.length" matListItemIcon>
+              {{ subItem.isOpen ? 'expand_less' : 'expand_more' }}
+            </mat-icon>
+            <span matListItemTitle>{{ subItem.nombre }}</span>
+          </a>
+
+          <!-- Menús de segundo nivel -->
+          <div *ngIf="subItem.subItems?.length && expandedSubMenuId === subItem.id" class="submenu">
+            <ng-container *ngFor="let subSubItem of subItem.subItems">
+              <a
+                mat-list-item
+                class="submenu-subitem"
+                [routerLink]="subSubItem.ruta"
+                [ngStyle]="getActiveStyle(subSubItem, subRla.isActive)"
+                routerLinkActive="selected-subope-menu-item"
+                #subRla="routerLinkActive"
+                [activated]="subRla.isActive"
+                [title]="!menuExpandido() ? subSubItem.nombre : ''"
+              >
+                <mat-icon *ngIf="iconMap[subSubItem.ruta]" matListItemIcon [svgIcon]="iconMap[subSubItem.ruta]"></mat-icon>
+
+                <span matListItemTitle>{{ subSubItem.nombre }}</span>
+              </a>
+            </ng-container>
+          </div>
+        </ng-container>
+        <!-- FIN PCD -->
+      </div>
+    </div>
+  </ng-container>
+</mat-nav-list>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="side-menu">
+    <mat-chip-listbox [value]="selectedOption.id" (change)="onSelectionChange($event)">
+      <mat-chip-option *ngFor="let sec of sections; trackBy: trackByFn" [value]="sec.id" class="full-width-chip">
+        {{ sec.label }}
+      </mat-chip-option>
+    </mat-chip-listbox>
+  </div>
+
+  <div class="form-container">
+    <!--<app-ope-log-listado [dataSource]="dataSource" [displayedColumns]="displayedColumns" />-->
+    <app-ope-log-listado [displayedColumns]="['fechaRegistro', 'tipoMovimiento']" [dataSource]="dataSource" />
+  </div>
+</div>

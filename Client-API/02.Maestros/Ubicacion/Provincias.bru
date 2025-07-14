@@ -1,0 +1,15 @@
+meta {
+  name: Provincias
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{Server}}/api/v1/Provincias
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

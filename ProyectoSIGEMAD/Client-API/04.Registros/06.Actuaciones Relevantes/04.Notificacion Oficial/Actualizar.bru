@@ -1,0 +1,44 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{Server}}/api/v1/actuaciones-relevantes/notificaciones/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 1,
+    "idSuceso": 1,
+    "detalles": [
+      {
+        "id": 1,
+        "idTipoNotificacion": 1,
+        "fechaHoraNotificacion": "2025-01-30T14:42:39.633Z",
+        "organosNotificados": "Organo oficial Actualizado",
+        "ucpm": "Ucpm Actualizado",
+        "organismoInternacional": "organismo 1 Actualizado",
+        "otrosPaises": "Portugal Actualizado",
+        "observaciones": "Sin observaciones Actualizado"
+      },
+      {
+        "id": 2,
+        "idTipoNotificacion": 1,
+        "fechaHoraNotificacion": "2025-01-30T14:42:39.633Z",
+        "organosNotificados": "Organo oficial 2 Actualizado",
+        "ucpm": "Ucpm 2 Actualizado",
+        "organismoInternacional": "organismo 2 Actualizado",
+        "otrosPaises": "Francia Actualizado",
+        "observaciones": "Sin observaciones 2 Actualizado"
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+}

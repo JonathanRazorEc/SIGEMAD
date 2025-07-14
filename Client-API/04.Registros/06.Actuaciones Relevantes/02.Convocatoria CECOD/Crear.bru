@@ -1,0 +1,42 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/actuaciones-relevantes/convocatoria-cecod/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 0,
+    "idSuceso": 1,
+    "detalles": [
+      {
+        "id": 0,
+        "fechaInicio": "2025-01-30",
+        "fechaFin": "2025-01-30",
+        "lugar": "Lugar",
+        "convocados": "100",
+        "participantes": "20",
+        "observaciones": "Sin observaciones"
+      },
+      {
+        "id": 0,
+        "fechaInicio": "2025-01-24",
+        "fechaFin": "2025-01-25",
+        "lugar": "Lugar",
+        "convocados": "50",
+        "participantes": "20",
+        "observaciones": "Sin observaciones"
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+}

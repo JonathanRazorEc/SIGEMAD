@@ -1,0 +1,167 @@
+<!-- Acordeón para Filtros -->
+<form *ngIf="formData" [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-accordion multi>
+    <mat-expansion-panel #filterPanel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Filtros</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <!-- Fila 1 -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+
+        <mat-form-field appearance="outline" fxFlex="20">
+          <mat-label>Denominación</mat-label>
+          <input matInput [formControl]="getForm('name')" placeholder="Ingresa texto" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="20">
+          <mat-label>Territorio</mat-label>
+          <mat-select [formControl]="getForm('territory')" (selectionChange)="changeTerritory($event)">
+            <mat-option *ngFor="let option of territories()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="20">
+          <mat-label>País</mat-label>
+          <mat-select [formControl]="getForm('country')" (selectionChange)="loadCommunities()">
+            <mat-option *ngFor="let option of filteredCountries()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="20">
+          <mat-label>Comunidad Autónoma</mat-label>
+          <input type="text" matInput [formControl]="getForm('CCAA')" [matAutocomplete]="autoCCAA">
+          <mat-autocomplete #autoCCAA="matAutocomplete" [displayWith]="getTitle.bind(this)">
+            <mat-option *ngFor="let option of autonomousCommunityfilteredOptions | async" [value]="option">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="20">
+          <mat-label>Provincia</mat-label>
+          <input type="text" matInput [formControl]="getForm('provincia')" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="getTitle.bind(this)">
+            <mat-option *ngFor="let option of ProvincesfilteredOptions | async" [value]="option">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <!-- Fila 2 -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Clase de suceso</mat-label>
+          <mat-select [formControl]="getForm('eventTypes')">
+            <mat-option *ngFor="let option of eventTypes()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Seguimiento</mat-label>
+          <mat-select [formControl]="getForm('eventStatus')">
+            <mat-option *ngFor="let option of eventStatus()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Estado del incendio</mat-label>
+          <mat-select [formControl]="getForm('fireStatus')">
+            <mat-option *ngFor="let option of fireStatus()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Situación operativa</mat-label>
+          <mat-select [formControl]="getForm('situationEquivalent')">
+            <mat-option *ngFor="let option of situationsEquivalent()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Superficie afectada</mat-label>
+          <mat-select [formControl]="getForm('affectedArea')">
+            <mat-option *ngFor="let option of superficiesFiltro()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Fila 3 -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Movimiento</mat-label>
+          <mat-select [formControl]="getForm('move')">
+            <mat-option *ngFor="let option of moves()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Rango de fechas</mat-label>
+          <mat-select [formControl]="getForm('between')" (selectionChange)="changeBetween($event)">
+            <mat-option *ngFor="let option of comparativeDates()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+          <mat-label>{{ showDateEnd() ? 'Fecha de inicio' : 'Fecha' }}</mat-label>
+          <input matInput [matDatepicker]="picker" [formControl]="getForm('fechaInicio')" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="25" class="mb-3"
+          [ngStyle]="{ visibility: showDateEnd() ? 'visible' : 'hidden' }">
+          <mat-label>Fecha de fin</mat-label>
+          <input matInput [matDatepicker]="picker2" [formControl]="getForm('fechaFin')" />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <!-- Botones -->
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px" style="width: 100%"
+    class="button-container">
+    <button mat-flat-button color="accent" type="button" (click)="goModal()">
+      <mat-icon>add</mat-icon>
+      Añadir
+    </button>
+
+    <div fxLayout="row" fxLayoutGap="16px">
+      <button mat-flat-button color="primary" type="submit">
+        <mat-icon>search</mat-icon>
+        Buscar
+      </button>
+
+      <button mat-flat-button color="primary" type="button" (click)="toggleAccordion(filterPanel)" disabled>
+        <mat-icon>filter_list</mat-icon>
+        Filtrar
+      </button>
+
+      <button mat-flat-button color="primary" type="button" (click)="clearFormFilter()">
+        <mat-icon>delete</mat-icon>
+        Limpiar
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,15 @@
+meta {
+  name: Capacidades
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{Server}}/api/v1/movilizaciones-medios/capacidades
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

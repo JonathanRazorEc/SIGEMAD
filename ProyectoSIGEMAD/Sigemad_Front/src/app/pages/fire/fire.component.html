@@ -1,0 +1,18 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-fire-filter-form
+    [currentPage]="page"
+    [pageSize]="pageSize"
+    [filtros]="filtros" 
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm" 
+    [(fires)]="fires">
+  </app-fire-filter-form>
+  <app-fire-table 
+    [isLoading]="isLoading" 
+    [fires]="fires" 
+    [(refreshFilterForm)]="refreshFilterForm"
+    (pageChanged)="onPageChanged($event)" 
+    *ngIf="fires?.data">
+  </app-fire-table>
+</div>

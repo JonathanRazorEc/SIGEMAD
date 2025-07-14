@@ -1,0 +1,10 @@
+// Estilos específicos que solo aplican a este componente
+.pin-location {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-top: 2px;
+  margin-bottom: 20px;
+}
+
+// Los demás estilos se han movido al componente padre 

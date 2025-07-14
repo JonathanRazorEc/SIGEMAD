@@ -1,0 +1,253 @@
+<ng-container *ngIf="filaDias.size > 0">
+  <ng-container *ngIf="filaDias.size > 1">
+    <button (click)="toggleVistaTabla()" flat-button>Alternar vista (completa/detallada)</button>
+  </ng-container>
+  <div fxLayout="column" fxLayoutGap="16px" class="filter-container">
+    <img class="w-100" src="/assets/img/graph.svg" alt="graph" />
+
+    <!-- GRÁFICO HISTÓRICO -->
+    <div class="tabla-contenedor-historico">
+      <div class="leyenda" style="margin-top: 52px">
+        <ng-container *ngIf="filaNivelSituacionOperativaEquivalente.size > 0 || filaActivacionSistemas.size > 0">
+          <div class="leyenda-item">
+            <img src="/assets/assets/img/DGPCE_logo.png" class="icono-leyenda" matTooltip="Situación operativa equivalente" />
+          </div>
+        </ng-container>
+        <ng-container *ngIf="filaAfectaciones.size > 0">
+          <div class="leyenda-item">
+            <img src="/assets/assets/img/consecuencias.png" class="icono-leyenda" matTooltip="Afectaciones" />
+          </div>
+        </ng-container>
+        <ng-container *ngIf="filaMediosExtincionOrdinarios.size > 0">
+          <div class="leyenda-item">
+            <img src="/assets/assets/img/hidroavion.png" class="icono-leyenda" matTooltip="Medios de extinción ordinarios" />
+          </div>
+        </ng-container>
+        <ng-container *ngIf="filaMediosExtincionExtraordinariosNacionales.size > 0">
+          <div class="leyenda-item">
+            <img src="/assets/assets/img/ume_logo.png" class="icono-leyenda" matTooltip="Medios de extición extraordinarios nacionales" />
+          </div>
+        </ng-container>
+        <ng-container *ngIf="filaMediosExtincionExtraordinariosInternacionales.size > 0">
+          <div class="leyenda-item">
+            <img src="/assets/assets/img/logo UE.png" class="icono-leyenda" matTooltip="Medios de extición extraordinarios internacionales" />
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Tabla -->
+      <table id="tablaHistorico" class="vista-general">
+        <tbody>
+          <ng-container *ngIf="filaDias.size > 0">
+            <tr id="filaDias">
+              <td colspan="24" *ngFor="let dia of filaDiasArray" style="font-size: 10px; text-align: left; color: blue">
+                {{ dia }}
+              </td>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="filaDias.size > 0">
+            <tr id="filaEvolucion" class="regla" style="height: 20px">
+              <ng-container *ngFor="let entry of filaEvolucionDiasCompletos | keyvalue; let diaIndex = index">
+                <ng-container *ngFor="let hour of [].constructor(24); let horaIndex = index">
+                  <td
+                    [id]="'filaEvolucion_' + entry.key + '_' + horaIndex"
+                    class="hora-celda"
+                    [ngClass]="{ 'inicio-dia': horaIndex === 0 }"
+                    style="position: relative; text-align: center; padding: 8px"
+                    [attr.title]="
+                      getBackgroundColorFilaEvolucion(entry.key, horaIndex) !== 'transparent'
+                        ? 'Estado el ' +
+                          entry.key +
+                          ' a las ' +
+                          horaIndex.toString().padStart(2, '0') +
+                          ' horas: ' +
+                          getEstadoFilaEvolucion(entry.key, horaIndex)
+                        : null
+                    "
+                  >
+                    <div
+                      *ngIf="getBackgroundColorFilaEvolucion(entry.key, horaIndex) !== 'transparent'"
+                      [ngStyle]="{
+                        'background-color': getBackgroundColorFilaEvolucion(entry.key, horaIndex),
+                        position: 'absolute',
+                        top: '7px',
+                        left: '0',
+                        width: '100%',
+                        height: '30%',
+                        display: 'block',
+                        zIndex: '999',
+                      }"
+                    >
+                      <!--{{ horaIndex }}-->
+                    </div>
+                    <div *ngIf="horaIndex !== 23" class="tercer-borde"></div>
+                  </td>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="filaNivelSituacionOperativaEquivalente.size > 0 || filaActivacionSistemas.size > 0">
+            <tr id="filaNivelSituacionOperativaEquivalente" style="height: 20px">
+              <ng-container *ngFor="let entry of filaNivelSituacionOperativaEquivalenteDiasCompletos | keyvalue; let diaIndex = index">
+                <ng-container *ngFor="let hour of [].constructor(24); let horaIndex = index">
+                  <td
+                    [id]="'filaNivelSituacionOperativaEquivalente' + entry.key + '_' + horaIndex"
+                    class="hora-celda"
+                    style="position: relative; text-align: center; padding: 8px"
+                  >
+                    <div
+                      [ngStyle]="{
+                        'background-color': getBackgroundColorFilaNivelSituacionOperativaEquivalente(entry.key, horaIndex),
+                        position: 'absolute',
+                        top: '8px',
+                        left: '0',
+                        width: '100%',
+                        height: '30%',
+                      }"
+                    ></div>
+                    <div
+                      [ngStyle]="{
+                        'background-image': getBackgroundIconFilaActivacionSistemas(entry.key, horaIndex),
+                        'background-size': 'contain',
+                        'background-repeat': 'no-repeat',
+                        position: 'absolute',
+                        top: '4px',
+                        left: '0',
+                        width: '100%',
+                        height: '100%',
+                      }"
+                    >
+                      <!--{{ horaIndex }}-->
+                    </div>
+                  </td>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="filaAfectaciones.size > 0">
+            <tr id="filaAfectaciones" style="height: 20px">
+              <ng-container *ngFor="let entry of filaAfectacionesDiasCompletos | keyvalue; let diaIndex = index">
+                <ng-container *ngFor="let hour of [].constructor(24); let horaIndex = index">
+                  <td
+                    [id]="'Afectaciones_' + entry.key + '_' + horaIndex"
+                    class="hora-celda"
+                    style="position: relative; text-align: center; padding: 8px"
+                  >
+                    <div
+                      [ngStyle]="{
+                        'background-image': getBackgroundIconFilaAfectaciones(entry.key, horaIndex),
+                        'background-size': 'contain',
+                        'background-repeat': 'no-repeat',
+                        'background-position': 'top center',
+                        position: 'absolute',
+                        top: '8px',
+                        left: '0',
+                        width: '16px',
+                        height: '16px',
+                      }"
+                    >
+                      <!--{{ horaIndex }}-->
+                    </div>
+                  </td>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="filaMediosExtincionOrdinarios.size > 0">
+            <tr id="filaMediosExtincionOrdinarios" style="height: 20px">
+              <ng-container *ngFor="let entry of filaMediosExtincionOrdinariosDiasCompletos | keyvalue; let diaIndex = index">
+                <ng-container *ngFor="let hour of [].constructor(24); let horaIndex = index">
+                  <td
+                    [id]="'filaMediosExtincionOrdinarios' + entry.key + '_' + horaIndex"
+                    class="hora-celda"
+                    style="position: relative; text-align: center; padding: 8px"
+                  >
+                    <div
+                      [ngStyle]="{
+                        'background-color': getBackgroundColorFilaMediosExtincionOrdinarios(entry.key, horaIndex),
+                        position: 'absolute',
+                        top: '8px',
+                        left: '0',
+                        width: '100%',
+                        height: '30%',
+                      }"
+                    >
+                      <!--{{ horaIndex }}-->
+                    </div>
+                  </td>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="filaMediosExtincionExtraordinariosNacionales.size > 0">
+            <tr id="filaMediosExtincionExtraOrdinariosNacionales" style="height: 20px">
+              <ng-container *ngFor="let entry of filaMediosExtincionExtraordinariosNacionalesDiasCompletos | keyvalue; let diaIndex = index">
+                <ng-container *ngFor="let hour of [].constructor(24); let horaIndex = index">
+                  <td
+                    [id]="'filaMediosExtincionOrdinarios' + entry.key + '_' + horaIndex"
+                    class="hora-celda"
+                    style="position: relative; text-align: center; padding: 8px"
+                  >
+                    <!--
+                    <div
+                      [ngStyle]="{
+                        'background-color': getBackgroundColorFilaMediosExtincionExtraordinariosNacionales(entry.key, horaIndex),
+                        position: 'absolute',
+                        top: '8px',
+                        left: '0',
+                        width: '100%',
+                        height: '30%',
+                      }"
+                    >
+                    -->
+
+                    <!-- PCD-->
+                    <div [ngStyle]="getEstiloFilaMediosExtincionExtraordinariosNacionales(entry.key, horaIndex)">
+                      <!-- FIN PCD-->
+
+                      <!--{{ horaIndex }}-->
+                    </div>
+                  </td>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="filaMediosExtincionExtraordinariosInternacionales.size > 0">
+            <tr id="filaMediosExtincionExtraOrdinariosInternacionales" style="height: 20px">
+              <ng-container *ngFor="let entry of filaMediosExtincionOrdinariosInternacionalesDiasCompletos | keyvalue; let diaIndex = index">
+                <ng-container *ngFor="let hour of [].constructor(24); let horaIndex = index">
+                  <td
+                    [id]="'filaMediosExtincionOrdinarios' + entry.key + '_' + horaIndex"
+                    class="hora-celda"
+                    style="position: relative; text-align: center; padding: 8px"
+                  >
+                    <div
+                      [ngStyle]="{
+                        'background-color': getBackgroundColorFilaMediosExtincionExtraordinariosInternacionales(entry.key, horaIndex),
+                        position: 'absolute',
+                        top: '8px',
+                        left: '0',
+                        width: '100%',
+                        height: '30%',
+                      }"
+                    >
+                      <!--{{ horaIndex }}-->
+                    </div>
+                  </td>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FIN GRÁFICO HISTÓRICO -->
+  </div>
+</ng-container>

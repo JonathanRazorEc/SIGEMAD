@@ -1,0 +1,51 @@
+@use '../../../../styles.scss' as theme;
+
+.form-container {
+  flex: 1;
+  background: #ececec;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.spaced-input {
+  margin-right: 15px;
+}
+
+.modal-header {
+  text-align: center;
+}
+
+.modal-footer {
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  color: var(--fire-color);
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: #e7e7e7;
+}
+
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pin-location {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+.padding-icons{
+  padding-left: 5px;
+}

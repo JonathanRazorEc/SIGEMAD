@@ -1,0 +1,15 @@
+meta {
+  name: Clasificacion Medios
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{Server}}/api/v1/clasificacion-medios
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

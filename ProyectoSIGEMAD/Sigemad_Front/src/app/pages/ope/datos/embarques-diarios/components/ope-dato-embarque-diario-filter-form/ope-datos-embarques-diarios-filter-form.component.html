@@ -1,0 +1,215 @@
+<!-- Acordeón para Filtros -->
+
+<form *ngIf="formData" [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-accordion multi>
+    <mat-expansion-panel #filterPanel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Filtros</mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- Fila 1 -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+        <!-- Fecha desde -->
+        <mat-form-field appearance="outline" fxFlex="18" class="mb-3">
+          <mat-label>Fecha desde</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerFechaInicio"
+            [formControl]="getForm('fechaInicio')"
+            [min]="fechaMinimaDatePicker"
+            [max]="fechaMaximaDatePicker"
+            (dateChange)="onFechaChange($event)"
+            (input)="onFechaChangeManual($event)"
+          />
+          <mat-datepicker-toggle matSuffix [for]="pickerFechaInicio"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFechaInicio></mat-datepicker>
+          <mat-error *ngIf="formData.get('fechaInicio')?.hasError('fechaInvalida')">El valor de la fecha no es válido.</mat-error>
+        </mat-form-field>
+
+        <!-- Fecha hasta -->
+        <mat-form-field appearance="outline" fxFlex="18" class="mb-3">
+          <mat-label>Fecha hasta</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerFechaFin"
+            [formControl]="getForm('fechaFin')"
+            [min]="fechaMinimaDatePicker"
+            [max]="fechaMaximaDatePicker"
+            (dateChange)="onFechaChange($event)"
+            (input)="onFechaChangeManual($event)"
+          />
+          <mat-datepicker-toggle matSuffix [for]="pickerFechaFin"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFechaFin></mat-datepicker>
+          <mat-error *ngIf="formData.get('fechaFin')?.hasError('fechaInvalida')">El valor de la fecha no es válido.</mat-error>
+          <mat-error *ngIf="formData.get('fechaFin')?.hasError('fechaFinInvalida')">
+            La fecha de fin debe ser posterior a la fecha de inicio.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- OPE Periodo-->
+        <mat-form-field appearance="outline" fxFlex="18">
+          <mat-label>Periodo</mat-label>
+          <mat-select [formControl]="getForm('opePeriodo')" (selectionChange)="onChangeOpePeriodo($event)">
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let option of opePeriodos()" [value]="option.id">
+              {{ option.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- OPE Fase-->
+        <mat-form-field appearance="outline" fxFlex="18">
+          <mat-label>Fase</mat-label>
+          <mat-select [formControl]="getForm('opeFase')" (selectionChange)="actualizarLineasMaritimas()">
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let option of opeFases()" [value]="option.id">
+              {{ option.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- OPE Línea Marítima -->
+        <!--
+        <mat-form-field appearance="outline" fxFlex="20">
+          <mat-label>Línea</mat-label>
+          <mat-select [formControl]="getForm('opeLineaMaritima')">
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let option of opeLineasMaritimas()" [value]="option.id">
+              {{ option.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        -->
+
+        <!-- OPE Línea marítima-->
+        <!--
+        <mat-form-field appearance="outline" fxFlex="28">
+          <mat-label>Línea</mat-label>
+          <input type="text" matInput [formControl]="getForm('opeLineaMaritima')" [matAutocomplete]="autoOpeLineaMaritima" />
+          <mat-autocomplete #autoOpeLineaMaritima="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of opeLineasMaritimasFiltradas()" [value]="option.id">
+              {{ option.nombre }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="formData.get('opeLineaMaritima')?.hasError('invalidOption')">Debe seleccionar una Línea válida de la lista</mat-error>
+        </mat-form-field>
+        -->
+
+        <!-- OPE Puertos -->
+        <div fxFlex="50" class="form-group">
+          <app-multi-select-autocomplete
+            [options]="opeLineasMaritimas()"
+            [isRequired]="false"
+            [formControl]="getForm('opeLineasMaritimasSeleccionadas')"
+            label="Líneas"
+            style="width: 100%"
+            displayProperty="descripcion"
+            alternativeDisplayProperty="nombre"
+          ></app-multi-select-autocomplete>
+        </div>
+      </div>
+      <!-- Fila 2 -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+        <!-- Criterio numérico -->
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Criterio numérico</mat-label>
+          <mat-select [formControl]="getForm('criterioNumerico')" (selectionChange)="onChangeCriterioNumerico($event)">
+            <mat-option [value]="null"></mat-option>
+            <mat-option value="rotaciones">Rotaciones</mat-option>
+            <mat-option value="pasajeros">Pasajeros</mat-option>
+            <mat-option value="turismos">Turismos</mat-option>
+            <mat-option value="totalVehiculos">Total vehículos</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Radio buttons de opciones de criterio numérico  -->
+        <mat-radio-group [formControl]="getForm('criterioNumericoRadio')" fxLayout="row" (change)="onChangeCriterioNumericoRadio($event)">
+          <mat-radio-button value="maximo">Máximo</mat-radio-button>
+          <mat-radio-button value="minimo">Mínimo</mat-radio-button>
+          <mat-radio-button value="cantidad">Cantidad</mat-radio-button>
+        </mat-radio-group>
+
+        <!-- Criterio de cantidad del "criterio numérico" seleccionado" -->
+        <mat-form-field appearance="outline" fxFlex="25">
+          <mat-label>Condición</mat-label>
+          <mat-select [formControl]="getForm('criterioNumericoCriterioCantidad')">
+            <mat-option value="igual">Igual a</mat-option>
+            <mat-option value="menor">Menor que</mat-option>
+            <mat-option value="mayor">Mayor que</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formData.get('criterioNumericoCriterioCantidad')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <!-- Cantidad del criterio de cantidad del "criterio numérico" seleccionado" -->
+        <mat-form-field class="input" appearance="outline" fxFlex="15" class="mb-3">
+          <input
+            matInput
+            [formControl]="getForm('criterioNumericoCriterioCantidadCantidad')"
+            type="number"
+            (keypress)="utilsService.allowOnlyNumbers($event)"
+            (input)="utilsService.enforceMaxLength($event, 6, getForm('criterioNumericoCriterioCantidadCantidad'))"
+            min="0"
+            max="999999"
+            step="1"
+          />
+          <mat-error *ngIf="formData.get('criterioNumericoCriterioCantidadCantidad')?.hasError('required')">Este campo es obligatorio.</mat-error>
+          <mat-error *ngIf="formData.get('criterioNumericoCriterioCantidadCantidad')?.hasError('min')">
+            El número debe ser mayor o igual a {{ formData.get('criterioNumericoCriterioCantidadCantidad')?.errors?.['min']?.['min'] }}.
+          </mat-error>
+          <mat-error *ngIf="formData.get('criterioNumericoCriterioCantidadCantidad')?.hasError('max')">
+            El número excede el máximo permitido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <!-- Botón Crear (a la izquierda) -->
+    <button mat-flat-button color="accent" aria-label="Crear" class="custom-button" type="button" (click)="goModal()">
+      <mat-icon>add</mat-icon>
+      Añadir
+    </button>
+
+    <!-- Botones a la derecha -->
+    <div fxLayout="row" fxLayoutGap="16px">
+      <!-- Botón Logs -->
+      <button
+        mat-flat-button
+        color="primary"
+        aria-label="Logs"
+        class="custom-button"
+        type="button"
+        (click)="opeUtilsService.abrirLogs(ID_TABLA_LOGS)"
+      >
+        <mat-icon>search</mat-icon>
+        Logs
+      </button>
+      <!-- Botón Buscar -->
+      <button mat-flat-button color="primary" aria-label="Buscar" class="custom-button" type="submit">
+        <mat-icon>search</mat-icon>
+        Buscar
+      </button>
+
+      <!-- Botón Filtrar -->
+      <!--
+      <button mat-flat-button color="primary" aria-label="Filtrar" class="custom-button" (click)="toggleAccordion(filterPanel)" type="button">
+        <mat-icon>filter_list</mat-icon>
+        Filtrar
+      </button>
+      -->
+
+      <!-- Botón Borrar -->
+      <button mat-flat-button color="primary" aria-label="Borrar" class="custom-button" type="button" (click)="clearFormFilter()">
+        <mat-icon>delete</mat-icon>
+        Limpiar
+      </button>
+
+      <!-- Botón Exportar Excel -->
+
+      <button mat-flat-button color="primary" type="button" (click)="exportToExcel()">
+        <mat-icon>download</mat-icon>
+        Exportar Excel
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+CREATE TABLE OPE_HIST_Linea (
+	Id int NOT NULL IDENTITY(1,1),
+	Nombre varchar(150) NOT NULL,
+	IdPuertoOrigen int NOT NULL,
+	IdPuertoDestino int NOT NULL,
+	FechaDesde datetime2 NOT NULL,
+	FechaHasta datetime2 NULL,
+	--
+	[Editable] bit DEFAULT 1 NOT NULL,
+	--
+	CONSTRAINT PK_OPE_HIST_Linea PRIMARY KEY (Id),
+	CONSTRAINT FK_OPE_HIST_PuertoDestinoOPE_HIST_Linea FOREIGN KEY (IdPuertoDestino) REFERENCES OPE_HIST_Puerto(Id)
+		ON DELETE NO ACTION 
+		ON UPDATE NO ACTION,
+	CONSTRAINT FK_OPE_HIST_PuertoOrigenOPE_HIST_Linea FOREIGN KEY (IdPuertoOrigen) REFERENCES OPE_HIST_Puerto(Id) 
+		ON DELETE NO ACTION 
+		ON UPDATE NO ACTION
+);
+
+

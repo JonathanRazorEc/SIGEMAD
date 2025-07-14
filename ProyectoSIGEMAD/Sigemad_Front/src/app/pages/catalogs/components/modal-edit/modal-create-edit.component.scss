@@ -1,0 +1,222 @@
+/*
+.modal-container {
+  max-width: 800px;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+*/
+
+//
+.modal-container {
+  max-width: 800px;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  overflow-x: hidden;
+
+  max-height: 90vh;
+  overflow-y: auto;
+}
+//
+
+.modal-header {
+  background-color: #ffe0c1;
+  padding: 1rem 1.5rem;
+  border-bottom: 3px solid #ff8000;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #ff8000;
+}
+
+.modal-form {
+  padding: 1.5rem;
+}
+
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0rem 0.5rem;
+}
+
+.form-group {
+  flex: 1 1 48%;
+  min-width: 240px;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  flex: 1 1 48%;
+  min-width: 240px;
+  box-sizing: border-box;
+}
+
+.modal-divider-full {
+  height: 2px;
+  background-color: #ff8000;
+  width: 100vw;
+  margin-left: -1.5rem; /* igual al padding horizontal de modal-container */
+  margin-right: -1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end; /* 🔸 Alinea a la derecha */
+  padding-top: 1.5rem;
+  gap: 1rem;
+}
+
+.modal-actions button {
+  min-width: 100px; /* 🔸 Más pequeños */
+  border-radius: 6px; /* 🔸 Recto pero suave */
+  padding: 0.3rem 1rem; /* 🔸 Menos altos */
+  font-size: 14px;
+}
+
+button[color='primary'] {
+  background-color: #1e90ff;
+  color: white;
+}
+
+button[color='primary']:hover {
+  background-color: #63b3ed;
+}
+
+button[color='warn'] {
+  border: 1px solid #d32f2f;
+  color: #d32f2f;
+  background-color: transparent;
+}
+
+button[color='warn']:hover {
+  background-color: #fddede;
+}
+
+.modal-card {
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); /* sombra muy sutil */
+  margin-bottom: 2rem;
+}
+
+/* Tamaño y estilo general para mat-form-field */
+mat-form-field.full-width {
+  width: 100%;
+  font-size: 15px;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  height: 56px; /* altura estándar para outline */
+  align-items: center;
+}
+
+::ng-deep .mat-input-element {
+  font-size: 15px;
+  padding: 0 12px;
+  height: 32px;
+}
+
+::ng-deep .mat-form-field-label {
+  font-size: 14px;
+  top: 1.6em;
+}
+
+/* Aumenta tamaño de select también */
+::ng-deep .mat-select-trigger {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+/* Uniformar altura visual del checkbox */
+.checkbox-field {
+  height: 56px;
+  font-size: 15px;
+  padding-left: 1rem;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 1rem;
+  background-color: #fff;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: border 0.2s ease;
+}
+
+.checkbox-wrapper:hover {
+  border-color: #999;
+}
+
+.custom-checkbox {
+  --mat-mdc-checkbox-checked-color: #1e90ff; /* color del check */
+  --mat-mdc-checkbox-unchecked-color: #aaa; /* color del borde no marcado */
+  --mdc-checkbox-selected-checkmark-color: white;
+  --mdc-checkbox-unselected-icon-color: #ccc;
+  --mdc-checkbox-disabled-color: #eee;
+
+  font-weight: 500;
+  margin: 0;
+}
+
+.custom-checkbox .mat-mdc-checkbox-touch-target {
+  height: 32px;
+  width: 32px;
+}
+
+.custom-checkbox .mat-mdc-checkbox-ripple {
+  display: none;
+}
+
+.checkbox-label {
+  margin-left: 12px;
+  color: #333;
+}
+
+// OPE
+#grupo3,
+#grupo4,
+#grupo5 {
+  .modal-header {
+    background-color: lightblue;
+    padding: 1rem 1.5rem;
+    border-bottom: 3px solid darkcyan;
+  }
+  .modal-title {
+    color: white;
+  }
+
+  .modal-divider-full {
+    background-color: darkcyan;
+  }
+  button[color='warn'] {
+    border: 1px solid darkblue;
+    color: darkblue;
+    background-color: transparent;
+  }
+}
+// FIN OPE
+
+.mat-mdc-form-field {
+  display: block;
+  margin-bottom: 0px;
+}

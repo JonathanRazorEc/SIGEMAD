@@ -1,0 +1,15 @@
+meta {
+  name: Territorios - Busqueda
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/territorios
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

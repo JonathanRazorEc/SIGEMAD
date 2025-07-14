@@ -1,0 +1,15 @@
+meta {
+  name: Estado Sucesos
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{Server}}/api/v1/estados-sucesos
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,34 @@
+meta {
+  name: Eliminar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/actuaciones-relevantes/notificaciones/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 1,
+    "idSuceso": 1,
+    "detalles": [
+      {
+        "id": 1,
+        "idTipoNotificacion": 1,
+        "fechaHoraNotificacion": "2025-01-30T14:42:39.633Z",
+        "organosNotificados": "Organo oficial",
+        "ucpm": "Ucpm",
+        "organismoInternacional": "organismo 1",
+        "otrosPaises": "Portugal",
+        "observaciones": "Sin observaciones"
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 204
+}

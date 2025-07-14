@@ -1,0 +1,60 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/registros/activaciones-sistemas/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 1,
+    "idSuceso": 1,
+    "detalles": [
+      {
+        "id": 0,
+        "idTipoSistemaEmergencia": 1,
+        "fechaHoraActivacion": "2025-01-30T15:26:37.510Z",
+        "fechaHoraActualizacion": "2025-01-30T15:26:37.510Z",
+        "autoridad": "autoridad 1",
+        "descripcionSolicitud": "descripcionSolicitud 1",
+        "observaciones": "observaciones 1",
+        "idModoActivacion": 1,
+        "fechaActivacion": "2025-01-30",
+        "codigo": "codigo 1",
+        "nombre": "nombre 1",
+        "urlAcceso": "urlAcceso 1",
+        "fechaHoraPeticion": "2025-01-30T15:26:37.510Z",
+        "fechaAceptacion": "2025-01-30",
+        "peticiones": "peticiones 1",
+        "mediosCapacidades": "mediosCapacidades 1"
+      },
+     {
+        "id": 0,
+        "idTipoSistemaEmergencia": 2,
+        "fechaHoraActivacion": "2025-01-30T15:26:37.510Z",
+        "fechaHoraActualizacion": "2025-01-30T15:26:37.510Z",
+        "autoridad": "autoridad 2",
+        "descripcionSolicitud": "descripcionSolicitud 2",
+        "observaciones": "observaciones 2",
+        "idModoActivacion": 1,
+        "fechaActivacion": "2025-01-30",
+        "codigo": "codigo 2",
+        "nombre": "nombre 2",
+        "urlAcceso": "urlAcceso 2",
+        "fechaHoraPeticion": "2025-01-30T15:26:37.510Z",
+        "fechaAceptacion": "2025-01-30",
+        "peticiones": "peticiones 2",
+        "mediosCapacidades": "mediosCapacidades 2"
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+}

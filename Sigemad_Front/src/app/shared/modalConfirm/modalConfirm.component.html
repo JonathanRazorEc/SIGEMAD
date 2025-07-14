@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="form-container">
+    <div class="text-center">
+      <h2>Estas seguro?</h2>
+    </div>
+    <div class="modal-footer" fxLayout="row" fxLayoutAlign="end center">
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+        <button (click)="closeModal()" mat-flat-button color="secondary" style="margin-right: 10px">No</button>
+        <button mat-flat-button color="primary" style="margin-right: 10px" (click)="confirm()">Si</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

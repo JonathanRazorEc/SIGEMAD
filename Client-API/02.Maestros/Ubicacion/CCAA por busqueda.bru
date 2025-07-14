@@ -1,0 +1,20 @@
+meta {
+  name: CCAA por busqueda
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{Server}}/api/v1/v2-paises/busqueda/comunidades?busqueda=va&IdPais=60
+  body: none
+  auth: inherit
+}
+
+params:query {
+  busqueda: va
+  IdPais: 60
+}
+
+assert {
+  res.status: eq 200
+}

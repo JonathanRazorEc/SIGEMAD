@@ -1,0 +1,126 @@
+@use '../../../../../../../styles.scss' as theme;
+
+.title {
+  color: var(--title-color-green);
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.form-container {
+  flex: 1;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.submit-button {
+  margin-top: 24px;
+  align-self: flex-start;
+}
+
+.button-container {
+  margin-top: 0px;
+}
+
+.custom-button {
+  font-size: 16px;
+  text-transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+mat-icon {
+  font-size: 24px;
+}
+
+.mb-3 {
+  margin-bottom: 12px;
+}
+
+.pin-location {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.j-end {
+  justify-content: flex-end;
+}
+
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: #e7e7e7;
+}
+
+//
+.embarques-diarios-relacionados {
+  display: inline-block; /* Hace que el h2 se comporte como un bloque en línea */
+  background-color: #3f51b5; /* Color de fondo de la pestaña */
+  color: white; /* Color del texto */
+  padding: 0px 10px; /* Espaciado interno para darle altura y ancho a la pestaña */
+  border-radius: 10px 10px 0 0; /* Bordes redondeados en la parte superior */
+  font-size: 0.9rem; /* Ajuste el tamaño de la fuente */
+  font-weight: bold; /* Pone la fuente en negrita */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+}
+
+.datoEmbarqueDiarioActivo {
+  background-color: lightblue; /* O el color que desees */
+  font-weight: bold;
+}
+
+//
+/*
+.form-en-edicion input {
+  border: 2px solid tomato;
+  background-color: hsla(60, 100%, 50%, 0.13);
+  padding: 10px;
+  border-radius: 6px;
+}
+*/
+
+//
+::ng-deep .mat-table th,
+::ng-deep .mat-table td {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+//::ng-deep .numeroTurismos-field.campoDesactivado .mat-mdc-text-field-wrapper,
+//::ng-deep .numeroAutocares-field.campoDesactivado .mat-mdc-text-field-wrapper,
+//::ng-deep .numeroCamiones-field.campoDesactivado .mat-mdc-text-field-wrapper,
+::ng-deep .numeroTotalVehiculos-field.campoDesactivado .mat-mdc-text-field-wrapper {
+  background-color: lightgray;
+  pointer-events: none;
+}
+
+//::ng-deep .numeroTurismos-field.campoDesactivado .mdc-floating-label,
+//::ng-deep .numeroAutocares-field.campoDesactivado .mdc-floating-label,
+//::ng-deep .numeroCamiones-field.campoDesactivado .mdc-floating-label,
+::ng-deep .numeroTotalVehiculos-field.campoDesactivado .mdc-floating-label {
+  background-color: lightgray;
+}
+
+.scrollable {
+  max-height: 90vh;
+  overflow: auto;
+}

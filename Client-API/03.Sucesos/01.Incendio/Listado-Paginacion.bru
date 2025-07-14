@@ -1,0 +1,35 @@
+meta {
+  name: Listado-Paginacion
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{Server}}/api/v1/Incendios?PageIndex=0&PageSize=3
+  body: none
+  auth: inherit
+}
+
+params:query {
+  PageIndex: 0
+  PageSize: 3
+  ~IdPais: 60
+  ~IdCcaa: 4
+  ~IdProvincia: 1
+  ~IdMunicipio: 1001
+  ~IdEstadoSuceso: 1
+  ~IdEstadoIncendio: 1
+  ~IdNivelGravedad: 1
+  ~IdSuperficieAfectada: 1
+  ~IdMovimiento: 1
+  ~IdComparativoFecha: 1
+  ~FechaInicio: 2024-10-07T23:03:57.403
+  ~FechaFin: 2024-10-07T23:05:04.670
+  ~IdSituacionEquivalente: 5
+  ~Sort: desc
+  ~IdTerritorio: 1
+}
+
+assert {
+  res.status: eq 200
+}

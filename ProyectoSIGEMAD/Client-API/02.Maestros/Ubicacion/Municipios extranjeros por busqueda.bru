@@ -1,0 +1,21 @@
+meta {
+  name: Municipios extranjeros por busqueda
+  type: http
+  seq: 17
+}
+
+get {
+  url: {{Server}}/api/v1/v2-Municipios/busqueda/extranjeros?busqueda=oli&idDistrito=1&Idpais=1
+  body: none
+  auth: inherit
+}
+
+params:query {
+  busqueda: oli
+  idDistrito: 1
+  Idpais: 1
+}
+
+assert {
+  res.status: eq 200
+}

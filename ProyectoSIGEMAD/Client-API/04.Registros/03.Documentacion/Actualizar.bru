@@ -1,0 +1,29 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/Documentaciones/lista
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  IdDocumento: {{IdDocumentacion}}
+  IdSuceso: 1
+  detalles[0].fechaHora: 2025-01-06T05:56:33.216Z
+  detalles[0].fechaHoraSolicitud: 2025-01-06T05:56:33.216Z
+  detalles[0].idTipoDocumento: 1
+  detalles[0].descripcion: *** ACTUALIZACIÓN ***
+  detalles[0].idsProcedenciasDestinos[0]: 3
+  detalles[0].idsProcedenciasDestinos[1]: 2
+  detalles[0].Id: 3
+  detalles[0].archivo: @file(C:\Users\ftm_com_uat\Downloads\WhatsApp Image 2025-01-20 at 14.07.09.jpeg)
+  ~detalles[0].idsProcedenciasDestinos[2]: 3
+}
+
+assert {
+  res.status: eq 200
+}

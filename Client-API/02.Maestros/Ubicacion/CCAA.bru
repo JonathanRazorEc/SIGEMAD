@@ -1,0 +1,15 @@
+meta {
+  name: CCAA
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{Server}}/api/v1/comunidadesautonomas
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

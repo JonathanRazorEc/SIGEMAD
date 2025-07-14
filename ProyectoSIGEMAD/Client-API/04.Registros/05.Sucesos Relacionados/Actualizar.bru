@@ -1,0 +1,28 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/sucesos-relacionados/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "IdRegistroActualizacion": 0,
+    "idSuceso": 1,
+    "idsSucesosAsociados": [2,3]
+  }
+  
+}
+
+vars:post-response {
+  IdSucesoRelacionado: res.body.idSucesoRelacionado
+}
+
+assert {
+  res.status: eq 200
+}

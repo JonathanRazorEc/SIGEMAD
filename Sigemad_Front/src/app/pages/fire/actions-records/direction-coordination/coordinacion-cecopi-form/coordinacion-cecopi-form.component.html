@@ -1,0 +1,154 @@
+<div [formGroup]="cecopiForm">
+  <!-- Primera fila: Fecha inicio, fecha fin, fichero -->
+  <div *ngIf="displayPart === 'first-row'" class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+    <!-- Fecha y hora de inicio -->
+    <mat-form-field appearance="outline" fxFlex="30%"> 
+      <mat-label>Fecha y hora de inicio</mat-label>
+      <input 
+        matInput 
+        placeholder="Fecha y hora de inicio" 
+        formControlName="fechaHoraInicio" 
+        type="datetime-local"
+        [min]="fechaMinimaDateTime" 
+        [max]="fechaMaximaDateTime" 
+      />
+      <mat-error *ngIf="cecopiForm.get('fechaHoraInicio')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      <mat-error *ngIf="cecopiForm.get('fechaHoraInicio')?.hasError('fechaHoraInicioInvalida')">
+        La fecha debe ser posterior al inicio del incendio
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Fecha y hora de fin -->
+    <mat-form-field appearance="outline" fxFlex="30%"> 
+      <mat-label>Fecha y hora de fin</mat-label>
+      <input 
+        matInput 
+        placeholder="Fecha y hora de fin" 
+        formControlName="fechaHoraFin" 
+        type="datetime-local"
+        [min]="fechaMinimaDateTime" 
+        [max]="fechaMaximaDateTime" 
+      />
+      <mat-error *ngIf="cecopiForm.get('fechaHoraFin')?.hasError('fechaHoraFinInvalida')">
+        La fecha debe ser posterior a la fecha de inicio
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo para subir fichero -->
+    <div fxFlex="40%" class="custom-form-field"> 
+      <label class="custom-form-field-label">Fichero</label>
+      <div class="custom-form-field-container">
+        <ngx-file-drop
+          dropZoneClassName="custom-file-input"
+          contentClassName="hidden-content"
+          (onFileDrop)="dropped($event)"
+          (onFileOver)="fileOver($event)"
+          (onFileLeave)="fileLeave($event)"
+        >
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <!-- Mostrar archivo existente como enlace descargable -->
+            <div *ngIf="existingFile && !file" class="existing-file-container">
+              <input
+                type="text"
+                readonly
+                class="file-display-input existing-file"
+                [value]="existingFile.nombreOriginal"
+              />
+              <button mat-button type="button" (click)="downloadExistingFile()" class="download-btn" matTooltip="Descargar archivo">
+                <mat-icon>download</mat-icon>
+              </button>
+              <button mat-button type="button" (click)="openFileSelector()" matTooltip="Cambiar archivo">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+            </div>
+            
+            <!-- Input normal para nuevos archivos -->
+            <div *ngIf="!existingFile || file" class="new-file-container">
+              <input
+                type="text"
+                readonly
+                class="file-display-input"
+                [value]="file ? file.name : 'Arraste o selecione un archivo aquí'"
+                (click)="openFileSelector()"
+                placeholder="Arraste o selecione un archivo aquí"
+              />
+              <button mat-button type="button" (click)="openFileSelector()">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+            </div>
+          </ng-template>
+        </ngx-file-drop>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segunda fila: Lugar, Provincia, Municipio -->
+  <div *ngIf="displayPart === 'second-row'" class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+    <!-- Campo Lugar -->
+    <mat-form-field appearance="outline" fxFlex="33%">
+      <mat-label>Lugar</mat-label>
+      <input
+        matInput
+        placeholder="Ingrese el Lugar"
+        formControlName="lugar"
+        type="text"
+      />
+      <mat-error *ngIf="cecopiForm.get('lugar')?.hasError('required')">Este campo es obligatorio.</mat-error>
+    </mat-form-field>
+
+    <!-- Provincia con autocompletado -->
+    <mat-form-field appearance="outline" fxFlex="33%">
+      <mat-label>Provincia</mat-label>
+      <input
+        matInput
+        formControlName="provincia"
+        [matAutocomplete]="autoProvince"
+        placeholder="Buscar provincia..."
+      />
+      <mat-autocomplete #autoProvince="matAutocomplete" [displayWith]="displayProvince" (optionSelected)="onProvinceChange($event)">
+        <mat-option *ngFor="let province of provincefilteredOptions | async" [value]="province">
+          {{ province.descripcion }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="cecopiForm.get('provincia')?.hasError('required')">Este campo es obligatorio.</mat-error>
+    </mat-form-field>
+
+    <!-- Municipio con autocompletado -->
+    <mat-form-field appearance="outline" fxFlex="33%">
+      <mat-label>Municipio</mat-label>
+      <input
+        matInput
+        formControlName="municipio"
+        [matAutocomplete]="autoMunicipality"
+        placeholder="Buscar municipio..."
+      />
+      <mat-autocomplete #autoMunicipality="matAutocomplete" [displayWith]="displayMunicipality" (optionSelected)="onMunicipalityChange($event)">
+        <mat-option *ngFor="let municipality of municipalityfilteredOptions | async" [value]="municipality">
+          {{ municipality.descripcion }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="cecopiForm.get('municipio')?.hasError('required')">Este campo es obligatorio.</mat-error>
+    </mat-form-field>
+    <img
+      (click)="openModalMap()"
+      style="align-self: self-start; cursor: pointer;"
+      matSuffix
+      src="/assets/img/location-btn.svg"
+      alt="location-btn"
+      class="pin-location"
+    />
+  </div>
+
+  <!-- Tercera fila: Observaciones -->
+  <div *ngIf="displayPart === 'third-row'" class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+    <mat-form-field appearance="outline" fxFlex="100%">
+      <mat-label>Observaciones</mat-label>
+      <textarea
+        matInput
+        placeholder="Ingrese observaciones adicionales"
+        formControlName="observaciones"
+        rows="4"
+      ></textarea>
+    </mat-form-field>
+  </div>
+</div> 

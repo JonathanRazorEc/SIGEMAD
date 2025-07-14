@@ -1,0 +1,16 @@
+meta {
+  name: Obtener Plan situacion por idFase e Situacion equivalente
+  type: http
+  seq: 19
+}
+
+get {
+  url: {{Server}}/api/v1/plan-situacion-emergencia/fase-nivel-situacion?idPlanEmergencia=4&situacionEquivalente=2
+  body: none
+  auth: inherit
+}
+
+params:query {
+  idPlanEmergencia: 4
+  situacionEquivalente: 2
+}

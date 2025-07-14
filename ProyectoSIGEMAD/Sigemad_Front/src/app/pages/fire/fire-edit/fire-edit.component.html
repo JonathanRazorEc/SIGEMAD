@@ -1,0 +1,189 @@
+<div fxLayout="column" class="filter-container">
+  <div class="filter-container-info">
+    <span>
+      <h2>{{ getForm('denomination') }}</h2>
+    </span>
+
+    <span>
+      Iniciado el <strong>{{ getFormatdate(getForm('startDate')) }}</strong>
+      &nbsp;en <strong>{{ getForm('ubicacion') }}</strong>
+      &nbsp;- <strong>{{ getForm('estado') }}</strong>
+    </span>
+
+    <span>
+      @if (esTerritorioNacional()) {
+        <img
+          (click)="openModalMap()"
+          matSuffix
+          src="/assets/img/location-btn.svg"
+          alt="location-btn"
+          class="pin-location"
+          matTooltip="Mapa de situación"
+        />
+      }
+    </span>
+  </div>
+
+  @if (getForm('generalNote')) {
+    <div class="filter-container_general-note" [matTooltip]="getForm('generalNote')">
+      <span>{{ getForm('generalNote') }}</span>
+    </div>
+  }
+
+  <div class="filter-container_actions">
+    <div>
+      <button class="filter-container_actions__back-btn" mat-flat-button (click)="volver()">Volver</button>
+      <button
+        class="filter-container_actions__delete-btn"
+        (click)="deleteFire()"
+        mat-flat-button
+        [disabled]="dataSource.data.length > 0 || cargandoIncendio"
+      >
+        Eliminar
+      </button>
+    </div>
+    <div>
+      <button *ngIf="!cargandoIncendio"  class="filter-container_actions__reload-btn" mat-flat-button (click)="refrescarDatosIncendio()">Recargar</button>
+      <button
+        (click)="goModalEditFire()"
+        mat-flat-button
+        [disabled]="cargandoIncendio"
+      >
+        Editar
+      </button>
+    </div>
+  </div>
+
+</div>
+<br />
+
+<!-- GRÁFICO HISTÓRICO -->
+<app-fire-grafico-historico [dataSource]="dataSource" />
+<!-- FIN GRÁFICO HISTÓRICO -->
+
+<br />
+
+<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
+  <div fxFlex="30" class="info-section">
+    <mat-card>
+      <mat-card-title>Situación Evolutiva</mat-card-title>
+      <mat-card-content>
+        <p>
+          <strong>Inicio de incendio:</strong>
+          19/08/2024 19:45
+        </p>
+        <p>
+          <strong>Estado:</strong>
+          Activo
+        </p>
+        <p>
+          <strong>Nivel de gravedad:</strong>
+          Activo
+        </p>
+        <mat-divider></mat-divider>
+
+        <h4>Hechos relevantes</h4>
+        <p>Activado plan nacional XX (18/08/2024 10:00)</p>
+        <p>Activado Copernico (18/08/2024 12:00)</p>
+        <p>CECOPI (19/08/2024 18:15)</p>
+        <mat-divider></mat-divider>
+
+        <h4>Consecuencias</h4>
+        <p>Heridos: 2</p>
+        <p>Evacuados: 134 (Santa María - 18/08/2024 19:45)</p>
+        <p>Área afectada: Santa María de Guía de Gran Canaria</p>
+        <p>Viabilidad: Corte CN-21 PK 2,300-3,100</p>
+        <mat-divider></mat-divider>
+
+        <h4>Medios intervinientes</h4>
+        <p>BRIF/A - Tineo (18/08/2024 12:40)</p>
+        <p>FOCA - Torrejón (18/08/2024 16:35)</p>
+        <p>UME - Aprobación (19/08/2024 19:45)</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="70" class="table-section">
+    <mat-card>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px">
+        <div style="display: flex; align-items: center">
+          <mat-card-title>Registro de actualizaciones</mat-card-title>
+          <mat-spinner
+            *ngIf="cargandoRegistroActualizaciones"
+            diameter="20"
+            class="refresh-fire-spinner"
+            class="refresh-fire-update-log"
+          ></mat-spinner>
+        </div>
+        <div fxLayout="row" fxLayoutGap="8px" class="btn-container">
+          <button mat-flat-button color="primary" (click)="goModalRecords()">Nuevo</button>
+          <!-- <button mat-button class="circle-button" (click)="goModalRecords()" appTooltip="Datos evolutivos">Nuevo</button>
+          <button mat-button class="circle-button" (click)="goModalEvolution()" appTooltip="Datos evolutivos">E</button>
+          <button mat-button class="circle-button" (click)="goModalCoordination()" appTooltip="Dirección y coordinación">C</button>
+          <button mat-button class="circle-button" (click)="goModalDocumentation()" appTooltip="Documentación">D</button>
+          <button mat-button class="circle-button" (click)="goModalRelevantActions()" appTooltip="Actuaciones relevantes">R</button>
+          <button mat-button class="circle-button" (click)="goModalOtherInformation()" appTooltip="Otra información">O</button>
+          <button mat-button class="circle-button" (click)="goModalRelatedEvent()" appTooltip="Sucesos relacionados">S</button> -->
+        </div>
+      </div>
+      <br />
+      <mat-card-content *ngIf="dataSource.data.length > 0">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%">
+          <ng-container matColumnDef="numero">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">N°</th>
+            <td mat-cell *matCellDef="let element">
+              {{ getRowNumber(dataSource.data.indexOf(element)) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaHora">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha / hora</th>
+            <td mat-cell *matCellDef="let element">
+              {{ getFormatdate(cambioHoraCest(element.fechaHora) ) }}
+            </td>
+          </ng-container>
+          <!--
+          <ng-container matColumnDef="tipoRegistro">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de registro</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.tipoRegistro.nombre }}
+            </td>
+          </ng-container> -->
+
+          <ng-container matColumnDef="apartados">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Apartados</th>
+            <td mat-cell *matCellDef="let element">{{ element.apartados ? element.apartados : 'Registro' }}</td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="tecnico">
+            <th  mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Técnico</th>
+            <td mat-cell *matCellDef="let element" class="text-center">{{ element.tecnico }}</td>
+          </ng-container> -->
+
+          <ng-container matColumnDef="opciones">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center">Opciones</th>
+            <td mat-cell *matCellDef="let fire" style="text-align: center">
+              <a (click)="goModalEdit(fire)">
+                <img src="/assets/img/edit.svg" alt="Editar" appTooltip="Editar registro" style="cursor: pointer" />
+              </a>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+          [length]="total"
+          [pageIndex]="pageIndex"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 20]"
+          (page)="onPage($event)"
+        ></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

@@ -1,0 +1,15 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-dato-asistencia-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opeDatosAsistencias)]="opeDatosAsistencias"
+  ></app-ope-dato-asistencia-filter-form>
+  <app-ope-datos-asistencias-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opeDatosAsistencias]="opeDatosAsistencias.data"
+    *ngIf="opeDatosAsistencias?.data"
+  ></app-ope-datos-asistencias-table>
+</div>

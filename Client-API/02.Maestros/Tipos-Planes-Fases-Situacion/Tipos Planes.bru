@@ -1,0 +1,20 @@
+meta {
+  name: Tipos Planes
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/tipos-planes?idTipoSuceso=6&idAmbito=2
+  body: none
+  auth: inherit
+}
+
+params:query {
+  idTipoSuceso: 6
+  idAmbito: 2
+}
+
+assert {
+  res.status: eq 200
+}

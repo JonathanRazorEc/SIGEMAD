@@ -1,0 +1,15 @@
+meta {
+  name: Situaciones Equivalentes
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/situaciones-equivalentes
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

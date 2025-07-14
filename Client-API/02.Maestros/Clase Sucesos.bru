@@ -1,0 +1,15 @@
+meta {
+  name: Clase Sucesos
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{Server}}/api/v1/clase-sucesos
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

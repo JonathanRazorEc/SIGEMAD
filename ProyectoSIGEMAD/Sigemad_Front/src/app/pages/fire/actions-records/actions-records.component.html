@@ -1,0 +1,491 @@
+<div class="actions-record-container">
+  <div class="modal-title" cdkDragHandle>
+    <h3>Registro de actuación - {{ registroId() ? 'Modificar' : 'Crear' }}</h3>
+  </div>
+
+  <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2 fxFlex="30">{{ data.fire.denominacion }}</h2>
+    <div fxFlex="70" fxLayout="row" fxLayoutGap="20px" class="header-info">
+      <div class="date">
+        <span class="date-label">Fecha y hora de inicio:</span>
+        <span class="header-info-values">{{ data.fire.fechaInicio | date: 'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="follow-up">
+        <span class="follow-up-label">Seguimiento:</span>
+        <span class="header-info-values">{{ data.fire.estadoSuceso.descripcion }}</span>
+      </div>
+      <div class="municipality">
+        <span class="municipality-label">{{ esTerritorioNacional() ? 'Municipio:' : 'Ubicación:' }}</span>
+        <span class="header-info-values">{{ data.fire.ubicacion }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div fxLayout="row" fxLayoutGap="20px" class="content-row">
+      <div fxFlex.gt-sm="78" fxFlex.lt-md="65" class="register-data-container">
+        <h4 class="section-title">Datos del registro</h4>
+        <div fxLayout="row wrap" fxLayoutGap="15px" class="register-form" [formGroup]="registerForm">
+          <!-- Date and Time Field -->
+          <div fxFlex="20" class="form-group">
+            <mat-form-field appearance="outline" class="mb-3">
+              <mat-label>Fecha y hora</mat-label>
+              <input
+                matInput
+                placeholder="Fecha y hora"
+                formControlName="fechaHoraEvolucion"
+                type="datetime-local"
+                [min]="fechaMinimaDateTime"
+                [max]="fechaMaximaDateTime"
+              />
+              <mat-error *ngIf="registerForm.get('fechaHoraEvolucion')?.hasError('required')">Este campo es obligatorio.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Entry/Exit Field -->
+          <div fxFlex="10" class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Entrada/Salida</mat-label>
+              <mat-select formControlName="idEntradaSalida">
+                <mat-option *ngFor="let option of inputOutputOptions()" [value]="option.id">
+                  {{ option.descripcion }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="registerForm.get('idEntradaSalida')?.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Medium Field -->
+          <div fxFlex="15" class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Medio</mat-label>
+              <input matInput placeholder="Buscar medio..." formControlName="idMedio" [matAutocomplete]="autoMedio" />
+              <mat-autocomplete #autoMedio="matAutocomplete" [displayWith]="displayMedio" (optionSelected)="onMedioSelected($event)">
+                <mat-option *ngFor="let option of mediofilteredOptions | async" [value]="option">
+                  {{ option.descripcion }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="registerForm.get('idMedio')?.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="50" class="form-group">
+            <app-multi-select-autocomplete
+              [options]="originDestinationOptions()"
+              [isRequired]="true"
+              formControlName="registroProcedenciasDestinos"
+              label="Procedencia/Destino"
+              (selectionChange)="onOriginDestinationChange($event)"
+              style="width: 100%"
+            ></app-multi-select-autocomplete>
+          </div>
+        </div>
+      </div>
+      <div fxFlex.gt-sm="22" fxFlex.lt-md="25" class="action-type-container">
+        <h4 class="section-title" style="text-align: center">Tipo de actuación</h4>
+        <div class="action-icons" [class.disabled-section]="!registroId()">
+          <div
+            class="action-icon"
+            [class.active]="isActive('evolutivos')"
+            (click)="registroId() && setActiveIcon('evolutivos', $event)"
+            [class.disabled]="!registroId()"
+            [class.tieneDatos]="
+              tieneDatos(
+                registroDataCargado()?.parametros,
+                registroDataCargado()?.areaAfectadas,
+                registroDataCargado()?.tipoImpactosEvoluciones,
+                registroDataCargado()?.intervencionMedios
+              )
+            "
+            matTooltip="Datos evolutivos [Alt+E]"
+            matTooltipPosition="above"
+          >
+            <img src="/assets/assets/img/evolutivos.png" class="custom-icon" />
+            <div
+              class="menu-desplegable"
+              *ngIf="showEvolutivosMenu"
+              [style.left]="getMenuPosition('evolutivos').left"
+              [style.top]="getMenuPosition('evolutivos').top"
+            >
+              <button
+                mat-button
+                class="menu-button"
+                (click)="handleMenuItemClick('parametros')"
+                [class.tieneDatos]="tieneDatos(registroDataCargado()?.parametros)"
+              >
+                <span class="highlight-letter">P</span>
+                arámetros
+              </button>
+              <button [disabled]="!esTerritorioNacional()"             
+                [ngClass]="{ 'disabled-button': !esTerritorioNacional()}"
+                mat-button
+                class="menu-button"
+                (click)="handleMenuItemClick('area')"
+                [class.tieneDatos]="tieneDatos(registroDataCargado()?.areaAfectadas)"
+              >
+                <span class="highlight-letter">Á</span>
+                rea afectada
+              </button>
+              <button
+                mat-button
+                class="menu-button"
+                (click)="handleMenuItemClick('consecuencias')"
+                [class.tieneDatos]="tieneDatos(registroDataCargado()?.tipoImpactosEvoluciones)"
+              >
+                <span class="highlight-letter">C</span>
+                onsecuencias
+              </button>
+              <button
+                mat-button
+                class="menu-button"
+                (click)="handleMenuItemClick('intervencion')"
+                [class.tieneDatos]="tieneDatos(registroDataCargado()?.intervencionMedios)"
+              >
+                <span class="highlight-letter">I</span>
+                ntervención de medios
+              </button>
+            </div>
+          </div>
+          <div
+            class="action-icon"
+            [class.active]="isActive('coordinacion')"
+            (click)="registroId() && setActiveIcon('coordinacion', $event)"
+            [class.disabled]="!registroId()"
+            [class.tieneDatos]="tieneDatos(registroDataCargado()?.direcciones,registroDataCargado()?.coordinacionesPMA,registroDataCargado()?.coordinacionesCecopi, registroDataCargado()?.activacionPlanEmergencias)"
+            matTooltip="Dirección y coordinación [Alt+C]"
+            matTooltipPosition="above"
+          >
+            <img src="/assets/assets/img/coordinacion.png" class="custom-icon" />
+            <div
+              class="menu-desplegable"
+              *ngIf="showCoordinacionMenu"
+              [style.left]="getMenuPosition('coordinacion').left"
+              [style.top]="getMenuPosition('coordinacion').top"
+            >
+              <button
+                mat-button
+                class="menu-button"
+                (click)="handleMenuItemClick('direction-coordination')"
+                [class.tieneDatos]="tieneDatos(registroDataCargado()?.direcciones, registroDataCargado()?.coordinacionesPMA,registroDataCargado()?.coordinacionesCecopi )"
+              >
+                <span class="highlight-letter">D</span>
+                irección y Coordinación
+              </button>
+              <button
+                mat-button
+                class="menu-button"
+                (click)="handleMenuItemClick('special-plans-activation')"
+                [class.tieneDatos]="tieneDatos(registroDataCargado()?.activacionPlanEmergencias)"
+              >
+                Activac. de <span class="highlight-letter">p</span>lanes de emergencia
+              </button>
+            </div>
+          </div>
+          <div
+            class="action-icon"
+            [class.active]="isActive('actuaciones')"
+            (click)="registroId() && setActiveIcon('actuaciones', $event)"
+            [class.disabled]="!registroId()"
+            matTooltip="Actuaciones relevantes DGPCE [Alt+R]"
+            matTooltipPosition="above"
+          >
+            <img src="/assets/assets/img/actuaciones.png" class="custom-icon" />
+            <div
+              class="menu-desplegable"
+              *ngIf="showActuacionesMenu"
+              [style.left]="getMenuPosition('actuaciones').left"
+              [style.top]="getMenuPosition('actuaciones').top"
+            >
+              <div class="menu-item">
+                <span class="highlight-letter">M</span>
+                ovilización de Medios
+              </div>
+              <div class="menu-item">
+                <span class="highlight-letter">C</span>
+                onvocatoria CECOD
+              </div>
+              <div class="menu-item">
+                Activac. de
+                <span class="highlight-letter">P</span>
+                lanes estatales
+              </div>
+              <div class="menu-item">
+                <span class="highlight-letter">N</span>
+                otificaciones oficiales
+              </div>
+              <button mat-button class="menu-button" (click)="handleMenuItemClick('systems-activation')">
+                Activación de <span class="highlight-letter">S</span>istemas
+              </button>
+              <div class="menu-item">
+                Declaración
+                <span class="highlight-letter">Z</span>
+                agep
+              </div>
+              <div class="menu-item">
+                <span class="highlight-letter">O</span>
+                tras actuaciones
+              </div>
+              <div class="menu-item">
+                <span class="highlight-letter">E</span>
+                mergencia nacional
+              </div>
+            </div>
+          </div>
+          <div
+            class="action-icon"
+            [class.active]="isActive('otra')"
+            (click)="registroId() && setActiveIcon('otra', $event)"
+            [class.disabled]="!registroId()"
+            matTooltip="Otra información [Alt+O]"
+            matTooltipPosition="above"
+          >
+            <img src="/assets/assets/img/otra.png" class="custom-icon" />
+            <div class="menu-desplegable" *ngIf="showOtraMenu" [style.left]="getMenuPosition('otra').left" [style.top]="getMenuPosition('otra').top">
+              <div class="menu-item">
+                <span class="highlight-letter">O</span>
+                tra información
+              </div>
+            </div>
+          </div>
+          <div
+            class="action-icon"
+            [class.active]="isActive('docu')"
+            (click)="registroId() && setActiveIcon('docu', $event)"
+            [class.disabled]="!registroId()"
+            matTooltip="Documentación [Alt+D]"
+            matTooltipPosition="above"
+          >
+            <img src="/assets/assets/img/docu.png" class="custom-icon" />
+            <div class="menu-desplegable" *ngIf="showDocuMenu" [style.left]="getMenuPosition('docu').left" [style.top]="getMenuPosition('docu').top">
+              <div class="menu-item">
+                <span class="highlight-letter">D</span>
+                ocumentación
+              </div>
+            </div>
+          </div>
+          <div
+            class="action-icon"
+            [class.active]="isActive('sucesos')"
+            (click)="registroId() && setActiveIcon('sucesos', $event)"
+            [class.disabled]="!registroId()"
+            matTooltip="Sucesos relacionados [Alt+S]"
+            matTooltipPosition="above"
+          >
+            <img src="/assets/assets/img/sucesos.png" class="custom-icon" />
+            <div
+              class="menu-desplegable"
+              *ngIf="showSucesosMenu"
+              [style.left]="getMenuPosition('sucesos').left"
+              [style.top]="getMenuPosition('sucesos').top"
+            >
+              <div class="menu-item">
+                <span class="highlight-letter">S</span>
+                ucesos relacionados
+              </div>
+            </div>
+          </div>
+          
+          <!-- Nuevo menú de Datos consolidados -->
+          <div
+            class="action-icon"
+            [class.active]="isActive('consolidados')"
+            (click)="registroId() && setActiveIcon('consolidados', $event)"
+            [class.disabled]="!registroId()"
+            matTooltip="Datos consolidados [Alt+N]"
+            matTooltipPosition="above"
+          >
+            <img src="/assets/assets/img/consolidados.png" class="custom-icon" />
+            <div
+              class="menu-desplegable"
+              *ngIf="showConsolidadosMenu"
+              [style.left]="getMenuPosition('consolidados').left"
+              [style.top]="getMenuPosition('consolidados').top"
+            >
+              <div class="menu-item" (click)="handleMenuItemClick('datos-consolidados')">
+                
+                Datos co<span class="highlight-letter">n</span>solidados
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content-area">
+      <ng-container [ngSwitch]="selectedOption">
+        <!-- Área -->
+        <ng-container *ngSwitchCase="'area'">
+          <app-area
+            #areaComponent
+            [fire]="data.fire"
+            [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+            [editData]="registroDataCargado()"
+            [isNewRecord]="data.isNewRecord"
+            [registroId]="registroId()"
+            [registrosPosterioresConAreasAfectadas]="registrosPosterioresConAreasAfectadas()"
+            (save)="onSaveFromChild($event)"
+            (changesMade)="onChangesFromChild($event)"
+            (hasUnsavedChanges)="onHasUnsavedChangesFromChild($event)"
+            class="component-width"
+          ></app-area>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'consecuencias'">
+          <app-consequences
+            [fire]="data.fire"
+            [editData]="registroDataCargado()"
+            (hasUnsavedChanges)="onHasUnsavedChangesFromChild($event)"
+            (changesMade)="onChangesFromChild($event)"
+            class="component-width"
+            [registroId]="registroId()"
+          ></app-consequences>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'intervencion'">
+          <app-intervention
+            (save)="onSaveFromChild($event)"
+            (changesMade)="onChangesFromChild($event)"
+            (hasUnsavedChanges)="onHasUnsavedChangesFromChild($event)"
+            class="component-width"
+            [fire]="data.fire"
+            [isNewRecord]="data.isNewRecord"
+            [registroId]="registroId()"
+            [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+            [editData]="registroDataCargado()"
+          ></app-intervention>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'parametros'">
+          <app-records
+            [fire]="data.fire"
+            [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+            [editData]="registroDataCargado()"
+            [isNewRecord]="data.isNewRecord"
+            [registroId]="registroId()"
+            [estadoIncendio]="estado"
+            (save)="onSaveFromChild($event)"
+            (changesMade)="onChangesFromChild($event)"
+            (hasUnsavedChanges)="onHasUnsavedChangesFromChild($event)"
+            class="component-width"
+          ></app-records>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'direction-coordination'">
+          <app-direction-coordination
+            [fire]="data.fire"
+            [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+            [editData]="registroDataCargado()"
+            [estadoIncendio]="estado"
+            [registroId]="registroId()"
+            (save)="onSaveFromChild($event)"
+            (changesMade)="onChangesFromChild($event)"
+            (hasUnsavedChanges)="onHasUnsavedChangesFromChild($event)"
+            class="component-width"
+          ></app-direction-coordination>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'special-plans-activation'">
+          <app-special-plans-activation
+            [fire]="data.fire"
+            [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+            [editData]="registroDataCargado()"
+            [isNewRecord]="data.isNewRecord"
+            [registroId]="registroId()"
+            [estadoIncendio]="estado"
+            (save)="onSaveFromChild($event)"
+            (changesMade)="onChangesFromChild($event)"
+            (unsavedChanges)="onHasUnsavedChangesFromChild($event)"
+            class="component-width"
+          ></app-special-plans-activation>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'systems-activation'">
+          <app-systems-activation
+            [dataMaestros]="dataMaestros"
+            [fire]="data.fire"
+            [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+            [editData]="registroDataCargado()"
+            [isFromRecords]="true"
+            (save)="onSaveFromChild($event)"
+            class="component-width"
+          ></app-systems-activation>
+        </ng-container>
+        
+        <ng-container *ngSwitchCase="'datos-consolidados'">
+          <!-- Placeholder para el futuro componente de datos consolidados -->
+          <div class="component-width">
+            <h2>Datos consolidados</h2>
+            <p>Esta funcionalidad está en desarrollo.</p>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+<!-- Footer -->
+<div class="footer" fxLayout="row" fxLayoutAlign="space-between center">
+  <!-- Izquierda: Botón Volver -->
+  <div fxFlex="33" fxLayoutAlign="start center">
+    <button mat-raised-button color="basic" (click)="closeModal(true)">
+      <mat-icon>arrow_back</mat-icon>
+      Volver
+    </button>
+  </div>
+
+  <!-- Centro: Botones Eliminar y Guardar -->
+  <div fxFlex="33" class="action-buttons" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+    <button 
+      [disabled]="disabledDelete()" 
+      mat-raised-button 
+      [ngClass]="{ 'disabled-button': disabledDelete(), 'enabled-delete-button': !disabledDelete() }" 
+      [style.color]="'white'" 
+      (click)="delete()">
+      <mat-icon>delete</mat-icon>
+      Eliminar
+    </button>
+    <button 
+      mat-flat-button 
+      color="primary" 
+      (click)="onSubmit()" 
+      [ngClass]="{ 'disabled-button': !enableSaveButton() ||isLoading()  }" 
+      [disabled]="isLoading() || !enableSaveButton()">
+      
+      <mat-icon *ngIf="!isLoading()">save</mat-icon>
+      
+      <mat-spinner 
+        *ngIf="isLoading()" 
+        diameter="20" 
+        color="accent" 
+        style="vertical-align: middle; display: inline-block; margin-bottom: -4px;">
+      </mat-spinner>
+      
+      {{ isLoading() ? 'Guardando...' : 'Guardar' }}
+    </button>
+
+  </div>
+
+  <!-- Derecha: Fechas (si hay datos, se muestran; si no, se reserva el espacio) -->
+  <div fxFlex="33" fxLayoutAlign="end center" class="footer-dates">
+    <div style="text-align: right; min-width: 200px;">
+      <div *ngIf="registroDataCargado()?.fechaCreacion">
+        <strong>Alta:</strong> {{ registroDataCargado()?.creadoPorNavigation.nombre }} - 
+        {{ registroDataCargado()?.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}
+      </div>
+        <div *ngIf="registroDataCargado()?.fechaModificacion || registroDataCargado()?.fechaCreacion" style="margin-top: 4px;">
+        <strong>Ult. Modificación:</strong>
+        {{ registroDataCargado()?.modificadoPorNavigation?.userName || registroDataCargado()?.creadoPorNavigation?.userName }} -
+        {{ (registroDataCargado()?.fechaModificacion || registroDataCargado()?.fechaCreacion) | date: 'dd/MM/yyyy HH:mm' }}
+      </div>
+      <!-- Espacio reservado si no hay datos -->
+      <div *ngIf="!registroDataCargado()?.fechaCreacion && !registroDataCargado()?.fechaModificacion">
+        &nbsp;
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

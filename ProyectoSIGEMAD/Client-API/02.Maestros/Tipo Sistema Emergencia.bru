@@ -1,0 +1,15 @@
+meta {
+  name: Tipo Sistema Emergencia
+  type: http
+  seq: 18
+}
+
+get {
+  url: {{Server}}/api/v1/tipos-sistemas-emergencia
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

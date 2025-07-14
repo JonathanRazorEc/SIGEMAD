@@ -1,0 +1,60 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{Server}}/api/v1/registros/activaciones-sistemas/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idRegistroActualizacion": 1,
+    "idSuceso": 1,
+    "detalles": [
+      {
+        "id": 1,
+        "idTipoSistemaEmergencia": 1,
+        "fechaHoraActivacion": "2025-01-30T15:26:37.510Z",
+        "fechaHoraActualizacion": "2025-01-30T15:26:37.510Z",
+        "autoridad": "autoridad 1 Actualizado",
+        "descripcionSolicitud": "descripcionSolicitud 1 Actualizado",
+        "observaciones": "observaciones 1 Actualizado",
+        "idModoActivacion": 1,
+        "fechaActivacion": "2025-01-30",
+        "codigo": "actualizado",
+        "nombre": "nombre 1 Actualizado",
+        "urlAcceso": "urlAcceso 1 Actualizado",
+        "fechaHoraPeticion": "2025-01-30T15:26:37.510Z",
+        "fechaAceptacion": "2025-01-30",
+        "peticiones": "peticiones 1 Actualizado",
+        "mediosCapacidades": "mediosCapacidades 1 Actualizado"
+      },
+     {
+        "id": 2,
+        "idTipoSistemaEmergencia": 1,
+        "fechaHoraActivacion": "2025-01-30T15:26:37.510Z",
+        "fechaHoraActualizacion": "2025-01-30T15:26:37.510Z",
+        "autoridad": "autoridad 2 Actualizado",
+        "descripcionSolicitud": "descripcionSolicitud 2 Actualizado",
+        "observaciones": "observaciones 2 Actualizado",
+        "idModoActivacion": 1,
+        "fechaActivacion": "2025-01-30",
+        "codigo": "Actualizado",
+        "nombre": "nombre 2 Actualizado",
+        "urlAcceso": "urlAcceso 2 Actualizado",
+        "fechaHoraPeticion": "2025-01-30T15:26:37.510Z",
+        "fechaAceptacion": "2025-01-30",
+        "peticiones": "peticiones 2 Actualizado",
+        "mediosCapacidades": "mediosCapacidades 2 Actualizado"
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+}

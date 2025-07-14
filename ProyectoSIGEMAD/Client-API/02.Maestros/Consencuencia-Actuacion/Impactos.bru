@@ -1,0 +1,21 @@
+meta {
+  name: Impactos
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{Server}}/api/v1/impactos-clasificados?busqueda=inges
+  body: none
+  auth: inherit
+}
+
+params:query {
+  busqueda: inges
+  ~idTipoImpacto: 51
+  ~nuclear: true
+}
+
+assert {
+  res.status: eq 200
+}

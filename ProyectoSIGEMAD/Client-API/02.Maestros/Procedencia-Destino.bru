@@ -1,0 +1,15 @@
+meta {
+  name: Procedencia-Destino
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{Server}}/api/v1/procedencias-destinos
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

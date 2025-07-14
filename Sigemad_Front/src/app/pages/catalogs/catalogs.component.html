@@ -1,0 +1,240 @@
+<div class="container" [id]="'grupo' + idTablaMaestraGrupo">
+  <div class="col-one" *ngIf="mostrarListadoTablas">
+    <mat-card-title style="padding: 10px">
+      <!--<strong>{{ 'Listado de tablas maestras y catálogos' }}</strong>-->
+      <strong>{{ getCabecera() }}</strong>
+    </mat-card-title>
+    <div class="sidebar">
+      <mat-nav-list>
+        <mat-list-item
+          *ngFor="let catalog of filteredCatalogs"
+          (click)="selectCatalog(catalog)"
+          [ngClass]="{ active: selectedCatalog?.Id === catalog.Id }"
+          [matTooltip]="catalog.Etiqueta"
+        >
+          {{ catalog.Etiqueta }}
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+  </div>
+  <div class="col-two">
+    <mat-card-title class="catalog-title" *ngIf="selectedCatalog?.Etiqueta">
+      <span class="prefix">Tabla</span>
+      <span class="catalog-name">{{ selectedCatalog?.Etiqueta?.toUpperCase() }}</span>
+    </mat-card-title>
+    <div class="content">
+      <div *ngIf="numeroRegistrosAMostrar !== undefined && numeroRegistrosAMostrar !== null && !mostrarPaginacion">
+        <span style="float: right; font-size: 0.9rem; padding-right: 10px; margin-bottom: 10px">
+          Se muestran los últimos {{ numeroRegistrosAMostrar }} registros
+        </span>
+      </div>
+      <div *ngIf="selectedCatalog?.Etiqueta">
+        <div class="filter-toolbar">
+          <div class="filter-left" *ngIf="mostrarFiltros && idTablaMaestraGrupo !== IDS_TABLAS_MAESTRAS_GRUPOS.OPE_HISTORICO_SIGE2">
+            <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem">
+              <div class="custom-filter-container" style="flex: 1 1 600px">
+                <div class="custom-filter-inputs">
+                  <mat-form-field appearance="outline" class="custom-field">
+                    <mat-label>Columna</mat-label>
+                    <mat-select [(ngModel)]="selectedColumn" (selectionChange)="onColumnChange($event.value)">
+                      <mat-option [value]="''">Sin filtro</mat-option>
+                      <mat-option *ngFor="let column of catalogColumns" [value]="column.Columna">
+                        {{ column.Etiqueta }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="custom-field" id="campoValor">
+                    <mat-label>Valor</mat-label>
+                    <input matInput [(ngModel)]="filterValue" placeholder="Ingrese valor" />
+                  </mat-form-field>
+
+                  <div class="deleted-toggle-field">
+                    <span class="toggle-label">Mostrar registros borrados</span>
+                    <mat-checkbox [(ngModel)]="showDeleted" class="toggle-checkbox"></mat-checkbox>
+                  </div>
+                </div>
+                <div class="custom-filter-buttons">
+                  <button mat-flat-button [ngClass]="filterApplied ? 'filter-applied' : ''" (click)="applyFilter()">Filtrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-right">
+            <div class="custom-filter-buttons button-group-responsive" style="flex: 1 1 auto; margin-left: auto; display: flex; align-items: center">
+              <button mat-flat-button color="accent" (click)="createNew()" *ngIf="selectedCatalog.Editable">Nuevo</button>
+              <button mat-flat-button color="warn" (click)="exportarExcel()" *ngIf="mostrarExportarExcel">
+                <mat-icon>download</mat-icon>
+                Exportar EXCEL
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-filter-container">
+          <div class="custom-table-wrapper">
+            <table
+              class="custom-table"
+              [appRowHighlight]="
+                idTablaMaestraGrupo === IDS_TABLAS_MAESTRAS_GRUPOS.OPE_CATALOGO ||
+                idTablaMaestraGrupo === IDS_TABLAS_MAESTRAS_GRUPOS.OPE_LOGS ||
+                idTablaMaestraGrupo === IDS_TABLAS_MAESTRAS_GRUPOS.OPE_HISTORICO_SIGE2
+                  ? 'lightblue'
+                  : '#ff9800'
+              "
+            >
+              <thead>
+                <tr>
+                  <ng-container *ngFor="let column of catalogColumns">
+                    <th *ngIf="column.ApareceEnListado">
+                      {{ column.Etiqueta }}
+                    </th>
+                    <th *ngIf="column.Columna === 'TipoMovimiento'">Usuario</th>
+                  </ng-container>
+                  <th class="actions-header" *ngIf="mostrarAccionesRegistros">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let element of dataSource">
+                  <ng-container *ngFor="let column of catalogColumns">
+                    <td *ngIf="column.ApareceEnListado">
+                      <!--
+                    <ng-container *ngIf="column.Tipo === 'select'; else normal">
+                      {{ element[column.Columna + '__texto'] }}
+                    </ng-container>
+                    <ng-template #normal>
+                      <ng-container *ngIf="column.Tipo === 'bit'; else other">
+                        {{ formatBoolean(element[column.Columna]) }}
+                      </ng-container>
+                      <ng-template #other>
+                        {{ element[column.Columna] }}
+                      </ng-template>
+                    </ng-template>
+                    -->
+
+                      <!-- TEST -->
+                      <ng-container [ngSwitch]="column.Tipo">
+                        <!-- datetime2 -->
+                        <ng-container *ngSwitchCase="'datetime2'">
+                          {{ getFechaFormateadaConHorasYMinutos(element[column.Columna]) }}
+                        </ng-container>
+
+                        <!-- date -->
+                        <ng-container *ngSwitchCase="'date'">
+                          {{ getFechaFormateadaSinHorasNiMinutos(element[column.Columna]) }}
+                        </ng-container>
+
+                        <!-- time -->
+                        <ng-container *ngSwitchCase="'time'">
+                          {{ getSoloHorasYMinutosFormateados(element[column.Columna]) }}
+                        </ng-container>
+
+                        <!-- select -->
+                        <ng-container *ngSwitchCase="'select'">
+                          {{ element[column.Columna + '__texto'] }}
+                        </ng-container>
+
+                        <!-- bit -->
+                        <ng-container *ngSwitchCase="'bit'">
+                          {{ formatBoolean(element[column.Columna]) }}
+                        </ng-container>
+
+                        <!-- char y además es tipo movimiento -->
+                        <ng-container *ngSwitchCase="'char'">
+                          <ng-container *ngIf="column.Columna === 'TipoMovimiento'; else defaultChar">
+                            {{ getTipoMovimientoDescripcion(element[column.Columna]) }}
+                          </ng-container>
+                          <ng-template #defaultChar>
+                            {{ element[column.Columna] }}
+                          </ng-template>
+                        </ng-container>
+
+                        <!-- cualquier otro tipo -->
+                        <ng-container *ngSwitchDefault>
+                          {{ element[column.Columna] }}
+                        </ng-container>
+                      </ng-container>
+                      <!-- FIN TEST -->
+                    </td>
+                    <td *ngIf="column.Columna === 'TipoMovimiento'">
+                      {{ getUsuarioPorTipoMovimiento(element['TipoMovimiento'], element) }}
+                    </td>
+                  </ng-container>
+                  <td class="actions-buttons-cell" *ngIf="mostrarAccionesRegistros">
+                    <div class="actions-buttons">
+                      <div class="tooltip-wrapper">
+                        <button
+                          class="icon-button"
+                          [class.disabled]="element.Borrado"
+                          (click)="element.Borrado ? null : editItem(element)"
+                          [disabled]="element.Borrado"
+                        >
+                          <img src="./assets/assets/img/editar.png" alt="Editar" class="action-icon" />
+                        </button>
+                        <span class="custom-tooltip">
+                          <!--{{ element.Borrado ? 'Registro borrado (sin edición)' : !element.Editable ? 'Edición restringida' : 'Editar' }}-->
+                          <span class="custom-tooltip">
+                            {{
+                              !selectedCatalog.Editable
+                                ? 'Ver'
+                                : element.Borrado
+                                  ? 'Registro borrado (sin edición)'
+                                  : !element.Editable
+                                    ? 'Edición restringida'
+                                    : 'Editar'
+                            }}
+                          </span>
+                        </span>
+                      </div>
+
+                      <div class="tooltip-wrapper" *ngIf="selectedCatalog.Editable">
+                        <button
+                          class="icon-button"
+                          [class.active]="element.Borrado"
+                          [class.disabled]="!element.Editable"
+                          (click)="!element.Editable ? null : deleteItem(element)"
+                          [disabled]="!element.Editable"
+                        >
+                          <img
+                            [src]="element.Borrado ? './assets/assets/img/recuperar.png' : './assets/assets/img/eliminar.png'"
+                            [alt]="element.Borrado ? 'Restaurar' : 'Eliminar'"
+                            class="action-icon"
+                          />
+                        </button>
+                        <span class="custom-tooltip">
+                          {{ !element.Editable ? 'Acción no permitida' : element.Borrado ? 'Recuperar registro borrado' : 'Eliminar registro' }}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator
+              [pageSize]="25"
+              [pageSizeOptions]="[20, 25, 30]"
+              showFirstLastButtons
+              (page)="handlePageEvent($event)"
+              *ngIf="mostrarPaginacion"
+            ></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Botón cerrar -->
+    <button
+      style="float: right"
+      mat-raised-button
+      (click)="closeModal()"
+      color="primary"
+      aria-label="Cerrar"
+      class="custom-button"
+      type="button"
+      *ngIf="mostrarBottonCerrar"
+    >
+      Cerrar
+    </button>
+    <!-- Fin Botón cerrar -->
+  </div>
+</div>

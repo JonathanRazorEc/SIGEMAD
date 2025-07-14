@@ -1,0 +1,43 @@
+@use '../../../styles.scss' as theme;
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  padding-top: 0;
+}
+
+.side-menu {
+  width: 200px;
+}
+
+.mat-chip {
+  margin: 5px 0;
+  display: block;
+}
+
+.full-width-chip {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.modal-header {
+  text-align: center;
+}
+
+.title {
+  color: var(--fire-color);
+}
+
+.component-width {
+  width: 100%;
+}

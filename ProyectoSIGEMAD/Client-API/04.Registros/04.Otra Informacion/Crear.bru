@@ -1,0 +1,50 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/otras-informaciones/lista
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "IdRegistroActualizacion": 0,
+    "IdSuceso": 1,
+    "lista": [
+      {
+        "id": 0,
+        "fechaHora": "2024-11-27T16:14:54.691Z",
+        "idMedio": 1,
+        "asunto": "ACTUALIZADO",
+        "observaciones": "string",
+        "IdsProcedenciasDestinos": [
+          1,2
+        ],
+        
+      },
+      {
+        "id": 0,
+        "fechaHora": "2024-11-27T16:14:54.691Z",
+        "idMedio": 1,
+        "asunto": "NUEVO",
+        "observaciones": "NUEVO",
+        "IdsProcedenciasDestinos": [
+          11
+        ],
+        
+      }
+    ]
+  }
+}
+
+vars:post-response {
+  IdOtraInformacion: res.body.idOtraInformacion
+}
+
+assert {
+  res.status: eq 200
+}

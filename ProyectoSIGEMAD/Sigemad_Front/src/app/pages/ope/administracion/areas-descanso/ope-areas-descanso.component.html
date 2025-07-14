@@ -1,0 +1,15 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-area-descanso-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opeAreasDescanso)]="opeAreasDescanso"
+  ></app-ope-area-descanso-filter-form>
+  <app-ope-areas-descanso-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opeAreasDescanso]="opeAreasDescanso.data"
+    *ngIf="opeAreasDescanso?.data"
+  ></app-ope-areas-descanso-table>
+</div>

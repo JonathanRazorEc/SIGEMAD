@@ -1,0 +1,15 @@
+meta {
+  name: Comparativa Fechas
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/comparativa-fechas
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

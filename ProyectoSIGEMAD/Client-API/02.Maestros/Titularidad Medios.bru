@@ -1,0 +1,15 @@
+meta {
+  name: Titularidad Medios
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{Server}}/api/v1/titular-medios
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

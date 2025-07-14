@@ -1,0 +1,103 @@
+<mat-card class="content-card">
+  <mat-grid-list cols="10" rowHeight="900px" class="container-grid">
+    <mat-grid-tile [colspan]="8">
+      <div class="map-header">
+        <h2 class="panel-title">Situación actual [13/06/2024 11:00]</h2>
+        <mat-icon class="refresh-icon">refresh</mat-icon>
+      </div>
+
+      <div class="map-buttons">
+        <button mat-flat-button color="primary" class="filter-button">
+          <mat-icon>fireplace</mat-icon>
+          Incendios
+        </button>
+        <button mat-flat-button color="primary" class="filter-button">
+          <mat-icon>public</mat-icon>
+          Terremotos
+        </button>
+        <button mat-flat-button color="primary" class="filter-button">
+          <mat-icon>cloud</mat-icon>
+          Meteorología
+        </button>
+        <button mat-flat-button color="primary" class="filter-button">
+          <mat-icon>category</mat-icon>
+          Otros Sucesos
+        </button>
+      </div>
+
+      <div id="map" class="map"></div>
+
+      <div #tooltip class="tooltip"></div>
+
+      <!-- Añadir información contextual -->
+      <div *ngIf="selectedFeature" class="map-info" [style.left.px]="infoPosition.x" [style.top.px]="infoPosition.y">
+        <div class="info-header">
+          <h3>{{ selectedFeature.denomination }}</h3>
+          <button class="close-btn" (click)="closeInfo()">&times;</button>
+        </div>
+        <div class="info-content">
+          <div class="info-row">
+            <span class="label">Fecha:</span>
+            <span class="value">{{ selectedFeature.date | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="info-row" *ngIf="selectedFeature.status">
+            <span class="label">Seguimiento:</span>
+            <span class="value">{{ selectedFeature.status }}</span>
+            <button class="info-link-btn" (click)="navigateToFeature()">&#10132;</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="cursor-coordinates" class="coordinates-display"></div>
+      <div class="coordinate-search">
+        <input type="text" id="utm-x" placeholder="UTM X" />
+        <input type="text" id="utm-y" placeholder="UTM Y" />
+        <button (click)="searchCoordinates()" mat-flat-button color="secondary">Buscar</button>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="2" class="tile-align-top">
+      <div class="info-container">
+        <div class="panel-header">
+          <h2 class="panel-title">Sucesos reseñables</h2>
+          <mat-icon class="settings-icon">settings</mat-icon>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="info-panel">
+          <div class="info-item">
+            <mat-label class="info-date">13/06/2024 05:50</mat-label>
+            <div class="info-detail">
+              <p class="info-title">Terremoto</p>
+              <p>ALBORÁN SUR. Magnitud: 3 mblg</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-label class="info-date">12/06/2024 10:25</mat-label>
+            <div class="info-detail">
+              <p class="info-title">Incendio forestal</p>
+              <p>Vilanova (Orense).</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-label class="info-date">12/06/2024 09:15</mat-label>
+            <div class="info-detail">
+              <p class="info-title">Incendio forestal</p>
+              <p>Estado: Extinguido</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-label class="info-date">10/06/2024 15:45</mat-label>
+            <div class="info-detail">
+              <p class="info-title">Terremoto</p>
+              <p>S TETUAN.MAC. Magnitud: 3.6 mblg</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>

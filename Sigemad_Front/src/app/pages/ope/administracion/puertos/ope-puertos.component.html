@@ -1,0 +1,17 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-puerto-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opePuertos)]="opePuertos"
+    [opePuertosPaises]="opePuertosPaises"
+  ></app-ope-puerto-filter-form>
+  <app-ope-puertos-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opePuertos]="opePuertos.data"
+    [opePuertosPaises]="opePuertosPaises"
+    *ngIf="opePuertos?.data"
+  ></app-ope-puertos-table>
+</div>

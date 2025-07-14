@@ -1,0 +1,34 @@
+meta {
+  name: Eliminar elementos
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{Server}}/api/v1/registros/areas-afectadas
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "IdSuceso": 1,
+    "IdRegistroActualizacion": 1,
+    "AreasAfectadas": [    {
+        "Id":1,
+        "FechaHora": "2025-04-26T09:17:19",
+        "IdProvincia": 30,
+        "IdMunicipio": 1043,
+        "IdEntidadMenor": 4,
+        "GeoPosicion": null
+      }]
+  }
+}
+
+vars:post-response {
+  IdEvolucion: res.body.idEvolucion
+}
+
+assert {
+  res.status: eq 200
+}

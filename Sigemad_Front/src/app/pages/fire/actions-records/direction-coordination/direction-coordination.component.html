@@ -1,0 +1,230 @@
+<div class="container">
+  <h4 class="section-title">Dirección y Coordinación - Gestiones</h4>
+  <h4 class="section-title-2">Actualizaciones anteriores</h4>
+
+  <!-- Contenedor para tabla de registros -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource()" class="full-width-table">
+      <!-- Columna Tipo -->
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef>Tipo de Gestión</th>
+        <td mat-cell *matCellDef="let element">{{ element.tipo }}</td>
+      </ng-container>
+
+      <!-- Columna Fecha Inicio -->
+      <ng-container matColumnDef="fechaInicio">
+        <th mat-header-cell *matHeaderCellDef>Fecha Inicio</th>
+        <td mat-cell *matCellDef="let element">{{ formatDate(element.fechaInicio) }}</td>
+      </ng-container>
+
+      <!-- Columna Fecha Fin -->
+      <ng-container matColumnDef="fechaFin">
+        <th mat-header-cell *matHeaderCellDef>Fecha Fin</th>
+        <td mat-cell *matCellDef="let element">{{ formatDate(element.fechaFin) }}</td>
+      </ng-container>
+
+      <!-- Columna Dirección -->
+      <ng-container matColumnDef="direccion">
+        <th mat-header-cell *matHeaderCellDef>Tipo de dirección</th>
+        <td mat-cell *matCellDef="let element">
+          <span [matTooltip]="element.direccion" *ngIf="element.direccion !== '-'">
+            {{ element.direccion.length > 30 ? (element.direccion | slice: 0 : 30) + '...' : element.direccion }}
+          </span>
+          <span *ngIf="element.direccion === '-'">-</span>
+        </td>
+      </ng-container>
+
+      <!-- Columna Lugar -->
+      <ng-container matColumnDef="autoridadDirige">
+        <th mat-header-cell *matHeaderCellDef>Autoridad/lugar</th>
+        <td mat-cell *matCellDef="let element">
+          <span [matTooltip]="element.autoridadDirige" *ngIf="element.autoridadDirige !== '-'">
+            {{ element.autoridadDirige.length > 30 ? (element.autoridadDirige | slice: 0 : 30) + '...' : element.autoridadDirige }}
+          </span>
+          <span *ngIf="element.autoridadDirige === '-'">-</span>
+        </td>
+      </ng-container>
+
+      <!-- Columna Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <div style="display: flex; gap: .5rem;">
+            <span style="align-self: center; font-weight: bold;">
+              @if (element.esModificado) {
+                <span style="color: #A16F01;">M</span>
+              } @else {
+                <span style="color: #05BB05">N</span>
+              }
+            </span>
+            <span>
+              <img (click)="editRecord(element)" src="/assets/img/edit-btn.svg" alt="edit-btn" style="cursor: pointer" matTooltip="Editar registro" />
+              <img (click)="deleteRecord(element)" src="/assets/img/close.svg" alt="delete-btn" style="cursor: pointer" matTooltip="Eliminar registro" />
+            </span>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <!-- Botón para mostrar el formulario - solo un placeholder por ahora -->
+  <div *ngIf="!showForm()" fxLayout="row" fxLayoutAlign="end center" class="new-button-container">
+    <button mat-flat-button color="primary" (click)="showFormSection()">
+      <mat-icon>add</mat-icon>
+      Nuevo
+    </button>
+  </div>
+
+  <!-- Formulario -->
+  <form *ngIf="showForm()" [formGroup]="formData" (ngSubmit)="onSubmit()" class="form-container">
+    <!-- DATOS PRINCIPALES -->
+    <div>
+      <h4 class="section-title-2">Información</h4>
+
+      <!-- Primera fila del formulario padre: Tipo de Gestión y la primera parte del hijo -->
+      <div class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start baseline">
+        <mat-form-field appearance="outline" fxFlex="20%">
+          <!-- Ancho para Tipo de Gestión -->
+          <mat-label>Tipo de gestión</mat-label>
+          <mat-select formControlName="tipoGestion">
+            <mat-option *ngFor="let tipo of directionTypes()" [value]="tipo.id">
+              {{ tipo.descripcion }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="getForm('tipoGestion')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <!-- Contenedor para la PRIMERA PARTE del formulario hijo -->
+        <div fxFlex="80%" *ngIf="formData.get('tipoGestion')?.value === 1">
+          <app-direccion-form
+            #direccionFormFirstRow
+            [initialData]="getInitialDireccionData()"
+            [displayPart]="'first-row'"
+            [directionCoordinationService]="directionService"
+            (formChange)="onDireccionFirstRowFormChange($event)"
+            (formValidityChange)="onDireccionFirstRowValidityChange($event)"
+          ></app-direccion-form>
+        </div>
+
+        <!-- Contenedor para la PRIMERA PARTE del formulario de Coordinación CECOPI -->
+        <div fxFlex="80%" *ngIf="formData.get('tipoGestion')?.value === 2">
+          <app-coordinacion-cecopi-form
+            #coordinacionCecopiFormFirstRow
+            [initialData]="isEditing() ? editingRecord()?.originalData : initialCoordinacionCecopiData()"
+            [displayPart]="'first-row'"
+            [directionCoordinationService]="directionService"
+            [fire]="fire"
+            (formChange)="onCoordinacionCecopiFirstRowFormChange($event)"
+            (formValidityChange)="onCoordinacionCecopiFirstRowValidityChange($event)"
+          ></app-coordinacion-cecopi-form>
+        </div>
+
+        <!-- Contenedor para la PRIMERA PARTE del formulario de Coordinación PMA -->
+        <div fxFlex="80%" *ngIf="formData.get('tipoGestion')?.value === 3">
+          <app-coordinacion-pma-form
+            #coordinacionPmaFormFirstRow
+            [initialData]="isEditing() ? editingRecord()?.originalData : initialCoordinacionPmaData()"
+            [displayPart]="'first-row'"
+            [directionCoordinationService]="directionService"
+            [fire]="fire"
+            (formChange)="onCoordinacionPmaFirstRowFormChange($event)"
+            (formValidityChange)="onCoordinacionPmaFirstRowValidityChange($event)"
+          ></app-coordinacion-pma-form>
+        </div>
+      </div>
+
+      <!-- Segunda fila del formulario padre: para la SEGUNDA PARTE del hijo -->
+      <div class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" *ngIf="formData.get('tipoGestion')?.value === 1">
+        <!-- Contenedor para la SEGUNDA PARTE del formulario hijo -->
+        <div fxFlex="100%">
+          <app-direccion-form
+            #direccionFormSecondRow
+            [initialData]="getInitialDireccionData()"
+            [displayPart]="'second-row'"
+            [directionCoordinationService]="directionService"
+            (formChange)="onDireccionSecondRowFormChange($event)"
+            (formValidityChange)="onDireccionSecondRowValidityChange($event)"
+          ></app-direccion-form>
+        </div>
+      </div>
+
+      <!-- Segunda fila para Coordinación CECOPI -->
+      <div class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" *ngIf="formData.get('tipoGestion')?.value === 2">
+        <div fxFlex="100%">
+          <app-coordinacion-cecopi-form
+            #coordinacionCecopiFormSecondRow
+            [initialData]="isEditing() ? editingRecord()?.originalData : initialCoordinacionCecopiData()"
+            [displayPart]="'second-row'"
+            [directionCoordinationService]="directionService"
+            [fire]="fire"
+            (formChange)="onCoordinacionCecopiSecondRowFormChange($event)"
+            (formValidityChange)="onCoordinacionCecopiSecondRowValidityChange($event)"
+          ></app-coordinacion-cecopi-form>
+        </div>
+      </div>
+
+      <!-- Tercera fila para Coordinación CECOPI -->
+      <div class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" *ngIf="formData.get('tipoGestion')?.value === 2">
+        <div fxFlex="100%">
+          <app-coordinacion-cecopi-form
+            #coordinacionCecopiFormThirdRow
+            [initialData]="isEditing() ? editingRecord()?.originalData : initialCoordinacionCecopiData()"
+            [displayPart]="'third-row'"
+            [directionCoordinationService]="directionService"
+            [fire]="fire"
+            (formChange)="onCoordinacionCecopiThirdRowFormChange($event)"
+            (formValidityChange)="onCoordinacionCecopiThirdRowValidityChange($event)"
+          ></app-coordinacion-cecopi-form>
+        </div>
+      </div>
+
+      <!-- Segunda fila para Coordinación PMA -->
+      <div class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" *ngIf="formData.get('tipoGestion')?.value === 3">
+        <div fxFlex="100%">
+          <app-coordinacion-pma-form
+            #coordinacionPmaFormSecondRow
+            [initialData]="isEditing() ? editingRecord()?.originalData : initialCoordinacionPmaData()"
+            [displayPart]="'second-row'"
+            [directionCoordinationService]="directionService"
+            [fire]="fire"
+            (formChange)="onCoordinacionPmaSecondRowFormChange($event)"
+            (formValidityChange)="onCoordinacionPmaSecondRowValidityChange($event)"
+          ></app-coordinacion-pma-form>
+        </div>
+      </div>
+
+      <!-- Tercera fila para Coordinación PMA -->
+      <div class="row" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" *ngIf="formData.get('tipoGestion')?.value === 3">
+        <div fxFlex="100%">
+          <app-coordinacion-pma-form
+            #coordinacionPmaFormThirdRow
+            [initialData]="isEditing() ? editingRecord()?.originalData : initialCoordinacionPmaData()"
+            [displayPart]="'third-row'"
+            [directionCoordinationService]="directionService"
+            [fire]="fire"
+            (formChange)="onCoordinacionPmaThirdRowFormChange($event)"
+            (formValidityChange)="onCoordinacionPmaThirdRowValidityChange($event)"
+          ></app-coordinacion-pma-form>
+        </div>
+      </div>
+
+      <!-- Aquí se añadirán componentes específicos para otros tipos de gestión -->
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="row add-button-row" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+      <button mat-raised-button color="accent" type="button" (click)="cancelEdit()">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit">
+        <mat-icon>{{ isEditing() ? 'save' : 'add' }}</mat-icon>
+        {{ isEditing() ? 'Actualizar' : 'Agregar' }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

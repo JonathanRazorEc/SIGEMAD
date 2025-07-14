@@ -1,0 +1,7 @@
+# Ignorar la salida de compilación y directorios específicos
+dist
+node_modules
+coverage
+package-lock.json
+yarn.lock
+*.min.* # Archivos minificados

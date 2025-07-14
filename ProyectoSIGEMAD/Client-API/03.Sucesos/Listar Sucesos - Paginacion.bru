@@ -1,0 +1,32 @@
+meta {
+  name: Listar Sucesos - Paginacion
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/sucesos?Sort&PageIndex=1&PageSize=10
+  body: none
+  auth: inherit
+}
+
+params:query {
+  Sort: 
+  PageIndex: 1
+  PageSize: 10
+  ~Denominacion: Inc
+  ~IdTerritorio: 1
+  ~IdPais: 60
+  ~IdCcaa: 4
+  ~IdProvincia: 1
+  ~IdMunicipio: 1001
+  ~IdMovimiento: 1
+  ~IdComparativoFecha: 2
+  ~FechaInicio: 2024-11-06
+  ~FechaFin: 2024-10-07
+  ~IdSuceso: 1
+}
+
+assert {
+  res.status: eq 200
+}

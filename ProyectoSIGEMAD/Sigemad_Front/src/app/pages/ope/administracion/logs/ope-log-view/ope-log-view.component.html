@@ -1,0 +1,18 @@
+<h2 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle class="title">{{ data.opeLog?.id ? 'Ver' : '' }} Log</h2>
+
+<mat-dialog-content>
+  <ng-container *ngFor="let chunk of getChunks(getKeys(data.opeLog), 4)">
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <ng-container *ngFor="let key of chunk">
+        <mat-form-field appearance="outline" fxFlex class="mb-3">
+          <mat-label>{{ key | titlecase }}</mat-label>
+          <input matInput [value]="formatValue(data.opeLog[key])" disabled />
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+  <button mat-raised-button mat-dialog-close color="primary" class="custom-button">Cerrar</button>
+</mat-dialog-actions>

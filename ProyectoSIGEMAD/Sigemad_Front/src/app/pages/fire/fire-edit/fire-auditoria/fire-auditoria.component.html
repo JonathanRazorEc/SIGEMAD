@@ -1,0 +1,49 @@
+<div class="vista-general" id="capturaPDF">
+
+  <div class="header-contenedor">
+    <button (click)="generatePDF()" class="btn-pdf">
+      Generar PDF
+    </button>
+  </div>
+
+  <div class="encabezado">
+    <div>
+      <h3 class="titulo">{{ fireData?.vistaPrimaria?.denominacion || 'Sin información' }}</h3>
+    </div>
+    <div class="info-principal">
+      <p><strong>Municipio:</strong> {{ fireData?.vistaPrimaria?.municipio || 'N/A' }} ({{ fireData?.vistaPrimaria?.provincia || 'N/A' }})</p>
+      <p><strong>Estado del suceso:</strong> {{ fireData?.vistaPrimaria?.estadoIncendio || 'N/A' }}</p>
+      <p><strong>Seguimiento:</strong> {{ fireData?.vistaPrimaria?.seguimiento || 'N/A' }}</p>
+      <p><strong>Inicio:</strong> {{ getFechaInicio(fireData?.vistaPrimaria?.inicio) || 'N/A' }}</p>
+      <p><strong>Nota general:</strong> {{ fireData?.vistaPrimaria?.notaGeneral || 'N/A' }}</p>
+      <p><strong>Superficie afectada:</strong> {{ fireData?.vistaPrimaria?.superficieAfectadaHa || 'N/A' }}</p>
+      <p><strong>Clase de suceso:</strong> {{ fireData?.vistaPrimaria?.claseSuceso || 'N/A' }}</p>
+    </div>
+  </div>
+
+  <div class="bloque" *ngFor="let bloque of fireData?.bloques || []">
+    <div class="bloque" *ngIf="bloque?.filas?.length > 0">
+      <div class="bloque-encabezado">
+        <h4>{{ bloque?.titulo || 'Sin título' }}</h4>
+        <input
+          type="checkbox"
+          class="select-bloque"
+          [checked]="bloque?.selected || false"
+          (change)="toggleSelection(bloque, $event)"
+        />
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let col of bloque?.columnas || []">{{ col || 'Sin columna' }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fila of bloque?.filas || []">
+            <td *ngFor="let celda of fila || []">{{ celda || 'N/A' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

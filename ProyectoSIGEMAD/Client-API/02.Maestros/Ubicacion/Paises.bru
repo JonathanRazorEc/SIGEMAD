@@ -1,0 +1,19 @@
+meta {
+  name: Paises
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{Server}}/api/v1/paises?ExcluirNacional=true
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ExcluirNacional: true
+}
+
+assert {
+  res.status: eq 200
+}

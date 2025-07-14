@@ -1,0 +1,66 @@
+@use '../../../../../../../styles.scss' as theme;
+
+.title {
+  color: var(--title-color-green);
+  text-align: center;
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.submit-button {
+  margin-top: 24px;
+  align-self: flex-start;
+}
+
+.button-container {
+  margin-top: 16px;
+}
+
+.custom-button {
+  font-size: 16px;
+  text-transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+mat-icon {
+  font-size: 24px;
+}
+
+.mb-3 {
+  margin-bottom: 12px;
+}
+
+.pin-location {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+.titulo-valores-medios {
+  text-align: left;
+}
+
+//
+//::ng-deep .numeroTurismos-field.campoDesactivado .mat-mdc-text-field-wrapper,
+//::ng-deep .numeroAutocares-field.campoDesactivado .mat-mdc-text-field-wrapper,
+//::ng-deep .numeroCamiones-field.campoDesactivado .mat-mdc-text-field-wrapper,
+::ng-deep .numeroTotalVehiculos-field.campoDesactivado .mat-mdc-text-field-wrapper {
+  background-color: lightgray;
+  pointer-events: none;
+}
+
+//::ng-deep .numeroTurismos-field.campoDesactivado .mdc-floating-label,
+//::ng-deep .numeroAutocares-field.campoDesactivado .mdc-floating-label,
+//::ng-deep .numeroCamiones-field.campoDesactivado .mdc-floating-label,
+::ng-deep .numeroTotalVehiculos-field.campoDesactivado .mdc-floating-label {
+  background-color: lightgray;
+}

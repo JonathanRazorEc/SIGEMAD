@@ -1,0 +1,86 @@
+<!-- Acordeón para Filtros -->
+
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-accordion multi>
+    <mat-expansion-panel #filterPanel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Filtros</mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- Fila 1 -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+        <mat-form-field appearance="outline" fxFlex="40">
+          <mat-label>Nombre</mat-label>
+          <input matInput [formControl]="getForm('nombre')" placeholder="Ingresa texto" />
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+        <mat-form-field appearance="outline" fxFlex="20">
+          <mat-label>Rango de fechas</mat-label>
+          <mat-select [formControl]="getForm('between')" (selectionChange)="changeBetween($event)">
+            <mat-option *ngFor="let option of comparativeDates()" [value]="option.id">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formData.get('between')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="20" class="mb-3">
+          <mat-label>{{ showDateEnd() ? 'Fecha inicio fase salida' : 'Fecha salida' }}</mat-label>
+          <input matInput [matDatepicker]="pickerFechaInicioFaseSalida" [formControl]="getForm('fechaInicioFaseSalida')" />
+          <mat-datepicker-toggle matSuffix [for]="pickerFechaInicioFaseSalida"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFechaInicioFaseSalida></mat-datepicker>
+          <mat-error *ngIf="formData.get('fechaInicioFaseSalida')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="20" class="mb-3" [ngStyle]="{ visibility: showDateEnd() ? 'visible' : 'hidden' }">
+          <mat-label>Fecha fin fase salida</mat-label>
+          <input matInput [matDatepicker]="pickerFechaFinFaseSalida" [formControl]="getForm('fechaFinFaseSalida')" />
+          <mat-datepicker-toggle matSuffix [for]="pickerFechaFinFaseSalida"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFechaFinFaseSalida></mat-datepicker>
+          <mat-error *ngIf="formData.get('fechaFinFaseSalida')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="20" class="mb-3">
+          <mat-label>{{ showDateEnd() ? 'Fecha inicio fase retorno' : 'Fecha retorno' }}</mat-label>
+          <input matInput [matDatepicker]="pickerFechaInicioFaseRetorno" [formControl]="getForm('fechaInicioFaseRetorno')" />
+          <mat-datepicker-toggle matSuffix [for]="pickerFechaInicioFaseRetorno"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFechaInicioFaseRetorno></mat-datepicker>
+          <mat-error *ngIf="formData.get('fechaInicioFaseRetorno')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="20" class="mb-3" [ngStyle]="{ visibility: showDateEnd() ? 'visible' : 'hidden' }">
+          <mat-label>Fecha fin fase retorno</mat-label>
+          <input matInput [matDatepicker]="pickerFechaFinFaseRetorno" [formControl]="getForm('fechaFinFaseRetorno')" />
+          <mat-datepicker-toggle matSuffix [for]="pickerFechaFinFaseRetorno"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFechaFinFaseRetorno></mat-datepicker>
+          <mat-error *ngIf="formData.get('fechaFinFaseRetorno')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <!-- Botones a la derecha -->
+    <div fxLayout="row" fxLayoutGap="16px">
+      <!-- Botón Buscar -->
+      <button mat-flat-button color="primary" aria-label="Buscar" class="custom-button" type="submit">
+        <mat-icon>search</mat-icon>
+        Buscar
+      </button>
+
+      <!-- Botón Filtrar -->
+      <!--
+      <button mat-flat-button color="primary" aria-label="Filtrar" class="custom-button" (click)="toggleAccordion(filterPanel)" type="button">
+        <mat-icon>filter_list</mat-icon>
+        Filtrar
+      </button>
+      -->
+
+      <!-- Botón Borrar -->
+      <button mat-flat-button color="primary" aria-label="Borrar" class="custom-button" type="button" (click)="clearFormFilter()">
+        <mat-icon>delete</mat-icon>
+        Limpiar
+      </button>
+    </div>
+  </div>
+</form>

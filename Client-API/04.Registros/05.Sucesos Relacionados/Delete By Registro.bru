@@ -1,0 +1,15 @@
+meta {
+  name: Delete By Registro
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{Server}}/api/v1/sucesos-relacionados/17
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 204
+}

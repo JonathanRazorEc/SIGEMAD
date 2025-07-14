@@ -1,0 +1,92 @@
+<div class="modal-header">
+  <h2 mat-dialog-title class="title" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>{{ data.title }}</h2>
+</div>
+
+<div class="container">
+  <div class="side-menu">
+    <mat-chip-listbox [value]="selectedOption.value" (change)="onSelectionChange($event)">
+      <mat-chip-option *ngFor="let sec of sections; trackBy: trackByFn" [value]="sec.id" class="full-width-chip">
+        {{ sec.label }}
+      </mat-chip-option>
+    </mat-chip-listbox>
+  </div>
+
+  <app-mobilization
+    [dataMaestros]="dataMaestros"
+    [fire]="data.fire"
+    [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+    [editData]="editData"
+    (save)="onSaveFromChild($event)"
+    *ngIf="selectedOption.value === 1 && isDataReady"
+    class="component-width"
+    @fadeInOut
+  ></app-mobilization>
+
+  <app-cecod
+    [fire]="data.fire"
+    [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+    [editData]="editData"
+    (save)="onSaveFromChild($event)"
+    *ngIf="selectedOption.value === 2 && isDataReady"
+    class="component-width"
+    @fadeInOut
+  ></app-cecod>
+
+  <app-activation-plan
+    [dataMaestros]="dataMaestros"
+    [fire]="data.fire"
+    [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+    [editData]="editData"
+    (save)="onSaveFromChild($event)"
+    *ngIf="selectedOption.value === 3 && isDataReady"
+    class="component-width"
+    @fadeInOut
+  ></app-activation-plan>
+
+  <app-notifications
+    [dataMaestros]="dataMaestros"
+    [fire]="data.fire"
+    [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+    [editData]="editData"
+    (save)="onSaveFromChild($event)"
+    *ngIf="selectedOption.value === 4 && isDataReady"
+    class="component-width"
+    @fadeInOut
+  ></app-notifications>
+
+  <app-systems-activation
+    [dataMaestros]="dataMaestros"
+    [fire]="data.fire"
+    [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+    [editData]="editData"
+    (save)="onSaveFromChild($event)"
+    *ngIf="selectedOption.value === 5 && isDataReady"
+    class="component-width"
+    @fadeInOut
+  ></app-systems-activation>
+
+  <app-emergency-national
+    [fire]="data.fire"
+    [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+    [editData]="editData"
+    [estadoIncendio]="estado"
+    (save)="onSaveFromChild($event)"
+    *ngIf="selectedOption.value === 7 && isDataReady"
+    class="component-width"
+    @fadeInOut
+  ></app-emergency-national>
+
+  <app-zagep
+    [fire]="data.fire"
+    [esUltimo]="data.fireDetail?.esUltimoRegistro ?? false"
+    [editData]="editData"
+    (save)="onSaveFromChild($event)"
+    *ngIf="selectedOption.value === 6 && isDataReady"
+    class="component-width"
+    @fadeInOut
+  ></app-zagep>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

@@ -1,0 +1,49 @@
+meta {
+  name: Eliminar elementos
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{Server}}/api/v1/registros/impactos
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "IdRegistroActualizacion": 1,
+    "IdSuceso": 1,
+    "Impactos": [
+      {
+        "id": 3,
+        "idimpactoclasificado": 2,
+        "nuclear": false,
+        "VaLoRAD": 1,
+        "numero": 1,
+        "observaciones": "string actualizado *****",
+        "fecha": "2024-10-15T23:58:21.601Z",
+        "FeChAHoRa": "2024-10-15T23:58:21.601Z",
+        "FechaHoraInicio": "2024-10-15T23:58:21.601Z",
+        "fechaHoraFin": "2024-10-15T23:58:21.601Z",
+        "alteracionInterrupcion": "A",
+        "causa": "string actualizado *****",
+        "numeroGraves": 0,
+        "IdTipoDanio": 1,
+        "ZonaPlanificacion": null,
+        "numeroUsuarios": 0,
+        "numeroIntervinientes": 0,
+        "numeroServicios": 0,
+        "numeroLocalidades": 0
+      }
+    ]
+  }
+}
+
+vars:post-response {
+  IdEvolucion: res.body.idEvolucion
+}
+
+assert {
+  res.status: eq 200
+}

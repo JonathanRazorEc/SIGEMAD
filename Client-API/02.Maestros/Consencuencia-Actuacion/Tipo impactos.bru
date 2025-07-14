@@ -1,0 +1,15 @@
+meta {
+  name: Tipo impactos
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{Server}}/api/v1/tipo-impacto
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~Nuclear: true
+}

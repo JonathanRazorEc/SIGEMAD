@@ -1,0 +1,30 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/registros/activaciones-planes
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  IdRegistroActualizacion: 1
+  IdSuceso: 1
+  ActivacionPlanes[0].Id: 1
+  ActivacionPlanes[0].IdTipoPlan: 1
+  ActivacionPlanes[0].TipoPlanPersonalizado: Nuevo plan ACTUALIZADO
+  ActivacionPlanes[0].IdPlanEmergencia: 1
+  ActivacionPlanes[0].PlanEmergenciaPersonalizado: Plan de emergencia ACTUALIZADO
+  ActivacionPlanes[0].FechaInicio: 2025-05-21
+  ActivacionPlanes[0].FechaFin: 2025-05-27
+  ActivacionPlanes[0].Autoridad: Nueva autoridad
+  ActivacionPlanes[0].Observaciones: Nueva observacion
+  ActivacionPlanes[0].Archivo: @file(C:\Users\agomezm\Desktop\Captura de pantalla 2024-04-09 123041.png)
+}
+
+assert {
+  res.status: eq 200
+}

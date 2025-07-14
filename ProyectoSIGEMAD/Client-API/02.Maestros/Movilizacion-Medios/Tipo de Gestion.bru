@@ -1,0 +1,19 @@
+meta {
+  name: Tipo de Gestion
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/movilizaciones-medios/tipos-gestion
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~IdPasoActual: 1
+}
+
+assert {
+  res.status: eq 200
+}

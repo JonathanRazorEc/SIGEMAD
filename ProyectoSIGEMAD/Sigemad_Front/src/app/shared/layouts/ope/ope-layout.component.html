@@ -1,0 +1,25 @@
+<app-ope-menu (menuStateChange)="onMenuStateChange($event)" />
+<div [ngClass]="menuExpandido ? 'difuminado' : 'sin-difuminado'">
+  <nav class="nav-miga-pan-ope">
+    <ol class="breadcrumb-ope">
+      <!--
+      <li *ngFor="let breadcrumb of breadcrumbs; let last = last" class="breadcrumb-item-ope" [class.active]="last">
+        <a *ngIf="!last" (click)="goToRoute(breadcrumb.url)">{{ breadcrumb.label }}</a>
+        <span *ngIf="last">{{ breadcrumb.label }}</span>
+      </li>
+      -->
+
+      <!-- Solo muestra como enlace los elementos intermedios, ni el primero ni el último -->
+      <li *ngFor="let breadcrumb of breadcrumbs; let i = index; let last = last" class="breadcrumb-item-ope" [class.active]="last">
+        <a *ngIf="i !== 0 && !last" (click)="goToRoute(breadcrumb.url)">
+          {{ breadcrumb.label }}
+        </a>
+        <span *ngIf="i === 0 || last">
+          {{ breadcrumb.label }}
+        </span>
+      </li>
+      <!-- FIN Solo muestra como enlace los elementos intermedios, ni el primero ni el último -->
+    </ol>
+  </nav>
+  <router-outlet></router-outlet>
+</div>

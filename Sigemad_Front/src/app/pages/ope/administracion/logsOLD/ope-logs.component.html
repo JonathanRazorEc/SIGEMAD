@@ -1,0 +1,15 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-log-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opeLogs)]="opeLogs"
+  ></app-ope-log-filter-form>
+  <app-ope-logs-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opeLogs]="opeLogs.data"
+    *ngIf="opeLogs?.data"
+  ></app-ope-logs-table>
+</div>

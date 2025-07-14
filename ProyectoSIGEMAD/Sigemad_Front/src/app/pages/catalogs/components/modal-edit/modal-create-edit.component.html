@@ -1,0 +1,135 @@
+<div class="modal-container" [id]="'grupo' + data.idTablaMaestraGrupo">
+  <div class="modal-header">
+    <!--<h2 class="modal-title">{{ mode === 'edit' ? 'Editar' : 'Crear' }} Registro</h2>-->
+    <h2 class="modal-title">{{ tituloModal }}</h2>
+  </div>
+
+  <form (ngSubmit)="save()" class="modal-form">
+    <mat-card class="modal-card">
+      <div class="form-grid">
+        <ng-container *ngFor="let col of columns">
+          <!-- TEST -->
+          <div *ngIf="col.ApareceEnEdicion">
+            <!-- FIN TEST -->
+
+            <!-- Checkbox -->
+            <div *ngIf="col.Tipo === 'bit'" class="form-group checkbox-wrapper">
+              <mat-checkbox [(ngModel)]="formData[col.Columna]" [name]="col.Columna" class="custom-checkbox" disableRipple>
+                <span class="checkbox-label">{{ col.Etiqueta }}</span>
+              </mat-checkbox>
+            </div>
+
+            <!-- Otros campos -->
+            <div *ngIf="col.Tipo !== 'bit'" class="form-group">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{ col.Etiqueta }}</mat-label>
+
+                <input
+                  *ngIf="col.Tipo === 'nvarchar'"
+                  matInput
+                  [(ngModel)]="formData[col.Columna]"
+                  [name]="col.Columna"
+                  [disabled]="!data.tablaEditable"
+                />
+                <input
+                  *ngIf="col.Tipo === 'int'"
+                  matInput
+                  type="number"
+                  step="1"
+                  [(ngModel)]="formData[col.Columna]"
+                  [name]="col.Columna"
+                  [disabled]="!data.tablaEditable"
+                />
+                <input
+                  *ngIf="col.Tipo === 'decimal'"
+                  matInput
+                  type="number"
+                  step="any"
+                  [(ngModel)]="formData[col.Columna]"
+                  [name]="col.Columna"
+                  [disabled]="!data.tablaEditable"
+                />
+
+                <!-- Para campos tipo datetime2 -->
+                <input
+                  *ngIf="col.Tipo === 'datetime2'"
+                  matInput
+                  type="datetime-local"
+                  [(ngModel)]="formData[col.Columna]"
+                  [name]="col.Columna"
+                  [disabled]="!data.tablaEditable"
+                />
+
+                <!-- Para campos tipo date -->
+                <input
+                  *ngIf="col.Tipo === 'date'"
+                  matInput
+                  type="date"
+                  [(ngModel)]="formData[col.Columna]"
+                  [name]="col.Columna"
+                  [disabled]="!data.tablaEditable"
+                />
+
+                <!-- Para campos tipo time -->
+                <input
+                  *ngIf="col.Tipo === 'time'"
+                  matInput
+                  type="time"
+                  [(ngModel)]="formData[col.Columna]"
+                  [name]="col.Columna"
+                  [disabled]="!data.tablaEditable"
+                />
+
+                <!-- Para campos tipo char -->
+                <!--
+                <input
+                  *ngIf="col.Tipo === 'char'"
+                  matInput
+                  maxlength="1"
+                  [(ngModel)]="formData[col.Columna]"
+                  [name]="col.Columna"
+                  [disabled]="!data.tablaEditable"
+                />
+                -->
+
+                <!-- Para campos tipo char -->
+                <ng-container *ngIf="col.Tipo === 'char'">
+                  <ng-container *ngIf="col.Columna === 'TipoMovimiento'; else defaultInput">
+                    <input matInput [value]="getTipoMovimientoDescripcion(formData[col.Columna])" [disabled]="!data.tablaEditable" />
+                  </ng-container>
+                  <ng-template #defaultInput>
+                    <input matInput maxlength="1" [(ngModel)]="formData[col.Columna]" [name]="col.Columna" [disabled]="!data.tablaEditable" />
+                  </ng-template>
+                </ng-container>
+
+                <!-- Para campos tipo uniqueidentifier -->
+                <input
+                  *ngIf="col.Tipo === 'uniqueidentifier'"
+                  matInput
+                  [(ngModel)]="formData[col.Columna]"
+                  [name]="col.Columna"
+                  [disabled]="!data.tablaEditable"
+                />
+
+                <mat-select *ngIf="col.Tipo === 'select'" [(ngModel)]="formData[col.Columna]" [name]="col.Columna" [disabled]="!data.tablaEditable">
+                  <mat-option *ngFor="let opt of getOptions(col.Columna)" [value]="opt.id">
+                    {{ opt.text }}
+                  </mat-option>
+                </mat-select>
+
+                <input *ngIf="!['nvarchar', 'int', 'decimal', 'select'].includes(col.Tipo)" matInput type="text" style="display: none" />
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </mat-card>
+
+    <div class="modal-divider-full"></div>
+
+    <div class="modal-actions">
+      <button mat-stroked-button color="warn" type="button" (click)="cancel()">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit" *ngIf="data.tablaEditable">Guardar</button>
+    </div>
+  </form>
+</div>

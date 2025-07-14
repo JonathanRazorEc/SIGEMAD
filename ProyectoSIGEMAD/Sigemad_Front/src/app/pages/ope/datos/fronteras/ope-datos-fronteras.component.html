@@ -1,0 +1,15 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-dato-frontera-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opeDatosFronteras)]="opeDatosFronteras"
+  ></app-ope-dato-frontera-filter-form>
+  <app-ope-datos-fronteras-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opeDatosFronteras]="opeDatosFronteras.data"
+    *ngIf="opeDatosFronteras?.data"
+  ></app-ope-datos-fronteras-table>
+</div>

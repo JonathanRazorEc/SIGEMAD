@@ -1,0 +1,430 @@
+.container {
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 20px;
+  border: 2px solid #C0C0C0;
+  overflow-x: hidden;
+}
+
+.special-plans-container {
+  padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+
+    h2 {
+      margin: 0;
+      color: #333;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .add-btn {
+      background-color: #2196F3;
+      color: white;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+
+      &:hover {
+        background-color: #1976D2;
+        box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
+      }
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .form-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+
+    h3 {
+      margin: 0 0 25px 0;
+      color: #495057;
+      font-size: 20px;
+      font-weight: 500;
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #dee2e6;
+    }
+
+    .form-row {
+      margin-bottom: 20px;
+
+      .form-group {
+        mat-form-field {
+          width: 100%;
+
+          ::ng-deep {
+            .mat-form-field-appearance-outline .mat-form-field-outline {
+              border-radius: 8px;
+            }
+
+            .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+              color: #2196F3;
+            }
+
+            .mat-form-field-label {
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+
+    .file-drop-zone {
+      width: 100%;
+      margin-top: 10px;
+
+      .file-drop-area {
+        border: 2px dashed #dee2e6;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        background: #ffffff;
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          border-color: #2196F3;
+          background: #f0f8ff;
+        }
+
+        &.file-over {
+          border-color: #4CAF50;
+          background: #f1f8e9;
+        }
+
+        .file-drop-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+
+          .file-icon {
+            font-size: 48px;
+            color: #6c757d;
+            margin-bottom: 10px;
+          }
+
+          .file-drop-text {
+            color: #6c757d;
+            font-size: 16px;
+            font-weight: 400;
+
+            .file-selected {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              color: #28a745;
+              font-weight: 500;
+
+              mat-icon {
+                font-size: 20px;
+              }
+            }
+          }
+
+          .upload-btn {
+            background-color: #FF9800;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+
+            &:hover {
+              background-color: #F57C00;
+            }
+          }
+        }
+      }
+    }
+
+    .form-actions {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #dee2e6;
+
+      button {
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 500;
+
+        &.mat-button {
+          color: #6c757d;
+
+          &:hover {
+            background-color: #f8f9fa;
+          }
+        }
+
+        &.mat-raised-button {
+          box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+
+          &:hover {
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
+          }
+        }
+
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .table-section {
+    margin-top: 30px;
+
+    h3 {
+      margin: 0 0 20px 0;
+      color: #333;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin-top: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      
+      .full-width-table {
+        width: 100%;
+        background: white;
+
+        th {
+          background-color: #f5f5f5;
+          color: rgba(0, 0, 0, 0.87);
+          font-weight: 500;
+          padding: 12px;
+          text-align: left;
+          border-bottom: 1px solid #e0e0e0;
+        }
+
+        td {
+          padding: 12px;
+          border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+          background-color: #f8f8f8;
+        }
+
+        .mat-column-acciones {
+          width: 120px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .no-data-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-top: 30px;
+
+    mat-icon {
+      font-size: 64px;
+      color: #dee2e6;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .special-plans-container {
+    padding: 15px;
+
+    .header-section {
+      flex-direction: column;
+      gap: 15px;
+      align-items: stretch;
+
+      .add-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    .form-section {
+      padding: 20px 15px;
+
+      .form-row {
+        flex-direction: column;
+
+        .form-group {
+          margin-bottom: 15px;
+        }
+      }
+
+      .file-drop-zone .file-drop-area {
+        padding: 20px 15px;
+
+        .file-drop-content .file-icon {
+          font-size: 36px;
+        }
+      }
+    }
+
+    .table-section .table-container {
+      overflow-x: auto;
+
+      .data-table {
+        min-width: 600px;
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-section,
+.table-section,
+.no-data-message {
+  animation: fadeIn 0.3s ease-out;
+}
+
+// Validación de formularios
+::ng-deep {
+  .mat-form-field.ng-invalid.ng-touched {
+    .mat-form-field-outline-thick {
+      color: #f44336 !important;
+    }
+
+    .mat-form-field-label {
+      color: #f44336 !important;
+    }
+  }
+
+  .mat-error {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+// Estilos para ser compatibles con direction-coordination
+.section-title {
+  color: #FF8000 !important;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.section-title-2 {
+  color: black !important;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: underline;
+  padding-bottom: 10px;
+}
+
+.new-button-container {
+  margin-top: 20px;
+}
+
+.form-padding-top {
+  padding-top: 20px;
+}
+
+.input {
+  width: 100%;
+}
+
+.full-width-input {
+  width: 100%;
+}
+
+.custom-form-field {
+  margin-bottom: 20px;
+  
+  .custom-form-field-label {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .custom-form-field-container {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    padding: 0;
+    
+    .custom-file-input {
+      background-color: #fff;
+      border-radius: 4px;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      
+      &:hover {
+        border-color: rgba(0, 0, 0, 0.87);
+      }
+    }
+  }
+}
+
+.file-display-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.87);
+  
+  &.existing-file {
+    color: #1976d2;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  &:read-only {
+    cursor: pointer;
+  }
+}
+
+.existing-file-container, .new-file-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-btn {
+  color: #1976d2;
+} 

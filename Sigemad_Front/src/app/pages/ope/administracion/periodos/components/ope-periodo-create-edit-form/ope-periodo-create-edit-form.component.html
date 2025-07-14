@@ -1,0 +1,137 @@
+<h2 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle class="title">
+  {{ data.opePeriodo?.id ? 'Modificar' : 'Crear' }} Periodo
+</h2>
+
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <!-- Tipo de periodo -->
+      <mat-form-field appearance="outline" fxFlex="50" class="mb-3">
+        <mat-label>Tipo de periodo</mat-label>
+        <mat-select [formControl]="getForm('opePeriodoTipo')" (selectionChange)="onChangeTipoPeriodo($event)">
+          <mat-option *ngFor="let option of opePeriodosTipos()" [value]="option.id">
+            {{ option.nombre }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.get('opePeriodoTipo')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+
+      <!-- Nombre -->
+      <mat-form-field appearance="outline" fxFlex="50" class="mb-3">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre del periodo" formControlName="nombre" />
+        <mat-error *ngIf="formData.get('nombre')?.hasError('required')">Este campo es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+      <!-- Fecha de inicio  fase salida-->
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Fecha inicio fase salida</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerFechaInicioFaseSalida"
+          [formControl]="getForm('fechaInicioFaseSalida')"
+          [min]="fechaMinimaDatePicker"
+          [max]="fechaMaximaDatePicker"
+        />
+        <mat-datepicker-toggle matSuffix [for]="pickerFechaInicioFaseSalida"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFechaInicioFaseSalida></mat-datepicker>
+        <mat-error *ngIf="formData.get('fechaInicioFaseSalida')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        <mat-error *ngIf="formData.get('fechaInicioFaseSalida')?.hasError('fechaInvalida')">El valor de la fecha no es válido.</mat-error>
+      </mat-form-field>
+
+      <!-- Fecha de fin fase salida -->
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Fecha fin fase salida</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerFechaFinFaseSalida"
+          [formControl]="getForm('fechaFinFaseSalida')"
+          [min]="fechaMinimaDatePicker"
+          [max]="fechaMaximaDatePicker"
+        />
+        <mat-datepicker-toggle matSuffix [for]="pickerFechaFinFaseSalida"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFechaFinFaseSalida></mat-datepicker>
+        <mat-error *ngIf="formData.get('fechaFinFaseSalida')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        <mat-error *ngIf="formData.get('fechaFinFaseSalida')?.hasError('fechaInvalida')">El valor de la fecha no es válido.</mat-error>
+        <mat-error *ngIf="formData.get('fechaFinFaseSalida')?.hasError('fechaFinInvalida')">
+          La fecha de fin debe ser posterior a la fecha de inicio.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Fecha de inicio fase retorno -->
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Fecha inicio fase retorno</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerFechaInicioFaseRetorno"
+          [formControl]="getForm('fechaInicioFaseRetorno')"
+          [min]="fechaMinimaDatePicker"
+          [max]="fechaMaximaDatePicker"
+        />
+        <mat-datepicker-toggle matSuffix [for]="pickerFechaInicioFaseRetorno"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFechaInicioFaseRetorno></mat-datepicker>
+        <mat-error *ngIf="formData.get('fechaInicioFaseRetorno')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        <mat-error *ngIf="formData.get('fechaInicioFaseRetorno')?.hasError('fechaInvalida')">El valor de la fecha no es válido.</mat-error>
+      </mat-form-field>
+
+      <!-- Fecha y hora de fin fase retorno -->
+      <mat-form-field appearance="outline" fxFlex="25" class="mb-3">
+        <mat-label>Fecha fin fase retorno</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerFechaFinFaseRetorno"
+          [formControl]="getForm('fechaFinFaseRetorno')"
+          [min]="fechaMinimaDatePicker"
+          [max]="fechaMaximaDatePicker"
+        />
+        <mat-datepicker-toggle matSuffix [for]="pickerFechaFinFaseRetorno"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFechaFinFaseRetorno></mat-datepicker>
+        <mat-error *ngIf="formData.get('fechaFinFaseRetorno')?.hasError('required')">Este campo es obligatorio.</mat-error>
+        <mat-error *ngIf="formData.get('fechaFinFaseRetorno')?.hasError('fechaInvalida')">El valor de la fecha no es válido.</mat-error>
+        <mat-error *ngIf="formData.get('fechaFinFaseRetorno')?.hasError('fechaFinInvalida')">
+          La fecha de fin debe ser posterior a la fecha de inicio.
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <!--
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+
+
+    <button mat-raised-button (click)="closeModal()" color="primary" aria-label="Buscar" class="custom-button" type="button">Cancelar</button>
+
+
+    <button mat-flat-button color="primary" type="submit" aria-label="Guardar" class="custom-button">Guardar</button>
+  </mat-dialog-actions>
+  -->
+
+  <!-- PIE CON AUDITORIA -->
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <!-- Info auditoría si hay datos completos -->
+    <div fxFlex="50" class="audit-info" style="text-align: left">
+      <div *ngIf="data.opePeriodo?.creadoPor && data.opePeriodo?.fechaCreacion">
+        <b>Alta:</b>
+        {{ data.opePeriodo.creadoPor }} con fecha {{ getFechaFormateadaConHorasMinutosYSegundos(data.opePeriodo.fechaCreacion) }}
+      </div>
+      <div *ngIf="data.opePeriodo?.modificadoPor && data.opePeriodo?.fechaModificacion">
+        <b>Última modificación:</b>
+        {{ data.opePeriodo.modificadoPor }} con fecha {{ getFechaFormateadaConHorasMinutosYSegundos(data.opePeriodo.fechaModificacion) }}
+      </div>
+    </div>
+
+    <!-- Flex vacío que ocupa espacio y empuja botones a la derecha -->
+    <div fxFlex></div>
+
+    <!-- Botones -->
+    <div fxLayout="row" fxLayoutGap="16px">
+      <button mat-raised-button (click)="closeModal()" color="primary" aria-label="Buscar" class="custom-button" type="button">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit" aria-label="Guardar" class="custom-button">Guardar</button>
+    </div>
+  </mat-dialog-actions>
+  <!-- FIN PIE CON AUDITORIA-->
+</form>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white">Cargando...</p>
+</ngx-spinner>

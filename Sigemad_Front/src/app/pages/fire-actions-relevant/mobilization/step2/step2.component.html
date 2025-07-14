@@ -1,0 +1,42 @@
+<div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+  <mat-form-field appearance="outline" fxFlex="20%">
+    <mat-label>Destino</mat-label>
+    <mat-select [formControl]="getForm('IdDestinoMedio')">
+      <mat-option *ngFor="let option of destinos()" [value]="option">
+        {{ option.descripcion }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="formGroup.get('IdDestinoMedio')?.hasError('required')">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="input full-width-input" appearance="outline" fxFlex="60%">
+    <mat-label>Titular del medio</mat-label>
+    <input matInput [formControl]="getForm('TitularMedio')" placeholder="Ingresa texto" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" fxFlex="20%" class="mb-3">
+    <mat-label>Fecha / hora de tramitación</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="getForm('FechaHoraTramitacion')" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="formGroup.get('FechaHoraTramitacion')?.hasError('required')">Este campo es
+      obligatorio.</mat-error>
+  </mat-form-field>
+</div>
+
+<div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+  <mat-form-field class="input full-width-input" appearance="outline" fxFlex="80%">
+    <mat-label>Descripción de la tramitación</mat-label>
+    <input matInput [formControl]="getForm('Descripcion2')" placeholder="Ingresa texto" />
+  </mat-form-field>
+
+  <mat-checkbox style="padding-bottom: 20px;" fxFlex="20%" [formControl]="getForm('PublicadoCECIS')">Publicación en
+    CECIS</mat-checkbox>
+</div>
+
+<div class="row" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="start center">
+  <mat-form-field class="input full-width-input" appearance="outline" fxFlex="100%">
+    <mat-label>Observaciones</mat-label>
+    <input matInput [formControl]="getForm('Observaciones2')" placeholder="Ingresa texto" />
+  </mat-form-field>
+</div>

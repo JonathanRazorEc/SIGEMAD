@@ -1,0 +1,56 @@
+<div class="sidebar">
+  <div class="container-sidebar">
+    <div class="item-sidebar">
+      <img src="/assets/img/burger.svg" alt="burger" />
+    </div>
+
+    <div class="mt-32 mb-34" class="item-sidebar">
+      <img src="/assets/img/logo.svg" alt="burger" width="100%" />
+    </div>
+
+    <div class="item-sidebar">
+      <div *ngFor="let item of menuBack()">
+        <div
+          (click)="redirectTo(item)"
+          class="cursor-pointer menu-item rounded mt-0 text-info"
+          [style]="
+            active == item.ruta
+              ? 'border: 2px solid rgb(' + item.colorRgb + '); background-color: rgb(' + item.colorRgb + ', 0.50); padding: 4px'
+              : 'padding: 4px; border: 2px solid transparent'
+          "
+        >
+          <img *ngIf="item.icono" src="{{ item.icono }}" alt="{{ item.nombre }}" class="mr-5" />
+          {{ item.nombre }}
+        </div>
+        <div *ngIf="item.subItems && item.isOpen">
+          <div
+            *ngFor="let subItem of item.subItems"
+            (click)="redirectTo(subItem)"
+            class="cursor-pointer menu-item rounded mt-0"
+            [style]="
+              active == subItem.ruta
+                ? 'padding: 4px; border: 2px solid rgb(' + subItem.colorRgb + '); background-color: rgb(' + subItem.colorRgb + ', 0.50)'
+                : 'border: 2px solid transparent; padding: 4px'
+            "
+          >
+            <img *ngIf="subItem.icono" src="{{ subItem.icono }}" alt="{{ subItem.nombre }}" class="mr-5" />
+            {{ subItem.nombre }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item-sidebar">
+      <div class="d-flex gap-5">
+        <div>
+          <img src="/assets/img/user.svg" alt="" width="32" height="32" />
+        </div>
+
+        <div class="calibri mb-10">
+          <div class="mr-14 text-user">{{ user.name }}</div>
+
+          <div class="subtext-user">{{ user.role }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

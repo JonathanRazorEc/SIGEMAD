@@ -1,0 +1,61 @@
+<!-- Acordeón para Filtros -->
+
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <mat-accordion multi>
+    <mat-expansion-panel #filterPanel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Filtros</mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- Fila 1 -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start stretch" class="filter-container">
+        <mat-form-field appearance="outline" fxFlex="40">
+          <mat-label>Nombre</mat-label>
+          <input matInput [formControl]="getForm('nombre')" placeholder="Ingresa texto" />
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px" style="width: 100%" class="button-container">
+    <!-- Botón Crear (a la izquierda) -->
+    <button mat-flat-button color="accent" aria-label="Crear" class="custom-button" type="button" (click)="goModal()">
+      <mat-icon>add</mat-icon>
+      Añadir
+    </button>
+
+    <!-- Botones a la derecha -->
+    <div fxLayout="row" fxLayoutGap="16px">
+      <!-- Botón Logs -->
+      <button
+        mat-flat-button
+        color="primary"
+        aria-label="Logs"
+        class="custom-button"
+        type="button"
+        (click)="opeUtilsService.abrirLogs(ID_TABLA_LOGS)"
+      >
+        <mat-icon>search</mat-icon>
+        Logs
+      </button>
+      <!-- Botón Buscar -->
+      <button mat-flat-button color="primary" aria-label="Buscar" class="custom-button" type="submit">
+        <mat-icon>search</mat-icon>
+        Buscar
+      </button>
+
+      <!-- Botón Filtrar -->
+      <!--
+      <button mat-flat-button color="primary" aria-label="Filtrar" class="custom-button" (click)="toggleAccordion(filterPanel)" type="button">
+        <mat-icon>filter_list</mat-icon>
+        Filtrar
+      </button>
+      -->
+
+      <!-- Botón Borrar -->
+      <button mat-flat-button color="primary" aria-label="Borrar" class="custom-button" type="button" (click)="clearFormFilter()">
+        <mat-icon>delete</mat-icon>
+        Limpiar
+      </button>
+    </div>
+  </div>
+</form>

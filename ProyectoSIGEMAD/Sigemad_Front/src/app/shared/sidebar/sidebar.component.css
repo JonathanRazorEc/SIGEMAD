@@ -1,0 +1,48 @@
+.sidebar {
+  margin-left: 12px;
+  margin-top: 12px;
+}
+
+.menu-item {
+  font-family: 'Inter';
+  font-size: 14px;
+  width: 231px;
+  display: flex;
+  align-items: center;
+}
+
+.text-user {
+  color: rgba(0, 0, 0, 0.25);
+  font-family: Calibri;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.subtext-user {
+  color: rgba(0, 0, 0, 0.25);
+  font-family: Calibri;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.mb-8 {
+  margin-bottom: 8px;
+}
+.container-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100vh;
+}
+
+.item-sidebar {
+  margin-bottom: 16px;
+}
+
+.container-sidebar .item-sidebar:last-child {
+  margin-top: auto;
+}

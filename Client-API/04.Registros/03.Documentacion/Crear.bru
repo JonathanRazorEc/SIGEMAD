@@ -1,0 +1,32 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Server}}/api/v1/Documentaciones/lista
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  idRegistroActualizacion: 1
+  IdSuceso: 1
+  detalles[0].fechaHora: 2025-01-06T05:56:33.216Z
+  detalles[0].fechaHoraSolicitud: 2025-01-06T05:56:33.216Z
+  detalles[0].idTipoDocumento: 1
+  detalles[0].idsProcedenciasDestinos[0]: 82
+  detalles[0].idsProcedenciasDestinos[1]: 83
+  ~detalles[0].id: 1
+  ~detalles[0].descripcion: Este es un nuevo archivo
+  ~detalles[0].archivo: @file(C:\Users\agomezm\Downloads\filtered_table.xlsx)
+}
+
+vars:post-response {
+  IdDocumentacion: res.body.idDocumentacion
+}
+
+assert {
+  res.status: eq 200
+}

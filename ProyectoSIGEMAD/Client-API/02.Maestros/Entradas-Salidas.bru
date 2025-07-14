@@ -1,0 +1,15 @@
+meta {
+  name: Entradas-Salidas
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{Server}}/api/v1/entradas-salidas
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

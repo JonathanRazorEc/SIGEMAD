@@ -1,0 +1,54 @@
+@use '../../../styles.scss' as theme;
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  padding-top: 0;
+}
+
+.side-menu {
+  width: 250px;
+}
+
+.mat-chip {
+  margin: 5px 0;
+  display: block;
+}
+
+.full-width-chip {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.modal-header {
+  text-align: center;
+}
+
+.title {
+  color: var(--fire-color);
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: #e7e7e7;
+}
+
+.component-container {
+  width: 100%; /* Asegura que el ancho sea consistente */
+  min-height: 300px; /* Define una altura mínima para evitar saltos */
+  position: relative; /* Hace que el contenido sea relativo al contenedor */
+  overflow: hidden; /* Evita que el contenido desborde durante la transición */
+}
+
+.component-width {
+  width: 100%;
+}

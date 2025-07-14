@@ -1,0 +1,15 @@
+<router-outlet (activate)="childActivated = true" (deactivate)="childActivated = false"></router-outlet>
+<div *ngIf="!childActivated">
+  <app-ope-periodo-filter-form
+    [(isLoading)]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [filtros]="filtros"
+    [(opePeriodos)]="opePeriodos"
+  ></app-ope-periodo-filter-form>
+  <app-ope-periodos-table
+    [isLoading]="isLoading"
+    [(refreshFilterForm)]="refreshFilterForm"
+    [opePeriodos]="opePeriodos.data"
+    *ngIf="opePeriodos?.data"
+  ></app-ope-periodos-table>
+</div>

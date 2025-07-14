@@ -1,0 +1,49 @@
+meta {
+  name: Actualizar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{Server}}/api/v1/registros/intervenciones
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "IdRegistroActualizacion": 1,
+    "IdSuceso": 1,
+    "Intervenciones": [
+      {
+        "id": 1,
+        "idCaracterMedio": 1,
+        "idCapacidad": 2,
+        "descripcion": "intervencion #1 actualizado",
+        "medioNoCatalogado": "string",
+        "numeroCapacidades": 1,
+        "idTitularidadMedio": 1,
+        "titular": "string",
+        "fechaHoraInicio": "2025-02-05T15:00:09.019Z",
+        "fechaHoraFin": "2025-08-18T03:26:09.019Z",
+        "idProvincia": 1,
+        "idMunicipio": 1001,
+        "observaciones": "string",
+        "detalleIntervencionMedios": [
+          {
+            "idMediosCapacidad": 1,
+            "numeroIntervinientes": 5
+          }
+        ]
+      }
+    ]
+  }
+}
+
+vars:post-response {
+  IdEvolucion: res.body.idEvolucion
+}
+
+assert {
+  res.status: eq 200
+}

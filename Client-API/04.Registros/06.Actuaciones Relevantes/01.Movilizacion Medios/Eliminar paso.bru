@@ -1,0 +1,90 @@
+meta {
+  name: Eliminar paso
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{Server}}/api/v1/actuaciones-relevantes/movilizacion-medios/lista
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  data: '''
+    {
+      "IdActuacionRelevante": 7,
+      "IdSuceso": 1,
+      "Movilizaciones": [
+        {
+          "Id": 6,
+          "Solicitante": "MODIFICADO Prueba de movilización",
+          "Pasos": [
+            {
+              "Id": 29,
+              "TipoPaso": 1,
+              "IdProcedenciaMedio": 1,
+              "AutoridadSolicitante": "MODIFICADO Autoridad de solicitud",
+              "FechaHoraSolicitud": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "MODIFICADO Descripción del paso de solicitud",
+              "Observaciones": "MODIFICADO Esta es una observación"
+            },
+            {
+              "Id": 30,
+              "TipoPaso": 2,
+              "IdDestinoMedio": 1,
+              "TitularMedio": "MODIFICADO Titular de tramitación",
+              "FechaHoraTramitacion": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "MODIFICADO Descripción de tramitación",
+              "Observaciones": "MODIFICADO Esta es una observación tramitación",
+              "PublicadoCECIS": true
+            },
+            {
+              "Id": 31,
+              "TipoPaso": 3,
+              "TitularMedio": "MODIFICADO Titular de ofrecimiento",
+              "FechaHoraOfrecimiento": "2025-01-06T05:56:33.216Z",
+              "FechaHoraDisponibilidad": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "MODIFICADO Descripción del paso de solicitud",
+              "Observaciones": "MODIFICADO Esta es una observación de ofrecimiento",
+              "GestionCECOD": true
+            },
+            {
+              "Id": 32,
+              "TipoPaso": 5,
+              "IdCapacidad": 1,
+              "IdTipoAdministracion": 1,
+              "MedioNoCatalogado": "MODIFICADO Medio no catalogado APORTACION",
+              "TitularMedio": "MODIFICADO Titular de APORTACION",
+              "FechaHoraAportacion": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "MODIFICADO Descripción del paso APORTACION"
+            },
+            {
+              "Id": 33,
+              "TipoPaso": 6,
+              "IdCapacidad": 2,
+              "MedioNoCatalogado": "MODIFICADO Medio no catalogado DESPLIEGUE",
+              "FechaHoraDespliegue": "2025-01-06T05:56:33.216Z",
+              "FechaHoraInicioIntervencion": "2025-01-06T05:56:33.216Z",
+              "Descripcion": "MODIFICADO Descripción del paso APORTACION",
+              "Observaciones": "MODIFICADO Esta es una observación DESPLIEGUE"
+            },
+            {
+              "Id": 34,
+              "TipoPaso": 7,
+              "IdCapacidad": 3,
+              "MedioNoCatalogado": "MODIFICADO Medio no catalogado FIN DE INTERVENCION",
+              "FechaHoraInicioIntervencion": "2025-01-06T05:56:33.216Z",
+              "Observaciones": "MODIFICADO Esta es una observación INTERVENCION"
+            }
+          ]
+        }
+      ]
+    }
+  '''
+  Movilizaciones[0].Pasos[0].Archivo: @file(C:\Users\ftm_com_uat\Downloads\Sigemad-API.json)
+}
+
+assert {
+  res.status: eq 200
+}

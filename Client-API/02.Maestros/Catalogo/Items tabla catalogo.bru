@@ -1,0 +1,17 @@
+meta {
+  name: Items tabla catalogo
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Server}}/api/v1/catalog/40/items?showDeleted=false&page=1&pageSize=25
+  body: none
+  auth: inherit
+}
+
+params:query {
+  showDeleted: false
+  page: 1
+  pageSize: 25
+}

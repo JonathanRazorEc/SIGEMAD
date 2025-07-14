@@ -1,0 +1,20 @@
+meta {
+  name: Situaciones
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{Server}}/api/v1/plan-situacion-emergencia?idPlanEmergencia=1&idFaseEmergencia=1
+  body: none
+  auth: inherit
+}
+
+params:query {
+  idPlanEmergencia: 1
+  idFaseEmergencia: 1
+}
+
+assert {
+  res.status: eq 200
+}

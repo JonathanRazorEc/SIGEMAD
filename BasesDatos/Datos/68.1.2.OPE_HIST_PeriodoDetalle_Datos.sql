@@ -1,0 +1,48 @@
+SET IDENTITY_INSERT OPE_HIST_PeriodoDetalle ON;
+
+INSERT INTO OPE_HIST_PeriodoDetalle (Id,IdPeriodo,Nombre,FechaInicial,FechaFinal,UsrAltaAuditoria,FechaAltaAuditoria,FechaFinSalida,FechaInicioRetorno) VALUES
+	 (1,3,N'Semana Santa 2009','2009-04-04 00:00:00.0','2009-04-15 00:00:00.0',N'adua','2009-03-30 13:10:04.0',NULL,NULL),
+	 (2,1,N'Verano 2009','2009-06-05 00:00:00.0','2009-09-15 00:00:00.0',N'adua','2009-03-30 13:50:42.927',NULL,NULL),
+	 (3,2,N'Navidad 2008-2009','2008-12-21 00:00:00.0','2009-01-08 00:00:00.0',N'adua','2009-03-30 14:06:57.263',NULL,NULL),
+	 (21,1,N'Verano 2008','2008-06-15 00:00:00.0','2008-09-15 00:00:00.0',N'{"User":"adua","Roles":["Admin","SystemAdmin","upc|alicante|3"],"FcAlta":"10/06/2009 13:01","RolPrincipal":"upc|alicante|3"}','2009-06-10 13:01:24.61',NULL,NULL),
+	 (22,3,N'Semana Santa 2008','2008-03-14 00:00:00.0','2008-03-23 00:00:00.0',N'{"User":"adua","Roles":["Admin","SystemAdmin","upc|alicante|3"],"FcAlta":"10/06/2009 13:02","RolPrincipal":"upc|alicante|3"}','2009-06-10 13:02:33.657',NULL,NULL),
+	 (23,2,N'Navidad 2007-2008','2007-12-12 00:00:00.0','2008-01-02 00:00:00.0',N'{"User":"adua","Roles":["Admin","SystemAdmin","upc|alicante|3"],"FcAlta":"10/06/2009 13:02","RolPrincipal":"upc|alicante|3"}','2009-06-10 13:02:59.42',NULL,NULL),
+	 (24,1,N'Verano 1992','1992-06-15 00:00:00.0','1992-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (25,1,N'Verano 1993','1993-06-15 00:00:00.0','1993-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (26,1,N'Verano 1994','1994-06-15 00:00:00.0','1994-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (27,1,N'Verano 1995','1995-06-15 00:00:00.0','1995-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL);
+INSERT INTO OPE_HIST_PeriodoDetalle (Id,IdPeriodo,Nombre,FechaInicial,FechaFinal,UsrAltaAuditoria,FechaAltaAuditoria,FechaFinSalida,FechaInicioRetorno) VALUES
+	 (28,1,N'Verano 1996','1996-06-15 00:00:00.0','1996-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (29,1,N'Verano 1997','1997-06-15 00:00:00.0','1997-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (30,1,N'Verano 1998','1998-06-15 00:00:00.0','1998-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (31,1,N'Verano 1999','1999-06-15 00:00:00.0','1999-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (32,1,N'Verano 2000','2000-06-15 00:00:00.0','2000-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (33,1,N'Verano 2001','2001-06-15 00:00:00.0','2001-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (34,1,N'Verano 2002','2002-06-15 00:00:00.0','2002-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (35,1,N'Verano 2003','2003-06-15 00:00:00.0','2003-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (36,1,N'Verano 2004','2004-06-15 00:00:00.0','2004-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (37,1,N'Verano 2005','2005-06-15 00:00:00.0','2005-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL);
+INSERT INTO OPE_HIST_PeriodoDetalle (Id,IdPeriodo,Nombre,FechaInicial,FechaFinal,UsrAltaAuditoria,FechaAltaAuditoria,FechaFinSalida,FechaInicioRetorno) VALUES
+	 (38,1,N'Verano 2006','2006-06-15 00:00:00.0','2006-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (39,1,N'Verano 2007','2007-06-15 00:00:00.0','2007-09-15 00:00:00.0',N'{"User":"OPE","Roles":["Migracion","Admin"],"FcAlta":"09/24/2009 00:00","RolPrincipal":"Migracion"}','2009-09-24 14:49:47.187',NULL,NULL),
+	 (43,1,N'Verano 2010','2010-06-03 00:00:00.0','2010-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["Admin","SystemAdmin"],"FcAlta":"14/10/2009 11:44","RolPrincipal":"Admin"}','2009-10-14 11:44:03.863',NULL,NULL),
+	 (47,3,N'Semana Santa 1990','1990-01-01 00:00:00.0','1990-03-01 00:00:00.0',N'{"User":"ccobo","Roles":["Admin","SystemAdmin"],"FcAlta":"14/10/2009 11:50","RolPrincipal":"Admin"}','2009-10-14 11:50:24.96',NULL,NULL),
+	 (48,3,N'Semana Santa 1991-1992','1991-01-01 00:00:00.0','1992-03-01 00:00:00.0',N'{"User":"ccobo","Roles":["Admin","SystemAdmin"],"FcAlta":"14/10/2009 11:50","RolPrincipal":"Admin"}','2009-10-14 11:50:56.493',NULL,NULL),
+	 (49,1,N'Verano 1900','1900-01-01 00:00:00.0','1900-02-02 00:00:00.0',N'{"User":"ccobo","Roles":["Admin","SystemAdmin"],"FcAlta":"14/10/2009 11:51","RolPrincipal":"Admin"}','2009-10-14 11:51:32.07',NULL,NULL),
+	 (51,1,N'Verano 2011','2011-06-15 00:00:00.0','2011-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"02/06/2011 16:28","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2011-06-02 16:28:58.613',NULL,NULL),
+	 (52,1,N'Verano 2012','2012-06-15 00:00:00.0','2012-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"07/06/2012 22:30","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2012-06-07 22:30:48.303',NULL,NULL),
+	 (53,1,N'Verano 2013','2013-06-15 00:00:00.0','2013-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"05/06/2013 13:51","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2013-06-05 13:51:51.887','2013-08-15 00:00:00.0','2013-07-15 00:00:00.0'),
+	 (54,1,N'Verano 2014','2014-06-15 00:00:00.0','2014-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"16/06/2014 11:50","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2014-06-16 11:50:40.153','2014-08-15 00:00:00.0','2014-07-15 00:00:00.0');
+INSERT INTO OPE_HIST_PeriodoDetalle (Id,IdPeriodo,Nombre,FechaInicial,FechaFinal,UsrAltaAuditoria,FechaAltaAuditoria,FechaFinSalida,FechaInicioRetorno) VALUES
+	 (55,1,N'Verano 2015','2015-06-15 00:00:00.0','2015-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"16/06/2015 11:03","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2015-06-16 11:03:28.39','2015-08-15 00:00:00.0','2015-07-15 00:00:00.0'),
+	 (56,1,N'Verano 2016','2016-06-15 00:00:00.0','2016-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"18/05/2016 12:31","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2016-05-18 12:31:54.933','2016-08-15 00:00:00.0','2016-07-15 00:00:00.0'),
+	 (57,1,N'Verano 2017','2017-06-15 00:00:00.0','2017-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"09/06/2017 19:51","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2017-06-09 19:51:22.813','2017-08-15 00:00:00.0','2017-07-15 00:00:00.0'),
+	 (58,1,N'Verano 2018','2018-06-15 00:00:00.0','2018-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"12/06/2018 10:57","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2018-06-12 10:57:34.877','2018-08-15 00:00:00.0','2018-07-15 00:00:00.0'),
+	 (59,1,N'Verano 2019','2019-06-15 00:00:00.0','2019-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"24/05/2019 13:58","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2019-05-24 13:58:29.603','2019-08-15 00:00:00.0','2019-07-15 00:00:00.0'),
+	 (61,1,N'Verano 2022','2022-06-15 00:00:00.0','2022-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"12/05/2022 12:46","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2022-05-12 12:46:13.383','2022-08-15 00:00:00.0','2022-07-15 00:00:00.0'),
+	 (62,1,N'Verano 2023','2023-06-13 00:00:00.0','2023-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"16/06/2023 15:34","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2023-06-16 15:34:08.173','2023-08-15 00:00:00.0','2023-07-15 00:00:00.0'),
+	 (63,1,N'Verano 2024','2024-06-13 00:00:00.0','2024-09-15 00:00:00.0',N'{"User":"ccobo","Roles":["AdminControl","DPersonales","Ope","SACOP"],"FcAlta":"04/06/2024 19:33","RolPrincipal":"SACOP","LocationRoles":["SACOP"]}','2024-06-04 19:33:28.87','2024-08-15 00:00:00.0','2024-07-13 00:00:00.0');
+
+
+
+SET IDENTITY_INSERT OPE_HIST_PeriodoDetalle OFF;
